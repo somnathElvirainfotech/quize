@@ -1267,3 +1267,14 @@ form.qiz .btn {
 }
 }
 
+
+
+#background {
+  position: absolute;
+  z-index: 0;
+  background: white;
+  display: block;
+  min-height: 50%;
+  min-width: 50%;
+  color: yellow;
+}

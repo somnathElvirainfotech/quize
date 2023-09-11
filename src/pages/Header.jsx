@@ -46,7 +46,7 @@ function Header() {
     dispatch(authActions.Logout());
     navigate("/");
     // window.location.reload();
-    toast.success("Logout Successfully");
+    // toast.success("Logout Successfully");
   };
 
   // console.log(user,'user')

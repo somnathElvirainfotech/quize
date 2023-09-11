@@ -27,13 +27,14 @@ import { AuthContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import { questionActions } from "../redux/question";
 import { useForm } from "react-hook-form";
-import { removeDuplicates } from "../common";
+import { newQID, removeDuplicates } from "../common";
 import SpeedRef from "./Modal/SpeedRef";
 import AskMentor from "./Modal/AskMentor";
 
 function Review() {
   const dispatch = useDispatch();
   const question = useSelector((state) => state.question);
+  const auth=useSelector((state)=>state.auth);
 
   console.log("questionid  ", question.questionid);
   console.log("questionlist  ", question.questionlist);
@@ -397,7 +398,7 @@ function Review() {
               <div className="content-left">
                 <div className="ch-h">
                   <h3>{question.subject_name}</h3>
-                  <small>QID:{question.questionlist.id}</small>
+                  <small>QID: {newQID(auth.user_id,question.questionlist.id)}</small>
                 </div>
                 <p>{question.questionlist.question}</p>
                 <div className="btn-wrap">

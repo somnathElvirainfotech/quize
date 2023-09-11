@@ -19,7 +19,7 @@ import { AuthContext } from '../App';
 import { useDispatch, useSelector } from "react-redux";
 import { questionActions } from "../redux/question";
 import { useForm } from "react-hook-form";
-import { removeDuplicates } from "../common";
+import { newQID, removeDuplicates } from "../common";
 import SpeedRef from "./Modal/SpeedRef";
 import AskMentor from "./Modal/AskMentor";
 
@@ -762,10 +762,15 @@ function Exam() {
               </div>
             </div>
             <div className="money-re-content">
+
+            
               <div className="content-left question_left">
+
+
+
                 <div className="ch-h">
                   <h3>{question.subject_name}</h3>
-                  <small>QID:{question.questionlist.id}</small>
+                  <small>QID: {newQID(auth.user_id,question.questionlist.id)} </small>
 
                 </div>
                 <p className="question">
