@@ -1,0 +1,7 @@
+## Redirect to build folder
+<IfModule mod_rewrite.c>
+    AddHandler application/x-httpd-ea-php81 .php .php8 .phtml
+    RewriteEngine on
+    RewriteRule ^$ build/ [L]
+    RewriteRule (.*) build/$1 [L]
+</IfModule>
