@@ -12,8 +12,7 @@ import { LoginSchama } from "../schema";
 import { QuestionSchama } from "./Schemas";
 import TokenHelper from './TokenHelper'
 
-import { useContext } from 'react';
-import { userContext } from '../store';
+
 import userService from '../services/user.service';
 import { toast } from 'react-toastify';
 import learnig from '../assets/images/learnig-mode.svg';

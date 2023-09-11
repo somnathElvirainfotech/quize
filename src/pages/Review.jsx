@@ -9,8 +9,7 @@ import {
   Button,
 } from "react-bootstrap";
 
-import { useContext } from "react";
-import { userContext } from "../store";
+
 import userService from "../services/user.service";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";

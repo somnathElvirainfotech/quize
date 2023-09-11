@@ -11,7 +11,6 @@ import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 import { createContext, useState } from "react";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import Store from "./store";
 import BasePage from './pages/BasePage';
 import { LoginAuth } from '../src/pages/LoginAuth';
 import Home from './pages/HomePage';
