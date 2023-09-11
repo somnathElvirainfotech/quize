@@ -36,12 +36,15 @@ function SpeedRef(props) {
                             width="100%"
                             height="400px"
                             id=""
-                            className=""
+                            className="my-ovrflow"
                             display="block"
                             position="relative"
                              />
+                              <h5 className='speed-ref'>Speed Reference</h5>
                         </div>
                     </div>
+
+                   
                 </div>
             </section> 
 

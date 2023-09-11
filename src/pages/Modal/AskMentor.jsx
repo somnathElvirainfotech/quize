@@ -127,7 +127,7 @@ function AskMentor() {
                 )}
               </h2>
               {!termsAgree && <p>Please Read And Agree To The Following:</p>}
-              <div className="check-wrap">
+              <div className="check-wrap ad-check-wrap">
                 {!termsAgree && (
                   <>
                     <ul>
@@ -183,13 +183,14 @@ function AskMentor() {
                     >
                       Proceed
                     </Button>
+                    <h5 className="ask-m">Ask a mentor</h5>
                   </>
                 )}
 
                 {/* =============== Form =============  */}
                 {termsAgree && (
                   <>
-                    <form className="row g-4" onSubmit={handleSubmit(submit)}>
+                    <form className="row" onSubmit={handleSubmit(submit)}>
                       <div className="col-md-12">
                         <label htmlFor="">Email Address </label>
                         <input type="email" {...register("txtemail")} />
@@ -242,10 +243,11 @@ function AskMentor() {
                         </p>
                       </div>
 
-                      <div className="col-md-12 my-5">
+                      <div className="col-md-12">
                         <button className="sign-in " type="submit">
                           Click Once & Wait
                         </button>
+                        
                       </div>
                     </form>
                   </>

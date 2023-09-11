@@ -1,4 +1,5 @@
 const jquery = require("jquery");
+const { default: Iframe } = require("react-iframe");
 
 jquery(document).ready(function($) {
     // hamburgers
@@ -8,7 +9,7 @@ jquery(document).ready(function($) {
     forEach(hamburgers, function(hamburger) { hamburger.addEventListener("click", function() {
         this.classList.toggle("is-active");
     }, false);
-    });
+    });  
 }
 // hamburgers
 
@@ -28,4 +29,3 @@ jquery(document).ready(function($) {
     // });
 });
 //menu
-

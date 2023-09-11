@@ -439,6 +439,10 @@ function Review() {
                     </button>
                   )}
                 </div>
+                <div id="monybgwater">
+          <p id="bg-text">{newQID(auth.user_id,question.questionlist.id)}</p>
+        </div>
+
               </div>
               <div className="content-right">
                 <div className="ch-h">
@@ -599,6 +603,9 @@ function Review() {
                     </li>
                   </ul>
                 </div>
+                <div id="monybgwater">
+          <p id="bg-text">{newQID(auth.user_id,question.questionlist.id)}</p>
+        </div>
               </div>
             </div>
           </div>

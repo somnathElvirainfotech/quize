@@ -763,7 +763,7 @@ function Exam() {
             
               <div className="content-left question_left">
 
-
+        
 
                 <div className="ch-h">
                   <h3>{question.subject_name}</h3>
@@ -803,6 +803,9 @@ function Exam() {
 
 
                 </div>
+                <div id="monybgwater">
+          <p id="bg-text">{newQID(auth.user_id,question.questionlist.id)}</p>
+        </div>
               </div>
               <div className="content-right">
                 <div className="ch-h">
@@ -872,7 +875,7 @@ function Exam() {
                   </>}
 
                   {(Number(question.radMode) === 1) && <>
-                    <Button type="submit"  className="checkAns">Check Ans</Button>
+                    <Button type="submit"  className="checkAns ">Check Ans</Button>
                   </>}
 
 
@@ -919,7 +922,12 @@ function Exam() {
                     </li>
                   </ul>
                 </div>
+
+                <div id="monybgwater">
+          <p id="bg-text">{newQID(auth.user_id,question.questionlist.id)}</p>
+        </div>
               </div>
+       
             </div>
           </div>
 
