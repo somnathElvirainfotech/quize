@@ -21,7 +21,7 @@ const encryptor = encryptTransform({
 const persistConfig = {
     key: 'root',
     storage,
-    // transforms: [encryptor],
+    transforms: [encryptor],
 };
 
 // ============= write all Reducer ================== //
