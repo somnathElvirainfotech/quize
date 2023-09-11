@@ -5,32 +5,55 @@ on:
 name: 🚀 Deploy website on push
   
 jobs:
-    react-web-deploy:
-      name: 🎉 Deploy
-      runs-on: ubuntu-latest
-      steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v3
+    web-server-deploy:
+        # The type of runner that the job will run on
+        runs-on: ubuntu-latest
+
+
+        steps:
+        - name: Deploy using ssh
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USERNAME }}
+            password: ${{ secrets.PASSWORD }}
+            port: 22
+            script: |
+              export NVM_DIR=~/.nvm
+              source ~/.nvm/nvm.sh
+              cd /var/www/vhosts/elvirainfotech.org/quiz
+              eval "$(ssh-agent -s)"
+              ssh-add ~/.ssh/somnath_git_deploy_key
+              git pull origin main
+              git status
+              npm install --force
+              npm run build --force
+    # react-web-deploy:
+    #   name: 🎉 Deploy
+    #   runs-on: ubuntu-latest
+    #   steps:
+    #   - name: 🚚 Get latest code
+    #     uses: actions/checkout@v3
   
-      - name: Use Node.js 20
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
+    #   - name: Use Node.js 20
+    #     uses: actions/setup-node@v2
+    #     with:
+    #       node-version: '20'
         
-      - name: 🔨 Build Project
-        run: |
-          npm install --force
-          npm run build --force
+    #   - name: 🔨 Build Project
+    #     run: |
+    #       npm install --force
+    #       npm run build --force
 
       
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ftps://ftp.server.elvirainfotech.org
-          username: quiz
-          password: Blek818%5
-          protocol: ftp
-          local-dir: ./build/
+    #   - name: 📂 Sync files
+    #     uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+    #     with:
+    #       server: ftps://ftp.server.elvirainfotech.org
+    #       username: quiz
+    #       password: Blek818%5
+    #       protocol: ftp
+    #       local-dir: ./build/
 
 
                
