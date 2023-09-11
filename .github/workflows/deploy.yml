@@ -47,14 +47,14 @@ jobs:
           npm run build
 
       
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: 198.71.57.34
-          username: quiz
-          password: Blek818%5
-          protocol: ftp
-          local-dir: ./build/
+      # - name: 📂 Sync files
+      #   uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      #   with:
+      #     server: 198.71.57.34
+      #     username: quiz
+      #     password: Blek818%5
+      #     protocol: ftp
+      #     local-dir: ./build/
 
 
                
