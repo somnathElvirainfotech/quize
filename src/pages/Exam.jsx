@@ -655,7 +655,7 @@ function Exam() {
     // alert(question.answerObj.length)
     if ((Number(question.count) === Number(question.totalQuestion - 1)) && (Number(question.answerObj.length) === Number(question.totalQuestion))) {
 
-      toast.success("answer submit successfull");
+      // toast.success("answer submit successfull");
 
       var currectQns = 0;
       var new_answerObj = [];
@@ -733,21 +733,21 @@ function Exam() {
                 </select> */}
               </div>
               <div className="money-h-right">
-                {/* <span className="page-count">1</span> */}
+                <span className="page-count">{question.count + 1}</span>
                 <ul className="pagination-wrap">
-                  {/* <li>
-                    <a href="#">
+                  <li>
+                    <a href="#" onClick={handlePrevious}>
                       <img src={prev} alt="prev" />
                     </a>
-                  </li> */}
+                  </li>
                   <li>
                     <span>{question.count + 1}</span>/<span>{question.totalQuestion}</span>
                   </li>
-                  {/* <li>
-                    <a href="#">
+                  <li>
+                    <a href="#" onClick={handleNext}>
                       <img src={next} alt="next" />
                     </a>
-                  </li> */}
+                  </li>
                 </ul>
                 {/* <div className="pagination-res">
                   <span className="tr-fl">
@@ -931,6 +931,9 @@ function Exam() {
               </div>
        
             </div>
+
+           
+
           </div>
 
 
@@ -938,6 +941,7 @@ function Exam() {
           {/* ======== review ===== */}
 
         </div>
+
       </section>
 
 

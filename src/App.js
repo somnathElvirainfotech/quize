@@ -7,23 +7,23 @@ import './assets/css/responsive.css';
 import './assets/js/custom.js'
 
 
-import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
-import { createContext, useState } from "react";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BasePage from './pages/BasePage';
-import { LoginAuth } from '../src/pages/LoginAuth';
 import Home from './pages/HomePage';
 import Exam from './pages/Exam';
 import Review from './pages/Review';
 import Result from './pages/Result';
 import Translate from './pages/Translate';
+import { RequireAuth } from './Middleware';
+import NotFound from './pages/NotFound';
 // import Login from './pages/LoginPage';
 
 
 
-export const AuthContext = createContext();
-var initialValue = {}
+
 
 function App() {
 
@@ -41,19 +41,19 @@ function App() {
         pauseOnHover={false}
       />
       <div className="App">
-        {/* <AuthContext.Provider value={{ user: initialValue }} > */}
 
         <BrowserRouter>
           <Routes>
             <Route path='' element={<BasePage />}>
               <Route index element={<Home />} />
-              <Route path='/exam' element={<Exam />} />
-              {/* <Route path='/login' element={<Login />} /> */}
-              <Route path='review' element={<Review />} />
-              <Route path='result' element={<Result />} />
+              <Route path='exam' element={<RequireAuth><Exam /></RequireAuth>} />
+              <Route path='review' element={<RequireAuth><Review /></RequireAuth>} />
+              <Route path='result' element={<RequireAuth><Result /></RequireAuth>} />
             </Route>
 
-            <Route path='/translate' element={<Translate />} />
+            <Route path='/translate' element={<RequireAuth><Translate /></RequireAuth>} />
+
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </BrowserRouter>
 

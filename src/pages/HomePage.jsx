@@ -163,6 +163,8 @@ function Home() {
         else {
             console.log("not get token")
         }
+
+        reset();
     }
 
 
