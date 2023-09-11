@@ -900,13 +900,14 @@ function Exam() {
                         href="#"
                         data-bs-toggle="modal"
                         data-bs-target="#searchpopup"
+                        title="Speed Reference"
                         // onClick={speedRefhandleShow}
                       >
                         <img src={search} alt="search" />
                       </a>
                     </li>
                     <li>
-                      <a href="/translate" target="_blank" rel="noopener noreferrer">
+                      <a href="/translate" target="_blank" rel="noopener noreferrer" title="Translation">
                         <img src={translate} alt="translate" />
                       </a>
                     </li>
@@ -915,6 +916,7 @@ function Exam() {
                         href="#"
                         data-bs-toggle="modal"
                         data-bs-target="#mentorpopup"
+                        title="Ask a Mentor"
                         // onClick={aksMentorRefhandleShow}
                       >
                         <img src={query} alt="query" />

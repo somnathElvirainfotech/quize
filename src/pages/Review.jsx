@@ -583,12 +583,13 @@ function Review() {
                         href="#"
                         data-bs-toggle="modal"
                         data-bs-target="#searchpopup"
+                        title="Speed Reference"
                       >
                         <img src={search} alt="search" />
                       </a>
                     </li>
                     <li>
-                      <a href="/translate" target="_blank" rel="noopener noreferrer" >
+                      <a href="/translate" target="_blank" rel="noopener noreferrer" title="Translation">
                         <img src={translate} alt="translate" />
                       </a>
                     </li>
@@ -597,6 +598,7 @@ function Review() {
                         href="#"
                         data-bs-toggle="modal"
                         data-bs-target="#mentorpopup"
+                        title="Ask a Mentor"
                       >
                         <img src={query} alt="query" />
                       </a>
