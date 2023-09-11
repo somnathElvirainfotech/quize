@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../assets/css/translator.css";
 import { useSelector } from "react-redux";
 import logo from "../assets/images/logo.png";
