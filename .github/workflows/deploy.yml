@@ -24,7 +24,7 @@ jobs:
               cd /var/www/vhosts/elvirainfotech.org/quiz
               eval "$(ssh-agent -s)"
               ssh-add ~/.ssh/somnath_git_deploy_key
-              git pull origin main
+              git pull origin master
               git status
               npm install --force
               npm run build --force
