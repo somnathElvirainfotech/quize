@@ -1,6 +1,7 @@
 {
   "name": "cmfas",
   "version": "0.1.0",
+  "homepage": "./",
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^3.1.1",
@@ -41,7 +42,7 @@
   "scripts": {
     "start": "react-scripts start",
     "watch:scss": "node-sass -w css/style.scss css/style.css",
-    "build": "CI=false react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
