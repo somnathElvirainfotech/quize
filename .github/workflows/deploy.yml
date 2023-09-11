@@ -5,30 +5,6 @@ on:
 name: 🚀 Deploy website on push
   
 jobs:
-    # web-server-deploy:
-    #     # The type of runner that the job will run on
-    #     runs-on: ubuntu-latest
-
-
-    #     steps:
-    #     - name: Deploy using ssh
-    #       uses: appleboy/ssh-action@master
-    #       with:
-    #         host: ${{ secrets.HOST }}
-    #         username: ${{ secrets.USERNAME }}
-    #         password: ${{ secrets.PASSWORD }}
-    #         port: 22
-    #         script: |
-    #           export NVM_DIR=~/.nvm
-    #           source ~/.nvm/nvm.sh
-    #           cd /var/www/vhosts/elvirainfotech.org/quiz
-    #           eval "$(ssh-agent -s)"
-    #           ssh-add ~/.ssh/somnath_git_deploy_key
-    #           git pull origin master
-    #           git status
-    #           npm install --force
-    #           npm run build --force
-
     react-web-deploy:
       name: 🎉 Deploy
       runs-on: ubuntu-latest
@@ -49,17 +25,8 @@ jobs:
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: 198.71.57.34
-          username: quiz
-          password: Blek818%5
+          server: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
           protocol: ftp
           local-dir: ./build/
-
-
-               
-
-        
-
-
-      
-      
