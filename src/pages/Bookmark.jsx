@@ -779,12 +779,15 @@ function Bookmark() {
             <div className="Money-Received-box">
               <div className="money-header">
                 <div className="money-h-left">
-                  <h6>{bookmark.subject_name}</h6>
+                <h2>Bookmark Questions</h2>
+                  {/* <h6>{bookmark.subject_name}</h6> */}
                   {/* <select id="inputState" className="form-select">
                   <option selected="">Section #1</option>
                   <option>Section #2</option>
                 </select> */}
+                
                 </div>
+                
                 <div className="money-h-right">
                   <span className="page-count">{bookmark.count + 1}</span>
                   <ul className="pagination-wrap exam-pagination">
