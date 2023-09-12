@@ -29,11 +29,12 @@ import { useForm } from "react-hook-form";
 import { newQID, removeDuplicates } from "../common";
 import SpeedRef from "./Modal/SpeedRef";
 import AskMentor from "./Modal/AskMentor";
+import { bookmarkActions } from "../redux/bookmark";
 
 function Review() {
   const dispatch = useDispatch();
   const question = useSelector((state) => state.question);
-  const auth=useSelector((state)=>state.auth);
+  const auth = useSelector((state) => state.auth);
 
   console.log("questionid  ", question.questionid);
   console.log("questionlist  ", question.questionlist);
@@ -339,6 +340,26 @@ function Review() {
     }
   };
 
+  const addBookmark = async () => {
+    const form = new FormData();
+    form.append("user_id", auth.user_id);
+    form.append("question_id", question.questionlist.id);
+    form.append("subject_name", question.subject_name);
+
+    var responce = await userService.AddBookmark(form);
+
+    console.log("AddBookmark ", responce.data)
+
+    if (responce.data.status) {
+      toast.success(responce.data.msg);
+    } else {
+      toast.warning(responce.data.error);
+    }
+
+    dispatch(bookmarkActions.questionReset());
+  }
+
+
   useEffect(() => {
     // console.log(user.questionlist.ans.length, '  user.questionlist.ans.length ')
 
@@ -368,7 +389,7 @@ function Review() {
               </div>
               <div className="money-h-right">
                 <span className="page-count">{question.count + 1}</span>
-                <ul className="pagination-wrap">
+                <ul className="pagination-wrap exam-pagination">
                   <li>
                     <a href="#" onClick={handlePrevious}>
                       <img src={prev} alt="prev" />
@@ -397,51 +418,13 @@ function Review() {
               <div className="content-left">
                 <div className="ch-h">
                   <h3>{question.subject_name}</h3>
-                  <small>QID: {newQID(auth.user_id,question.questionlist.id)}</small>
+                  <small>QID: {newQID(auth.user_id, question.questionlist.id)}</small>
                 </div>
                 <p>{question.questionlist.question}</p>
-                <div className="btn-wrap">
-                  {question.count > 0 && (
-                    <>
-                      <button className="animate-btn" onClick={handleFirst}>
-                        First
-                      </button>
-                    </>
-                  )}
 
-                  {question.count > 0 && (
-                    <>
-                      <button className="animate-btn" onClick={handlePrevious}>
-                        Prev
-                      </button>
-                    </>
-                  )}
-
-                  {question.count <= question.totalQuestion - 2 && (
-                    <>
-                      <button className="animate-btn" onClick={handleNext}>
-                        Next
-                      </button>
-                    </>
-                  )}
-
-                  {question.count <= question.totalQuestion - 2 && (
-                    <>
-                      <button onClick={handleLast} className="animate-btn">
-                        Last
-                      </button>
-                    </>
-                  )}
-
-                  {question.count === question.totalQuestion - 1 && (
-                    <button className="animate-btn" onClick={finalAnsSubmit}>
-                      End
-                    </button>
-                  )}
-                </div>
                 <div id="monybgwater">
-          <p id="bg-text">{newQID(auth.user_id,question.questionlist.id)}</p>
-        </div>
+                  <p id="bg-text">{newQID(auth.user_id, question.questionlist.id)}</p>
+                </div>
 
               </div>
               <div className="content-right">
@@ -574,7 +557,7 @@ function Review() {
                 <div className="multiple-options">
                   <ul>
                     <li>
-                      <a href="#">
+                      <a href="#" title="Add Bookmark" onClick={addBookmark} >
                         <img src={add} alt="add" />
                       </a>
                     </li>
@@ -606,11 +589,55 @@ function Review() {
                   </ul>
                 </div>
                 <div id="monybgwater">
-          <p id="bg-text">{newQID(auth.user_id,question.questionlist.id)}</p>
-        </div>
+                  <p id="bg-text">{newQID(auth.user_id, question.questionlist.id)}</p>
+                </div>
               </div>
             </div>
+
+
+
           </div>
+
+          <div className="btn-wrap exam-btn">
+            {question.count > 0 && (
+              <>
+                <button className="animate-btn" onClick={handleFirst}>
+                  First
+                </button>
+              </>
+            )}
+
+            {question.count > 0 && (
+              <>
+                <button className="animate-btn" onClick={handlePrevious}>
+                  Prev
+                </button>
+              </>
+            )}
+
+            {question.count <= question.totalQuestion - 2 && (
+              <>
+                <button className="animate-btn" onClick={handleNext}>
+                  Next
+                </button>
+              </>
+            )}
+
+            {question.count <= question.totalQuestion - 2 && (
+              <>
+                <button onClick={handleLast} className="animate-btn">
+                  Last
+                </button>
+              </>
+            )}
+
+            {question.count === question.totalQuestion - 1 && (
+              <button className="animate-btn" onClick={finalAnsSubmit}>
+                End
+              </button>
+            )}
+          </div>
+
         </div>
       </section>
 

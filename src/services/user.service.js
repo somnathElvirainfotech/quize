@@ -60,6 +60,37 @@ class UserService {
 
 
   }
+
+
+  async AddBookmark(data) {
+    return axios.post('https://www.cmfasacademy.com/api.php?params=add_bookmark', data, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+    });
+
+
+  }
+
+  async RemoveBookmark(data) {
+    return axios.post('https://www.cmfasacademy.com/api.php?params=remove_bookmark', data, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+    });
+
+
+  }
+
+  async BookmarkList(data) {
+    return axios.post('https://www.cmfasacademy.com/api.php?params=bookmark_list', data, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+    });
+
+
+  }
   
 
 }

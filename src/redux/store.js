@@ -6,6 +6,7 @@ import { encryptTransform } from 'redux-persist-transform-encrypt';
 
 import authReducer from './auth';
 import questionReducer from './question';
+import bookmarkReducer from './bookmark';
 
 
 const encryptionKey = 'test@key123';
@@ -21,13 +22,14 @@ const encryptor = encryptTransform({
 const persistConfig = {
     key: 'root',
     storage,
-    transforms: [encryptor],
+    // transforms: [encryptor],
 };
 
 // ============= write all Reducer ================== //
 const rootReducer = combineReducers({
     question: questionReducer,
     auth: authReducer,
+    bookmark:bookmarkReducer,
 });
 // ============= End write all Reducer ============= //
 

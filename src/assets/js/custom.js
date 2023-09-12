@@ -14,18 +14,18 @@ jquery(document).ready(function($) {
 // hamburgers
 
 //menu
-    // var pull = $('#pull');
-    // menu = $('#menu-bg');
-    // menuHeight  = menu.height();
-    // $(pull).on('click', function(e) {
-    //     e.preventDefault();
-    //     menu.slideToggle(500);
-    // });
-    // $(window).resize(function(){
-    //     var w = $(window).width();
-    //     if(w > 320 && menu.is(':hidden')) {
-    //     menu.removeAttr('style');
-    // }
-    // });
+    var pull = jquery('#pull');
+    var menu = jquery('#menu-bg');
+    var menuHeight  = menu.height();
+    jquery(pull).on('click', function(e) {
+        e.preventDefault();
+        menu.slideToggle(500);
+    });
+    jquery(window).resize(function(){
+        var w = jquery(window).width();
+        if(w > 320 && menu.is(':hidden')) {
+        menu.removeAttr('style');
+    }
+    });
 });
 //menu

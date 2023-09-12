@@ -21,14 +21,13 @@ import SpeedRef from "./Modal/SpeedRef";
 import AskMentor from "./Modal/AskMentor";
 import { bookmarkActions } from "../redux/bookmark";
 
-function Exam() {
+function Bookmark() {
   const dispatch = useDispatch();
-  const question = useSelector(state => state.question);
+  const bookmark = useSelector(state => state.bookmark);
   const auth = useSelector(state => state.auth);
 
-
-  console.log("questionid  ", question.questionid);
-  console.log("questionlist  ", question.questionlist);
+  console.log("questionid  ", bookmark.questionid);
+  console.log("questionlist  ", bookmark.questionlist);
 
   const formref = useRef(null);
 
@@ -41,16 +40,16 @@ function Exam() {
 
 
   const handleNext = async () => {
-    var index = question.count;
-    if (question.count < (question.totalQuestion - 1)) {
+    var index = bookmark.count;
+    if (bookmark.count < (bookmark.totalQuestion - 1)) {
 
       index = index + 1;
 
-      dispatch(questionActions.count(index));
+      dispatch(bookmarkActions.count(index));
 
       // setCurrentIndex();
       // console.log(currentIndex, 'currentIndex')
-      await saveAnswerObj();
+      // await saveAnswerObj();
       await getquestiondata(`qid${index}`);
 
     }
@@ -59,16 +58,16 @@ function Exam() {
 
   const handlePrevious = async () => {
     // console.log(currentIndex, 'currentIndex')
-    var index = question.count;
-    if (question.count > 0) {
+    var index = bookmark.count;
+    if (bookmark.count > 0) {
       index = index - 1;
 
-      dispatch(questionActions.count(index));
+      dispatch(bookmarkActions.count(index));
 
 
       // setCurrentIndex(user.questionid.length - 1);
 
-      await saveAnswerObj();
+      // await saveAnswerObj();
 
       await getquestiondata(`qid${index}`);
     }
@@ -76,24 +75,52 @@ function Exam() {
 
 
   const handleFirst = async () => {
-    dispatch(questionActions.count(0));
+    dispatch(bookmarkActions.count(0));
 
-    await saveAnswerObj();
+    // await saveAnswerObj();
     await getquestiondata(`qid0`);
   }
 
   const handleLast = async () => {
-    var index = (question.totalQuestion - 1);
-    dispatch(questionActions.count(index));
-    await saveAnswerObj();
-    await getquestiondata(`qid${question.totalQuestion - 1}`);
+    var index = (bookmark.totalQuestion - 1);
+    dispatch(bookmarkActions.count(index));
+    // await saveAnswerObj();
+    await getquestiondata(`qid${bookmark.totalQuestion - 1}`);
   }
 
+  var getFristquestiondata = async () => {
+
+    // alert(11)
+    let form = new FormData();
+    form.append("user_id", auth.user_id);
+
+    // ==== answer form reset ========
+
+    var response = await userService.BookmarkList(form);
+
+    console.log("BookmarkList  ", response.data)
+
+    if (response.data.status) {
+
+      dispatch(bookmarkActions.questionlist(response.data.ques));
+      dispatch(bookmarkActions.questionid(response.data.question_ids));
+      dispatch(bookmarkActions.totalQuestion(response.data.question_count));
+      dispatch(bookmarkActions.subject_name(response.data.subject_name));
+      dispatch(bookmarkActions.radMode(1));
+      // dispatch(bookmarkActions.speedRefFileLink(responce.data.speed_reference_file_path))
+      // dispatch(bookmarkActions.subject_id(data.lstSubject))
+    } else {
+      dispatch(bookmarkActions.questionReset());
+      // toast.warning("No Bookmark Question Found");
+    }
+
+  }
 
   var getquestiondata = async (q_id) => {
+    // alert(q_id)
     // let q_id = currentId.value
     console.log(q_id, "  q_id");
-    console.log(question.questionid[q_id], "  q_value");
+    console.log(bookmark.questionid[q_id], "  q_value");
 
     // ==== answer form reset ========
 
@@ -102,10 +129,10 @@ function Exam() {
 
     if (q_id !== "") {
       let datas = {
-        "next_qid": question.questionid[q_id]
+        "next_qid": bookmark.questionid[q_id]
       }
 
-
+      console.log(datas)
 
       var response = await userService.Nextquestion(datas);
 
@@ -126,11 +153,11 @@ function Exam() {
         let new_ans = await removeDuplicates(response.data.ques.ans)
         response.data.ques.ans = new_ans;
 
-        // console.log("faqdata ", response.data)
+        console.log("faqdata ", response.data)
 
 
-        dispatch(questionActions.questionlist(response.data.ques));
-        dispatch(questionActions.speedRefFileLink(response.data.speed_reference_file_path))
+        dispatch(bookmarkActions.questionlist(response.data.ques));
+        dispatch(bookmarkActions.speedRefFileLink(response.data.speed_reference_file_path))
 
         if (response.data.ques.ans.length > 1) {
           if (formref.current !== null) {
@@ -182,13 +209,13 @@ function Exam() {
   var setPreviousAnsValue = async () => {
 
     // alert(1);
-    var oldQA_obj = question.answerObj;
-    // question.questionid[q_id]
+    var oldQA_obj = bookmark.answerObj;
+    // bookmark.questionid[q_id]
 
     for (const [index, i] of oldQA_obj.entries()) {
-      if (question.questionlist.id === i.qid) {
+      if (bookmark.questionlist.id === i.qid) {
         console.log("fffffff " + i.ans.length)
-        if (question.questionlist.ans.length > 1) {
+        if (bookmark.questionlist.ans.length > 1) {
           const myArray = i.ans.split("");
           console.log(`ans id == ${i.qid} === ${myArray}`)
           for (var j of myArray) {
@@ -213,6 +240,7 @@ function Exam() {
 
 
   }
+
 
   const checkAns = async (data) => {
     // e.preventDefault();
@@ -254,7 +282,7 @@ function Exam() {
 
       // console.log("user answer ", answer);
 
-      if (question.questionlist.ans === answer) {
+      if (bookmark.questionlist.ans === answer) {
 
         // toast.success("your answer right");
 
@@ -281,9 +309,9 @@ function Exam() {
         // toast.error("Your answer wrong");
 
 
-        // alert(question.questionlist.ans.includes('A'))
+        // alert(bookmark.questionlist.ans.includes('A'))
 
-        if (question.questionlist.ans.includes('A')) {
+        if (bookmark.questionlist.ans.includes('A')) {
           if (answer.includes('A')) {
             form.querySelector('#t_test1').className = 'right_ans';
           } else {
@@ -293,7 +321,7 @@ function Exam() {
           form.querySelector('#t_test1').className = 'wrong_ans';
         }
 
-        if (question.questionlist.ans.includes('B')) {
+        if (bookmark.questionlist.ans.includes('B')) {
           if (answer.includes('B')) {
             form.querySelector('#t_test2').className = 'right_ans';
           } else {
@@ -303,7 +331,7 @@ function Exam() {
           form.querySelector('#t_test2').className = 'wrong_ans';
         }
 
-        if (question.questionlist.ans.includes('C')) {
+        if (bookmark.questionlist.ans.includes('C')) {
           if (answer.includes('C')) {
             form.querySelector('#t_test3').className = 'right_ans';
           } else {
@@ -313,7 +341,7 @@ function Exam() {
           form.querySelector('#t_test3').className = 'wrong_ans';
         }
 
-        if (question.questionlist.ans.includes('D')) {
+        if (bookmark.questionlist.ans.includes('D')) {
           if (answer.includes('D')) {
             form.querySelector('#t_test4').className = 'right_ans';
           } else {
@@ -346,7 +374,7 @@ function Exam() {
       form.querySelector('#t_test4').className = '';
 
 
-      if (question.questionlist.ans === data.answer) {
+      if (bookmark.questionlist.ans === data.answer) {
 
         // toast.success("your answer right");
 
@@ -391,19 +419,19 @@ function Exam() {
           form.querySelector('#t_test4').className = 'wrong_ans';
         }
 
-        if (question.questionlist.ans.includes('A')) {
+        if (bookmark.questionlist.ans.includes('A')) {
 
           form.querySelector('#t_test1').className = 'right_ans';
         }
-        else if (question.questionlist.ans.includes('B')) {
+        else if (bookmark.questionlist.ans.includes('B')) {
 
           form.querySelector('#t_test2').className = 'right_ans';
         }
-        else if (question.questionlist.ans.includes('C')) {
+        else if (bookmark.questionlist.ans.includes('C')) {
 
           form.querySelector('#t_test3').className = 'right_ans';
         }
-        else if (question.questionlist.ans.includes('D')) {
+        else if (bookmark.questionlist.ans.includes('D')) {
 
           form.querySelector('#t_test4').className = 'right_ans';
         }
@@ -412,7 +440,7 @@ function Exam() {
 
       }
 
-      console.log(`user ans=${data.answer} | ans=${question.questionlist.ans}`)
+      console.log(`user ans=${data.answer} | ans=${bookmark.questionlist.ans}`)
 
 
     }
@@ -470,12 +498,12 @@ function Exam() {
           answer += test4;
         }
 
-        const ans_status = answer === question.questionlist.ans ? true : false;
+        const ans_status = answer === bookmark.questionlist.ans ? true : false;
 
-        var newQA_obj = { "qid": question.questionlist.id, "ans": answer, "status": ans_status }
+        var newQA_obj = { "qid": bookmark.questionlist.id, "ans": answer, "status": ans_status }
 
 
-        var oldQA_obj = question.answerObj;
+        var oldQA_obj = bookmark.answerObj;
 
         console.log("oldQA_obj  ", Object.keys(oldQA_obj));
 
@@ -483,14 +511,14 @@ function Exam() {
           var run_status = true;
 
           for (const [index, i] of oldQA_obj.entries()) {
-            if (question.questionlist.id === i.qid) {
+            if (bookmark.questionlist.id === i.qid) {
               // var newQA_obj={"qid":user.questionlist.id,"ans":userAns,"status":ans_status};
               // oldQA_obj[index].ans = answer;
               // oldQA_obj[index].status = ans_status;
 
               var obj = { index, answer, ans_status };
 
-              dispatch(questionActions.answerObjUpdate(obj));
+              dispatch(bookmarkActions.answerObjUpdate(obj));
               run_status = false;
               break;
             }
@@ -499,9 +527,9 @@ function Exam() {
           if (run_status) {
             // oldQA_obj.push(newQA_obj);
 
-            // dispatch(questionActions.answerObj(oldQA_obj));
+            // dispatch(bookmarkActions.answerObj(oldQA_obj));
 
-            dispatch(questionActions.answerObjAdd(newQA_obj));
+            dispatch(bookmarkActions.answerObjAdd(newQA_obj));
           }
 
           // console.log("new oldQA_obj  ", oldQA_obj);
@@ -512,8 +540,8 @@ function Exam() {
         if (oldQA_obj.length === 0) {
           // oldQA_obj.push(newQA_obj);
           // console.log(oldQA_obj)
-          // dispatch(questionActions.answerObj(oldQA_obj));
-          dispatch(questionActions.answerObjAdd(newQA_obj));
+          // dispatch(bookmarkActions.answerObj(oldQA_obj));
+          dispatch(bookmarkActions.answerObjAdd(newQA_obj));
         }
 
 
@@ -527,11 +555,11 @@ function Exam() {
 
       if (answer !== null) {
 
-        const ans_status = answer === question.questionlist.ans ? true : false;
+        const ans_status = answer === bookmark.questionlist.ans ? true : false;
 
-        var newQA_obj = { "qid": question.questionlist.id, "ans": answer, "status": ans_status }
+        var newQA_obj = { "qid": bookmark.questionlist.id, "ans": answer, "status": ans_status }
 
-        var oldQA_obj = question.answerObj;
+        var oldQA_obj = bookmark.answerObj;
 
         console.log("oldQA_obj  ", oldQA_obj);
 
@@ -539,14 +567,14 @@ function Exam() {
           var run_status = true;
 
           for (const [index, i] of oldQA_obj.entries()) {
-            if (question.questionlist.id === i.qid) {
+            if (bookmark.questionlist.id === i.qid) {
               // var newQA_obj={"qid":user.questionlist.id,"ans":userAns,"status":ans_status};
               // oldQA_obj[index].ans = answer;
               // oldQA_obj[index].status = ans_status;
 
               var obj = { index, answer, ans_status };
 
-              dispatch(questionActions.answerObjUpdate(obj));
+              dispatch(bookmarkActions.answerObjUpdate(obj));
               run_status = false;
               break;
             }
@@ -555,9 +583,9 @@ function Exam() {
           if (run_status) {
             // oldQA_obj.push(newQA_obj);
 
-            // dispatch(questionActions.answerObj(oldQA_obj));
+            // dispatch(bookmarkActions.answerObj(oldQA_obj));
 
-            dispatch(questionActions.answerObjAdd(newQA_obj));
+            dispatch(bookmarkActions.answerObjAdd(newQA_obj));
           }
 
           // console.log("new oldQA_obj  ", oldQA_obj);
@@ -568,8 +596,8 @@ function Exam() {
         if (oldQA_obj.length === 0) {
           // oldQA_obj.push(newQA_obj);
           // console.log(oldQA_obj)
-          // dispatch(questionActions.answerObj(oldQA_obj));
-          dispatch(questionActions.answerObjAdd(newQA_obj));
+          // dispatch(bookmarkActions.answerObj(oldQA_obj));
+          dispatch(bookmarkActions.answerObjAdd(newQA_obj));
         }
 
       }
@@ -585,7 +613,7 @@ function Exam() {
   const answersubmit = async () => {
 
 
-    if ((Number(question.count) === Number(question.totalQuestion - 1)) && (Number(question.answerObj.length) === (Number(question.totalQuestion) - 1))) {
+    if ((Number(bookmark.count) === Number(bookmark.totalQuestion - 1)) && (Number(bookmark.answerObj.length) === (Number(bookmark.totalQuestion) - 1))) {
 
       // ======= checking ======== 
       var ans_type = getValues("ans_type");
@@ -599,7 +627,7 @@ function Exam() {
 
         if (test1 || test2 || test3 || test4) {
           await saveAnswerObj();
-          dispatch(questionActions.ansSubmit(true));
+          dispatch(bookmarkActions.ansSubmit(true));
         } else {
           toast.warning("please fillup all answer!!");
         }
@@ -610,14 +638,14 @@ function Exam() {
 
         if (answer !== null) {
           await saveAnswerObj();
-          dispatch(questionActions.ansSubmit(true));
+          dispatch(bookmarkActions.ansSubmit(true));
         } else {
           toast.warning("please fillup all answer!!");
         }
       }
 
 
-    } else if ((Number(question.count) === Number(question.totalQuestion - 1)) && (Number(question.answerObj.length) === Number(question.totalQuestion))) {
+    } else if ((Number(bookmark.count) === Number(bookmark.totalQuestion - 1)) && (Number(bookmark.answerObj.length) === Number(bookmark.totalQuestion))) {
       if (ans_type === "checkbox") {
 
         var test1 = getValues('test1');
@@ -627,7 +655,7 @@ function Exam() {
 
         if (test1 || test2 || test3 || test4) {
           await saveAnswerObj();
-          dispatch(questionActions.ansSubmit(true));
+          dispatch(bookmarkActions.ansSubmit(true));
         } else {
           toast.warning("please fillup all answer!!");
         }
@@ -638,13 +666,13 @@ function Exam() {
 
         if (answer !== null) {
           await saveAnswerObj();
-          dispatch(questionActions.ansSubmit(true));
+          dispatch(bookmarkActions.ansSubmit(true));
         } else {
           toast.warning("please fillup all answer!!");
         }
       }
 
-    } else if (Number(question.answerObj.length) < Number(question.totalQuestion)) {
+    } else if (Number(bookmark.answerObj.length) < Number(bookmark.totalQuestion)) {
       toast.warning("please fillup all answer!!");
     }
 
@@ -654,15 +682,15 @@ function Exam() {
 
   const finalAnsSubmit = async () => {
 
-    // alert(question.answerObj.length)
-    if ((Number(question.count) === Number(question.totalQuestion - 1)) && (Number(question.answerObj.length) === Number(question.totalQuestion))) {
+    // alert(bookmark.answerObj.length)
+    if ((Number(bookmark.count) === Number(bookmark.totalQuestion - 1)) && (Number(bookmark.answerObj.length) === Number(bookmark.totalQuestion))) {
 
       // toast.success("answer submit successfull");
 
       var currectQns = 0;
       var new_answerObj = [];
 
-      for (var i of question.answerObj) {
+      for (var i of bookmark.answerObj) {
 
         if (i.status === true) {
           var newQA_obj = { "qid": i.qid, "ans": i.ans, "status": 1 }
@@ -677,7 +705,7 @@ function Exam() {
       console.log("new_answerObj  ", new_answerObj)
 
       var data = {
-        "subid": question.subject_id,
+        "subid": bookmark.subject_id,
         "userId": auth.user_id,
         "ans_data": new_answerObj
       };
@@ -686,11 +714,11 @@ function Exam() {
 
       console.log("responce ans submit", responce.data)
 
-      dispatch(questionActions.ansSubmit(false));
-      dispatch(questionActions.totalCurrectAns(currectQns))
-      // dispatch(questionActions.questionReseltStatus(true))
-      // dispatch(questionActions.questionReseltChecked(true));
-      dispatch(questionActions.count(0));
+      dispatch(bookmarkActions.ansSubmit(false));
+      dispatch(bookmarkActions.totalCurrectAns(currectQns))
+      // dispatch(bookmarkActions.questionReseltStatus(true))
+      // dispatch(bookmarkActions.questionReseltChecked(true));
+      dispatch(bookmarkActions.count(0));
       // await getquestiondata(`qid0`);
 
       navigate('/result');
@@ -701,44 +729,43 @@ function Exam() {
   }
 
 
-  const addBookmark = async () => {
-
-    // alert(1)
-
+  const removeBookmark = async () => {
     const form = new FormData();
     form.append("user_id", auth.user_id);
-    form.append("question_id", question.questionlist.id);
-    form.append("subject_name", question.subject_name);
+    form.append("question_id", bookmark.questionlist.id);
 
-    var responce = await userService.AddBookmark(form);
+    console.log("remove question_id ", bookmark.questionlist.id);
+
+    var responce = await userService.RemoveBookmark(form);
 
     console.log("AddBookmark ", responce.data)
 
     if (responce.data.status) {
       toast.success(responce.data.msg);
     } else {
-      toast.warning(responce.data.error);
+      toast.error(responce.data.error);
     }
 
-    dispatch(bookmarkActions.questionReset());
+    await getFristquestiondata()
 
   }
 
 
 
   useEffect(() => {
+    // alert(bookmark.questionid.length)
     // console.log(user.questionlist.ans.length, '  user.questionlist.ans.length ')
-    if (question.answerObj.length > 0) {
-      setPreviousAnsValue();
+    if (bookmark.totalQuestion === 0) {
+      getFristquestiondata();
     }
-  }, [question.questionlist])
+  }, [])
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if ((question.answerObj.length === Number(question.totalQuestion)) && ((Number(question.count)) === Number(question.totalQuestion - 1)) && question.ansSubmit === true) {
-      finalAnsSubmit();
-    }
-  }, [question.ansSubmit])
+  //   if ((bookmark.answerObj.length === Number(bookmark.totalQuestion)) && ((Number(bookmark.count)) === Number(bookmark.totalQuestion - 1)) && bookmark.ansSubmit === true) {
+  //     finalAnsSubmit();
+  //   }
+  // }, [bookmark.ansSubmit])
 
 
   return (
@@ -747,151 +774,152 @@ function Exam() {
         <div className="container">
           {/* ===== question and exam list ====== */}
 
-          <div className="Money-Received-box">
-            <div className="money-header">
-              <div className="money-h-left">
-                <h6>{question.subject_name}</h6>
-                {/* <select id="inputState" className="form-select">
+
+          {bookmark.totalQuestion > 0 && <>
+            <div className="Money-Received-box">
+              <div className="money-header">
+                <div className="money-h-left">
+                  <h6>{bookmark.subject_name}</h6>
+                  {/* <select id="inputState" className="form-select">
                   <option selected="">Section #1</option>
                   <option>Section #2</option>
                 </select> */}
-              </div>
-              <div className="money-h-right">
-                <span className="page-count">{question.count + 1}</span>
-                <ul className="pagination-wrap exam-pagination">
-                  <li>
-                    <a href="#" onClick={handlePrevious}>
-                      <img src={prev} alt="prev" />
-                    </a>
-                  </li>
-                  <li>
-                    <span>{question.count + 1}</span>/<span>{question.totalQuestion}</span>
-                  </li>
-                  <li>
-                    <a href="#" onClick={handleNext}>
-                      <img src={next} alt="next" />
-                    </a>
-                  </li>
-                </ul>
-                {/* <div className="pagination-res">
+                </div>
+                <div className="money-h-right">
+                  <span className="page-count">{bookmark.count + 1}</span>
+                  <ul className="pagination-wrap exam-pagination">
+                    <li>
+                      <a href="#" onClick={handlePrevious}>
+                        <img src={prev} alt="prev" />
+                      </a>
+                    </li>
+                    <li>
+                      <span>{bookmark.count + 1}</span>/<span>{bookmark.totalQuestion}</span>
+                    </li>
+                    <li>
+                      <a href="#" onClick={handleNext}>
+                        <img src={next} alt="next" />
+                      </a>
+                    </li>
+                  </ul>
+                  {/* <div className="pagination-res">
                   <span className="tr-fl">
                     <i className="fa-solid fa-circle-check" />
                   </span>
                   <span>true</span>
                   <span className="count">1</span>
                 </div> */}
-              </div>
-            </div>
-
-            <div className="money-re-content">
-
-
-              <div className="content-left question_left">
-
-
-
-                <div className="ch-h">
-                  <h3>{question.subject_name}</h3>
-                  <small>QID: {newQID(auth.user_id, question.questionlist.id)} </small>
-
-                </div>
-                <p className="question">
-                  {question.questionlist.question}
-                </p>
-
-                <div id="monybgwater">
-                  <p id="bg-text">{newQID(auth.user_id, question.questionlist.id)}</p>
                 </div>
               </div>
-              <div className="content-right">
-                <div className="ch-h">
-                  <h3>Select An Answer</h3>
+              <div className="money-re-content">
+
+
+                <div className="content-left question_left">
+
+
+
+                  <div className="ch-h">
+                    <h3>{bookmark.subject_name}</h3>
+                    <small>QID: {newQID(auth.user_id, bookmark.questionlist.id)} </small>
+
+                  </div>
+                  <p className="question">
+                    {bookmark.questionlist.question}
+                  </p>
+
+                  <div id="monybgwater">
+                    <p id="bg-text">{newQID(auth.user_id, bookmark.questionlist.id)}</p>
+                  </div>
                 </div>
+                <div className="content-right">
+                  <div className="ch-h">
+                    <h3>Select An Answer</h3>
+                  </div>
 
 
-                {/* ======== FORM 2 ANS length check =========  */}
+                  {/* ======== FORM 2 ANS length check =========  */}
 
 
-                <form ref={formref} onSubmit={handleSubmit(checkAns)} className="qiz">
+                  <form ref={formref} onSubmit={handleSubmit(checkAns)} className="qiz">
 
-                  {question.questionlist.ans.length > 1 && <>
-                    <input type="hidden" {...register('ans_type')} value={"checkbox"} />
-                    <p id="t_test1" className="clearfix">
-                      <input type="checkbox" id="test1" {...register('test1')} value={"A"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="test1">
-                        {question.questionlist.choice1}
-                      </label>
-                    </p>
-                    <p id="t_test2" className="clearfix">
-                      <input type="checkbox" id="test2"  {...register('test2')} value={"B"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="test2">
-                        {question.questionlist.choice2}
-                      </label>
-                    </p>
-                    <p id="t_test3" className="clearfix">
-                      <input type="checkbox" id="test3"  {...register('test3')} value={"C"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="test3">
-                        {question.questionlist.choice3}
-                      </label>
-                    </p>
-                    <p id="t_test4" className="clearfix">
-                      <input type="checkbox" id="test4"  {...register('test4')} value={"D"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="test4">
-                        {question.questionlist.choice4}
-                      </label>
-                    </p>
-                  </>}
+                    {bookmark.questionlist?.ans.length > 1 && <>
+                      <input type="hidden" {...register('ans_type')} value={"checkbox"} />
+                      <p id="t_test1" className="clearfix">
+                        <input type="checkbox" id="test1" {...register('test1')} value={"A"} disabled={bookmark.questionReseltChecked} />
+                        <label htmlFor="test1">
+                          {bookmark.questionlist.choice1}
+                        </label>
+                      </p>
+                      <p id="t_test2" className="clearfix">
+                        <input type="checkbox" id="test2"  {...register('test2')} value={"B"} disabled={bookmark.questionReseltChecked} />
+                        <label htmlFor="test2">
+                          {bookmark.questionlist.choice2}
+                        </label>
+                      </p>
+                      <p id="t_test3" className="clearfix">
+                        <input type="checkbox" id="test3"  {...register('test3')} value={"C"} disabled={bookmark.questionReseltChecked} />
+                        <label htmlFor="test3">
+                          {bookmark.questionlist.choice3}
+                        </label>
+                      </p>
+                      <p id="t_test4" className="clearfix">
+                        <input type="checkbox" id="test4"  {...register('test4')} value={"D"} disabled={bookmark.questionReseltChecked} />
+                        <label htmlFor="test4">
+                          {bookmark.questionlist.choice4}
+                        </label>
+                      </p>
+                    </>}
 
-                  {question.questionlist.ans.length === 1 && <>
-                    <input type="hidden" {...register('ans_type')} value={"radio"} />
-                    <p id="t_test1">
-                      <input type="radio" id="answer1"  {...register('answer')} value={"A"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="answer1">
-                        {question.questionlist.choice1}
-                      </label>
-                    </p>
-                    <p id="t_test2">
-                      <input type="radio" id="answer2"  {...register('answer')} value={"B"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="answer2">
-                        {question.questionlist.choice2}
-                      </label>
-                    </p>
-                    <p id="t_test3">
-                      <input type="radio" id="answer3"  {...register('answer')} value={"C"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="answer3">
-                        {question.questionlist.choice3}
-                      </label>
-                    </p>
-                    <p id="t_test4">
-                      <input type="radio" id="answer4"  {...register('answer')} value={"D"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="answer4">
-                        {question.questionlist.choice4}
-                      </label>
-                    </p>
-                  </>}
+                    {bookmark.questionlist?.ans.length === 1 && <>
+                      <input type="hidden" {...register('ans_type')} value={"radio"} />
+                      <p id="t_test1">
+                        <input type="radio" id="answer1"  {...register('answer')} value={"A"} disabled={bookmark.questionReseltChecked} />
+                        <label htmlFor="answer1">
+                          {bookmark.questionlist.choice1}
+                        </label>
+                      </p>
+                      <p id="t_test2">
+                        <input type="radio" id="answer2"  {...register('answer')} value={"B"} disabled={bookmark.questionReseltChecked} />
+                        <label htmlFor="answer2">
+                          {bookmark.questionlist.choice2}
+                        </label>
+                      </p>
+                      <p id="t_test3">
+                        <input type="radio" id="answer3"  {...register('answer')} value={"C"} disabled={bookmark.questionReseltChecked} />
+                        <label htmlFor="answer3">
+                          {bookmark.questionlist.choice3}
+                        </label>
+                      </p>
+                      <p id="t_test4">
+                        <input type="radio" id="answer4"  {...register('answer')} value={"D"} disabled={bookmark.questionReseltChecked} />
+                        <label htmlFor="answer4">
+                          {bookmark.questionlist.choice4}
+                        </label>
+                      </p>
+                    </>}
 
-                  {(Number(question.radMode) === 1) && <>
-                    <Button type="submit" className="checkAns ">Check Ans</Button>
-                  </>}
-
-
-
-
-                </form>
+                    {(Number(bookmark.radMode) === 1) && <>
+                      <Button type="submit" className="checkAns ">Check Ans</Button>
+                    </>}
 
 
 
 
-                {/* ======== END FORM 2 ANS length check =========  */}
+                  </form>
 
-                <div className="multiple-options">
-                  <ul>
-                    <li >
-                      <a href="#" title="Add Bookmark" onClick={addBookmark}>
-                        <img src={add} alt="add" />
-                      </a>
-                    </li>
-                    <li>
+
+
+
+                  {/* ======== END FORM 2 ANS length check =========  */}
+
+                  <div className="multiple-options">
+                    <ul>
+                      <li>
+                        <a href="#" className="remove_bookmark" title="Remove Bookmark" onClick={removeBookmark}>
+                          <img src={add} alt="add" />
+                        </a>
+                      </li>
+                      {/* <li>
                       <a
                         href="#"
                         data-bs-toggle="modal"
@@ -901,13 +929,13 @@ function Exam() {
                       >
                         <img src={search} alt="search" />
                       </a>
-                    </li>
-                    <li>
+                    </li> */}
+                      {/* <li>
                       <a href="/translate" target="_blank" rel="noopener noreferrer" title="Translation">
                         <img src={translate} alt="translate" />
                       </a>
-                    </li>
-                    <li>
+                    </li> */}
+                      {/* <li>
                       <a
                         href="#"
                         data-bs-toggle="modal"
@@ -917,52 +945,69 @@ function Exam() {
                       >
                         <img src={query} alt="query" />
                       </a>
-                    </li>
-                  </ul>
+                    </li> */}
+                    </ul>
+                  </div>
+
+                  <div id="monybgwater">
+                    <p id="bg-text">{newQID(auth.user_id, bookmark.questionlist.id)}</p>
+                  </div>
                 </div>
 
-                <div id="monybgwater">
-                  <p id="bg-text">{newQID(auth.user_id, question.questionlist.id)}</p>
-                </div>
               </div>
+
+
+
 
             </div>
 
-          </div>
+            <div className="btn-wrap exam-btn">
+
+              {bookmark.count > 0 && <>
+                <button className="animate-btn" onClick={handleFirst}>
+                  First
+                </button>
+              </>}
+
+              {bookmark.count > 0 && <>
+                <button className="animate-btn" onClick={handlePrevious}>
+                  Prev
+                </button>
+              </>}
+
+              {bookmark.count <= (bookmark.totalQuestion - 2) && <>
+                <button className="animate-btn" onClick={handleNext}>
+                  Next
+                </button>
+              </>}
+
+              {bookmark.count <= (bookmark.totalQuestion - 2) && <>
+                <button onClick={handleLast} className="animate-btn">
+                  Last
+                </button>
+              </>}
+
+              {/* {bookmark.count === (bookmark.totalQuestion - 1) && <button className="animate-btn" onClick={answersubmit}>End</button>} */}
 
 
-        
-          <div className="btn-wrap exam-btn">
-
-            {question.count > 0 && <>
-              <button className="animate-btn" onClick={handleFirst}>
-                First
-              </button>
-            </>}
-
-            {question.count > 0 && <>
-              <button className="animate-btn" onClick={handlePrevious}>
-                Prev
-              </button>
-            </>}
-
-            {question.count <= (question.totalQuestion - 2) && <>
-              <button className="animate-btn" onClick={handleNext}>
-                Next
-              </button>
-            </>}
-
-            {question.count <= (question.totalQuestion - 2) && <>
-              <button onClick={handleLast} className="animate-btn">
-                Last
-              </button>
-            </>}
-
-            {question.count === (question.totalQuestion - 1) && <button className="animate-btn" onClick={answersubmit}>End</button>}
+            </div>
+          </>}
 
 
-          </div>
+          {bookmark.totalQuestion === 0 && <>
+            <div className="Money-Received-box">
+              <div className="money-header result-header">
 
+              </div>
+
+              <div className="result-content">
+                <div className="content-middle">
+                  <h4>No Bookmark Question Found</h4>
+                </div>
+
+              </div>
+            </div>
+          </>}
 
 
           {/* ======== review ===== */}
@@ -982,4 +1027,4 @@ function Exam() {
   )
 }
 
-export default Exam
+export default Bookmark

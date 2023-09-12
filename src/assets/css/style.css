@@ -124,14 +124,19 @@ header .logo img {
   vertical-align: top;
   width: auto;
   height: auto;
-  margin: 0 46px;
+  margin: 0 26px;
 }
 .nav > ul > li:last-child,
 .nav > ul > li:only-child {
   margin: 0;
 }
 
-.nav > ul > li::before {
+.nav > ul > li a.active {
+  color: #8dc63f;
+  position: relative;
+}
+
+.nav > ul > li::before{
   position: absolute;
   bottom: -8px;
   left: 0px;
@@ -147,6 +152,8 @@ header .logo img {
   border-radius: 5px 5px 0 0;
   /* right: 0; */
 }
+
+
 
 .nav > ul > li:last-child::before {
   display: none;
@@ -180,6 +187,7 @@ header .logo img {
 .nav > ul > li.current-menu-ancestor > a {
   color: #8dc63f;
 }
+
 .nav > ul > li > ul {
   position: absolute;
   top: 100%;
@@ -680,6 +688,9 @@ option {
   padding: 4px 10px;
   border-right: 1px solid #cbcbcb;
 }
+ul.exam-pagination li {
+  height: auto !important;
+}
 .Money-Received .money-h-right ul.pagination-wrap li:last-child {
   border: none;
 }
@@ -802,7 +813,7 @@ option {
 .Money-Received .qiz [type="radio"]:checked + label,
 .Money-Received .qiz [type="radio"]:not(:checked) + label {
   position: relative;
-  padding-left: 28px;
+  padding-left: 24px;
   cursor: pointer;
   line-height: 18px;
   display: inline-block;
@@ -820,6 +831,7 @@ option {
   border-radius: 100%;
   background: #fff;
 }
+
 .Money-Received .qiz [type="radio"]:checked + label:after,
 .Money-Received .qiz [type="radio"]:not(:checked) + label:after {
   content: "\f058";
@@ -834,6 +846,13 @@ option {
   color: #8dc63f;
   font-size: 17px;
 }
+.Money-Received .qiz [type="radio"]:not(:checked) + label:before,
+.Money-Received .qiz [type="radio"]:checked + label:before,
+.Money-Received .qiz [type="radio"]:checked + label:after
+{
+  left: -15px;
+}
+
 .Money-Received .qiz [type="radio"]:not(:checked) + label:after {
   opacity: 0;
   -webkit-transform: scale(0);
@@ -1058,26 +1077,25 @@ input[id="card_four"]:checked~label[for="card_four"] .card .check_btn {
   display: none;
 }
 
-
-
-
-
-
-
-
 .btn-wrap{
   position: absolute;
   left: 31px;
   bottom: 32px;
   z-index: 9;
 }
+
+.btn-wrap.exam-btn {
+  position: relative;
+  top: 19px;
+}
+
 .animate-btn{
   background: #8dc63f;
   border: 1px solid #8dc63f;
   padding: 8px 28px;
   color: #fff;
   font-size: 16px;
-  border-radius: 20px;
+  border-radius: 50px;
   text-decoration: none;
   margin-right: 25px;
   box-sizing: border-box;
@@ -1088,6 +1106,9 @@ input[id="card_four"]:checked~label[for="card_four"] .card .check_btn {
   color: #1E88E5;
 }
 
+.remove_bookmark img{
+  filter: invert(28%) sepia(85%) saturate(7030%) hue-rotate(354deg) brightness(101%) contrast(128%);
+}
 
 /* custom-css-for-nav */
 .nav > ul > li p.login{
@@ -1145,6 +1166,7 @@ input[id="card_four"]:checked~label[for="card_four"] .card .check_btn {
 .Money-Received .qiz p label {
   width: 93%;
   margin-left: 12px;
+  line-height: 22px;
 }
 form.qiz p.right_ans label, .Money-Received .qiz p.wrong_ans label {
   padding: 5px;
@@ -1155,12 +1177,14 @@ form.qiz p.right_ans label, .Money-Received .qiz p.wrong_ans label {
 
 p.wrong_ans label {
   color: #ff0000 !important;
-  border: 1px solid #ff0000;
+  border: 0;
+  /* border: 1px solid #ff0000; */
 }
 
 p.right_ans label{
   color: #090 !important;
-  border: 1px solid #090;
+  border: 0;
+  /* border: 1px solid #090; */
 }
 
 .Money-Received .qiz p{
@@ -1176,10 +1200,13 @@ p.right_ans label{
   background-image: url('../images/no.png');
   width: 32px;
   height: 32px;
+  left: -3px;
+  /* left: 10px; */
+  background-repeat: no-repeat;
   position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+  background-size: 80%;
+  top: 5px;
+  /* transform: translateY(-50%); */
   /* transform: translateY(-50%); */
 }
 
@@ -1188,15 +1215,18 @@ p.right_ans label{
   background-image: url('../images/yes.png');
   width: 32px;
   height: 32px;
+  background-repeat: no-repeat;
   position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+  background-size: 80%;
+  /* left: 10px; */
+  left: -3px;
+  top: 5px;
+  /* transform: translateY(-50%); */
   /* transform: translateY(-50%); */
 }
 
 .Money-Received .qiz p.wrong_ans label, .Money-Received .qiz p.right_ans label {
-  min-height: 45px;
+  /* min-height: 45px; */
   display: flex;
   align-items: center;
 }
@@ -1213,7 +1243,8 @@ p.right_ans label{
 }
 
 .Money-Received .qiz p.wrong_ans label, .Money-Received .qiz p.right_ans label{
-  padding-left: 54px !important;
+  padding-left: 34px !important;
+  line-height: 22px;
 }
 
 .Money-Received .qiz .wrong_ans [type="radio"]:not(:checked) + label:before,
@@ -1268,6 +1299,20 @@ p.question {
 form.qiz .btn {
   margin-top: 15px;
 }
+.btn-wrap.exam-btn{
+  left:0;
+}
+.animate-btn {
+  padding: 4px 20px;
+  margin-right: 12px;
+}
+.Money-Received .money-re-content .content-right{
+  padding: 24px 15px;
+}
+.Money-Received .qiz p label{
+  width: 90%;
+}
+
 }
 
 

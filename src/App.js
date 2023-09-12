@@ -19,6 +19,7 @@ import Result from './pages/Result';
 import Translate from './pages/Translate';
 import { RequireAuth } from './Middleware';
 import NotFound from './pages/NotFound';
+import Bookmark from './pages/Bookmark';
 // import Login from './pages/LoginPage';
 
 
@@ -49,6 +50,7 @@ function App() {
               <Route path='exam' element={<RequireAuth><Exam /></RequireAuth>} />
               <Route path='review' element={<RequireAuth><Review /></RequireAuth>} />
               <Route path='result' element={<RequireAuth><Result /></RequireAuth>} />
+              <Route path='bookmark' element={<RequireAuth><Bookmark /></RequireAuth>} />
             </Route>
 
             <Route path='/translate' element={<RequireAuth><Translate /></RequireAuth>} />

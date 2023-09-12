@@ -5,7 +5,6 @@ import {
   Nav,
   NavDropdown,
   Image,
-  NavLink,
   Button,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +13,7 @@ import TokenHelper from "./TokenHelper";
 import userService from "../services/user.service";
 
 import { LinkContainer } from "react-router-bootstrap";
-import { Link } from "react-router-dom";
+import { Link,NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import logo from "../assets/images/logo.png";
 import { AuthContext } from "../App";
@@ -55,9 +54,9 @@ function Header() {
         <div className="nav-area container">
           <div className="cover-nav">
             <div className="logo">
-              <Link to="/">
+              <NavLink to="/">
                 <img src={logo} alt="logo" className="footer-logo" />
-              </Link>
+              </NavLink>
             </div>
             <a href="javascript:void(0)" id="pull">
               <div className="hamburger hamburger--spring">
@@ -69,18 +68,21 @@ function Header() {
             <div className="nav">
               <ul id="menu-bg">
                 <li>
-                  <Link to="/">home</Link>
+                  <NavLink to="/">home</NavLink>
+                </li>
+                {isAuthenticated && <li>
+                  <NavLink to="/bookmark">bookmark</NavLink>
+                </li> }
+                <li>
+                  <Link to="/"> about us </Link>
                 </li>
                 <li>
-                  <a href="javascript:void(0)"> about us </a>
+                  <Link to="/">faq</Link>
                 </li>
                 <li>
-                  <a href="javascript:void(0)">faq</a>
+                  <Link to="/"> contact </Link>
                 </li>
-                <li>
-                  <a href="javascript:void(0)"> contact </a>
-                </li>
-                <li>
+                <li className="header-btn1">
                   {isAuthenticated ? (
                     <p className="login">{user_data.name}</p>
                   ) : (
@@ -95,7 +97,7 @@ function Header() {
                     </a>
                   )}
                 </li>
-                <li>
+                <li className="header-btn1">
                   {isAuthenticated ? (
                     <button className="dropdown-item" onClick={Logout}>
                       Logout
