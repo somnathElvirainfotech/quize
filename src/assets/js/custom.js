@@ -23,9 +23,16 @@ jquery(document).ready(function($) {
     });
     jquery(window).resize(function(){
         var w = jquery(window).width();
-        if(w > 320 && menu.is(':hidden')) {
-        menu.removeAttr('style');
-    }
+    //     if(w > 320 && menu.is(':hidden')) {
+    //     menu.removeAttr('style');
+    // }
     });
+
+    // jquery(document).on('click', '.deletelanguage', function(){
+    //     alert("success");
+    // });
+
+
+
 });
 //menu
