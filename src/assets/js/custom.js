@@ -35,7 +35,7 @@ jquery(document).ready(function ($) {
         alert("success");
         // menu.slideToggle(500);
 
-        jquery('#menu-bg').toggle();
+        jquery('#menu-bg').slideToggle(500);
         
     });
 
