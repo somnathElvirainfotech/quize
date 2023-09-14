@@ -33,7 +33,10 @@ jquery(document).ready(function ($) {
 
     jquery(document).on('click', '#pull', function(){
         alert("success");
-        menu.slideToggle(500);
+        // menu.slideToggle(500);
+
+        jquery('#menu-bg').toggle();
+        
     });
 
 
