@@ -14,10 +14,10 @@
 }
 
 #bg-text {
-  color: #f5f5f5;
-  font-size: 95px;
-  transform: rotate(300deg);
-  -webkit-transform: rotate(300deg);
+  color: #e1e1e1;
+  font-size: 50px;
+  transform: rotate(335deg);
+  -webkit-transform: rotate(335deg);
 }
 
 div {

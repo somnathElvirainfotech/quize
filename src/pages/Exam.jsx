@@ -30,6 +30,28 @@ function Exam() {
   console.log("questionid  ", question.questionid);
   console.log("questionlist  ", question.questionlist);
 
+  const [fontSize, setFontSize] = useState(14);
+  const [lineHeight, setLineHeight] = useState(22);
+  const [explanationdisplay, setExplanationdisplay] = useState(false);
+
+
+  const FontInc = () => {
+    if (fontSize < 20) {
+      setFontSize((e) => e + 1);
+      setLineHeight((e) => e + 4);
+    }
+  }
+
+  const FontDnc = () => {
+    if (fontSize > 12) {
+      setFontSize((e) => e - 1);
+      if(fontSize>14)
+      {
+        setLineHeight((e) => e - 4);
+      }
+    }
+  }
+
   const formref = useRef(null);
 
   const navigate = useNavigate();
@@ -43,7 +65,7 @@ function Exam() {
   const handleNext = async () => {
     var index = question.count;
     if (question.count < (question.totalQuestion - 1)) {
-
+      setExplanationdisplay(false)
       index = index + 1;
 
       dispatch(questionActions.count(index));
@@ -226,7 +248,7 @@ function Exam() {
         toast.warning("Please select answer!!");
         return;
       }
-
+      setExplanationdisplay(true);
       var form = formref.current;
 
       // =============== check box ============= //
@@ -255,6 +277,7 @@ function Exam() {
       // console.log("user answer ", answer);
 
       if (question.questionlist.ans === answer) {
+       
 
         // toast.success("your answer right");
 
@@ -337,7 +360,7 @@ function Exam() {
       }
 
       var form = formref.current;
-
+      setExplanationdisplay(true);
       //  ============== radio ============= ///
 
       form.querySelector('#t_test1').className = '';
@@ -583,9 +606,10 @@ function Exam() {
 
 
   const answersubmit = async () => {
+//alert("123")
 
-
-    if ((Number(question.count) === Number(question.totalQuestion - 1)) && (Number(question.answerObj.length) === (Number(question.totalQuestion) - 1))) {
+    if ((Number(question.count) === Number(question.totalQuestion - 1)) ) {
+      //alert("999")
 
       // ======= checking ======== 
       var ans_type = getValues("ans_type");
@@ -599,10 +623,8 @@ function Exam() {
 
         if (test1 || test2 || test3 || test4) {
           await saveAnswerObj();
-          dispatch(questionActions.ansSubmit(true));
-        } else {
-          toast.warning("please fillup all answer!!");
-        }
+        } 
+        dispatch(questionActions.ansSubmit(true));
 
       }
       else {
@@ -610,43 +632,41 @@ function Exam() {
 
         if (answer !== null) {
           await saveAnswerObj();
-          dispatch(questionActions.ansSubmit(true));
-        } else {
-          toast.warning("please fillup all answer!!");
-        }
+        } 
+        dispatch(questionActions.ansSubmit(true));
       }
 
-
-    } else if ((Number(question.count) === Number(question.totalQuestion - 1)) && (Number(question.answerObj.length) === Number(question.totalQuestion))) {
-      if (ans_type === "checkbox") {
-
-        var test1 = getValues('test1');
-        var test2 = getValues('test2');
-        var test3 = getValues('test3');
-        var test4 = getValues('test4');
-
-        if (test1 || test2 || test3 || test4) {
-          await saveAnswerObj();
-          dispatch(questionActions.ansSubmit(true));
-        } else {
-          toast.warning("please fillup all answer!!");
-        }
-
-      }
-      else {
-        var answer = getValues('answer');
-
-        if (answer !== null) {
-          await saveAnswerObj();
-          dispatch(questionActions.ansSubmit(true));
-        } else {
-          toast.warning("please fillup all answer!!");
-        }
-      }
-
-    } else if (Number(question.answerObj.length) < Number(question.totalQuestion)) {
-      toast.warning("please fillup all answer!!");
     }
+    // } else if ((Number(question.count) === Number(question.totalQuestion - 1)) && (Number(question.answerObj.length) === Number(question.totalQuestion))) {
+    //   if (ans_type === "checkbox") {
+
+    //     var test1 = getValues('test1');
+    //     var test2 = getValues('test2');
+    //     var test3 = getValues('test3');
+    //     var test4 = getValues('test4');
+
+    //     if (test1 || test2 || test3 || test4) {
+    //       await saveAnswerObj();
+    //       dispatch(questionActions.ansSubmit(true));
+    //     } else {
+    //       toast.warning("please fillup all answer!!");
+    //     }
+
+    //   }
+    //   else {
+    //     var answer = getValues('answer');
+
+    //     if (answer !== null) {
+    //       await saveAnswerObj();
+    //       dispatch(questionActions.ansSubmit(true));
+    //     } else {
+    //       toast.warning("please fillup all answer!!");
+    //     }
+    //   }
+
+    // } else if (Number(question.answerObj.length) < Number(question.totalQuestion)) {
+    //   toast.warning("please fillup all answer!!");
+    // }
 
 
   }
@@ -655,7 +675,7 @@ function Exam() {
   const finalAnsSubmit = async () => {
 
     // alert(question.answerObj.length)
-    if ((Number(question.count) === Number(question.totalQuestion - 1)) && (Number(question.answerObj.length) === Number(question.totalQuestion))) {
+    //if ((Number(question.count) === Number(question.totalQuestion - 1)) && (Number(question.answerObj.length) === Number(question.totalQuestion))) {
 
       // toast.success("answer submit successfull");
 
@@ -696,7 +716,7 @@ function Exam() {
       navigate('/result');
 
 
-    }
+    //}
 
   }
 
@@ -731,11 +751,12 @@ function Exam() {
     if (question.answerObj.length > 0) {
       setPreviousAnsValue();
     }
+    console.log(question.answerObj,"fdlkjglk sdfg");
   }, [question.questionlist])
 
   useEffect(() => {
 
-    if ((question.answerObj.length === Number(question.totalQuestion)) && ((Number(question.count)) === Number(question.totalQuestion - 1)) && question.ansSubmit === true) {
+    if ((Number(question.count) === Number(question.totalQuestion-1))  && question.ansSubmit === true) {
       finalAnsSubmit();
     }
   }, [question.ansSubmit])
@@ -756,30 +777,47 @@ function Exam() {
                   <option>Section #2</option>
                 </select> */}
               </div>
-              <div className="money-h-right">
-                <span className="page-count">{question.count + 1}</span>
+              <div className="money-h-middle">
+              
+              <span className="page-count">Attempted : {question.answerObj.length}/{question.totalQuestion}</span>
                 <ul className="pagination-wrap exam-pagination">
                   <li>
                     <a href="#" onClick={handlePrevious}>
                       <img src={prev} alt="prev" />
+                      Previous Question
                     </a>
                   </li>
-                  <li>
+                  <li className="countnum">
+                    
                     <span>{question.count + 1}</span>/<span>{question.totalQuestion}</span>
                   </li>
+                  
+                  {question.count === (question.totalQuestion - 1) ?  (
                   <li>
-                    <a href="#" onClick={handleNext}>
-                      <img src={next} alt="next" />
+                    <a href="#" onClick={answersubmit}>
+                      End
+                     
                     </a>
                   </li>
+                    ):(
+                      <li>
+                                      <a href="#" onClick={handleNext}>
+                                        Next Question
+                                        <img src={next} alt="next" />
+                                      </a>
+                                    </li>
+
+                    )
+                  }
+                
                 </ul>
-                {/* <div className="pagination-res">
-                  <span className="tr-fl">
-                    <i className="fa-solid fa-circle-check" />
-                  </span>
-                  <span>true</span>
-                  <span className="count">1</span>
-                </div> */}
+
+              </div>
+              <div className="money-h-right">
+                <span className="inc_dnc_btn text-inc-dec" onClick={FontInc}>A+</span>
+                <span className="inc_dnc_btn text-inc-dec" onClick={FontDnc}>A-</span>
+                
+
               </div>
             </div>
 
@@ -795,7 +833,7 @@ function Exam() {
                   <small>QID: {newQID(auth.user_id, question.questionlist.id)} </small>
 
                 </div>
-                <p className="question">
+                <p className="question" style={{ fontSize: `${fontSize}px`, lineHeight: `${lineHeight}px` }}>
                   {question.questionlist.question}
                 </p>
 
@@ -812,7 +850,7 @@ function Exam() {
                 {/* ======== FORM 2 ANS length check =========  */}
 
 
-                <form ref={formref} onSubmit={handleSubmit(checkAns)} className="qiz">
+                <form ref={formref} onSubmit={handleSubmit(checkAns)} className="qiz" style={{ fontSize: `${fontSize}px`, lineHeight: `${lineHeight}px` }} >
 
                   {question.questionlist.ans.length > 1 && <>
                     <input type="hidden" {...register('ans_type')} value={"checkbox"} />
@@ -878,6 +916,16 @@ function Exam() {
 
 
                 </form>
+                {(explanationdisplay) && <>
+                <p style={{fontSize:"12px",lineHeight:2}}>
+                 <span style={{color:'green',fontWeight:'bold'}}>
+                 Explanation :
+                  </span>
+                  <span style={{marginLeft:"5px",color:'green'}} > 
+                  {question.questionlist.explanation}
+                  </span>                    
+                </p>
+                </>}
 
 
 
@@ -931,7 +979,7 @@ function Exam() {
           </div>
 
 
-        
+{/* 
           <div className="btn-wrap exam-btn">
 
             {question.count > 0 && <>
@@ -961,7 +1009,7 @@ function Exam() {
             {question.count === (question.totalQuestion - 1) && <button className="animate-btn" onClick={answersubmit}>End</button>}
 
 
-          </div>
+          </div> */}
 
 
 

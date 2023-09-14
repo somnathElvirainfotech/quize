@@ -655,47 +655,70 @@ footer .footer-left::before {
   text-transform: capitalize;
 }
 option {
-  background: #8dc63f;
-  color: #fff;
+  background: #ededed;
+  color: #000;
   cursor: pointer;
 }
 .Money-Received .money-h-right {
   display: flex;
   align-items: center;
 }
-.Money-Received .money-h-right ul.pagination-wrap {
+ ul.pagination-wrap {
   margin: 0;
   padding: 0;
   display: flex;
   list-style: none;
   background: #ffffff 0% 0% no-repeat padding-box;
-  border: 1px solid #cbcbcb;
   border-radius: 6px;
   height: 34px;
   align-items: center;
   margin-right: 30px;
 }
 
-.Money-Received .money-h-right ul.pagination-wrap li:nth-child(2) span {
+ ul.pagination-wrap li:nth-child(2) span {
   font-style: normal;
   font-weight: 600;
   letter-spacing: 0px;
   color: #58595b;
   text-transform: capitalize;
 }
-.Money-Received .money-h-right ul.pagination-wrap li {
+
+ /*14-9-23*/
+ .pagination-wrap li {
   height: 100%;
-  padding: 4px 10px;
-  border-right: 1px solid #cbcbcb;
+  padding: 1px 10px;
+  /* border-right: 1px solid #c24343; */
+  border: 1px solid #8dc63f;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
 }
 ul.exam-pagination li {
   height: auto !important;
 }
-.Money-Received .money-h-right ul.pagination-wrap li:last-child {
-  border: none;
+ ul.pagination-wrap li:last-child {
+  /*border: none;*/
 }
 
-.Money-Received .money-h-right .page-count {
+/*14-9-23*/
+  .page-count {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #cbcbcb;
+  border-radius: 6px;
+  height: 34px;
+  width: 150px;
+  align-items: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0px;
+  color: #58595b;
+  text-transform: capitalize;
+}
+.text-inc-dec {
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 1px solid #cbcbcb;
   border-radius: 6px;
@@ -712,7 +735,7 @@ ul.exam-pagination li {
   color: #58595b;
   text-transform: capitalize;
 }
-.Money-Received .money-h-right .pagination-res {
+  .pagination-res {
   height: 34px;
   border: 1px solid #cbcbcb;
   display: flex;
@@ -1285,6 +1308,58 @@ p.question {
   padding-top: 30px;
 }
 
+/*14-9-23*/
+.Money-Received .money-h-middle{
+  display:flex;
+}
+ul.pagination-wrap li a {
+  font-size: 16px;
+  color: #8dc63f;
+  text-decoration: none;
+  padding-left: 5px;
+  padding-right: 6px;
+}
+ul.pagination-wrap li a img {
+  margin-right: 9px;
+  margin-top: -2px;
+  margin-left: 9px;
+  width: 10px;
+}
+
+.Money-Received .money-h-left h2{
+  font-size: 25px;
+}
+.Money-Received .money-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
+  flex-wrap: wrap;
+}
+.Money-Received .money-header.book-mark .money-h-left {
+      width: 31%;
+}
+.Money-Received .money-header.book-mark{
+  justify-content: initial;
+}.Money-Received.money-header.book-mark .money-h-left{
+width: 36%;
+}
+li.countnum {
+  border: 0;
+}
+ul.pagination-wrap li:first-child img{
+  margin-left: 0;
+}
+ul.pagination-wrap li:last-child img{
+  margin-right: 0;
+}
+.Money-Received .money-header.book-mark ul.pagination-wrap{
+  gap:15px;
+}
+.money-header.review ul.pagination-wrap{
+  gap:25px;
+}
+  /*14-9-23*/
+
 @media only screen and (max-width: 767px) {
   .btn-wrap{
     position: static;
@@ -1293,9 +1368,10 @@ p.question {
   .btn-wrap button {
     margin-bottom: 15px;
 }
-.Money-Received .money-re-content .content-left {
+/*.Money-Received .money-re-content .content-left {
   padding-bottom: 40px !important;
 }
+*/
 form.qiz .btn {
   margin-top: 15px;
 }
@@ -1449,10 +1525,64 @@ h5.speed-ref{
   z-index: -1;
 }
 #monybgwater #bg-text{
-  font-size: 95px;
+  font-size: 50px;
 }
 .Money-Received .money-re-content .content-left,
 .Money-Received .money-re-content .content-right{
   overflow: hidden;
   z-index: 9;
+}
+
+
+/* loader */
+.loader {
+  border: 5px solid #f4f4f4;
+  border-radius: 50%;
+  border-top: 5px solid #8dc63f;
+  width: 35px;
+  height: 35px;
+  -webkit-animation: spin 1s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.bg-loader {
+  background: #000000c4;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  top: 0;
+  bottom: 0;
+  flex-direction: column;
+}
+/* end loader */
+
+
+.inc_dnc_btn{
+  margin-right: 10px;
+  cursor: pointer;
 }

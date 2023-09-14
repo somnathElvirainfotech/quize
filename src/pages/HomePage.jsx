@@ -73,7 +73,7 @@ function Home() {
         form.append("chkRandom", checkRandom);
         form.append("chkHide", checkH);
         form.append("radMode", data.radMode);
-        form.append("type", "normal");
+        form.append("type", "filter");
         form.append("userId", auth.user_id);
         var responce = await userService.Postquestion(form);
 
@@ -83,7 +83,7 @@ function Home() {
         if (responce.data.error) {
             toast.error(responce.data.error)
         } else {
-            console.log(responce.data.ques, 'jghjgjg')
+            console.log(responce.data, 'jghjgjg')
             console.log(responce.data.question_ids, 'jghjgjg')
 
             let new_ans = await removeDuplicates(responce.data.ques.ans)
@@ -132,7 +132,7 @@ function Home() {
         if (mem_id !== "") {
             let datas = {
                 "mem_id": mem_id,
-                "engine_type": "normal"
+                "engine_type": "filter"
             }
             var response = await userService.getlist(datas);
             console.log("faqdata ", response.data)
@@ -183,7 +183,7 @@ function Home() {
             <section className="text-engine">
                 <div className="container">
                     <div className="text-engine-content">
-                        <h2>Classic Test Engine</h2>
+                        <h2>Filter-Based Test Engine</h2>
                         <form className="row g-3 text-engine-frm" onSubmit={handleSubmit(submit)}>
 
                             <div className="col-md-6">

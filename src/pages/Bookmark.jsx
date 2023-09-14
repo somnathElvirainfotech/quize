@@ -20,11 +20,14 @@ import { newQID, removeDuplicates } from "../common";
 import SpeedRef from "./Modal/SpeedRef";
 import AskMentor from "./Modal/AskMentor";
 import { bookmarkActions } from "../redux/bookmark";
+import Loader from "./Loader";
 
 function Bookmark() {
   const dispatch = useDispatch();
   const bookmark = useSelector(state => state.bookmark);
   const auth = useSelector(state => state.auth);
+
+  const [loader, setLoader] = useState(false);
 
   console.log("questionid  ", bookmark.questionid);
   console.log("questionlist  ", bookmark.questionlist);
@@ -90,6 +93,8 @@ function Bookmark() {
 
   var getFristquestiondata = async () => {
 
+    setLoader(true);
+
     // alert(11)
     let form = new FormData();
     form.append("user_id", auth.user_id);
@@ -113,6 +118,8 @@ function Bookmark() {
       dispatch(bookmarkActions.questionReset());
       // toast.warning("No Bookmark Question Found");
     }
+
+    setLoader(false);
 
   }
 
@@ -770,6 +777,7 @@ function Bookmark() {
 
   return (
     <>
+    {loader && <Loader />}
       <section className="Money-Received">
         <div className="container">
           {/* ===== question and exam list ====== */}
@@ -777,7 +785,7 @@ function Bookmark() {
 
           {bookmark.totalQuestion > 0 && <>
             <div className="Money-Received-box">
-              <div className="money-header">
+              <div className="money-header book-mark">
                 <div className="money-h-left">
                 <h2>Bookmark Questions</h2>
                   {/* <h6>{bookmark.subject_name}</h6> */}
@@ -787,24 +795,32 @@ function Bookmark() {
                 </select> */}
                 
                 </div>
+                <div className="money-h-middle">
+              
+
+                <ul className="pagination-wrap exam-pagination">
+                  <li>
+                    <a href="#" onClick={handlePrevious}>
+                      <img src={prev} alt="prev" />
+                      Previous Question
+                    </a>
+                  </li>
+                  <li className="countnum">
+                    
+                    <span>{bookmark.count + 1}</span>/<span>{bookmark.totalQuestion}</span>
+                  </li>
+                  <li>
+                    <a href="#" onClick={handleNext}>
+                      Next Question
+                      <img src={next} alt="next" />
+                    </a>
+                  </li>
+                </ul>
+
+              </div>
                 
                 <div className="money-h-right">
-                  <span className="page-count">{bookmark.count + 1}</span>
-                  <ul className="pagination-wrap exam-pagination">
-                    <li>
-                      <a href="#" onClick={handlePrevious}>
-                        <img src={prev} alt="prev" />
-                      </a>
-                    </li>
-                    <li>
-                      <span>{bookmark.count + 1}</span>/<span>{bookmark.totalQuestion}</span>
-                    </li>
-                    <li>
-                      <a href="#" onClick={handleNext}>
-                        <img src={next} alt="next" />
-                      </a>
-                    </li>
-                  </ul>
+
                   {/* <div className="pagination-res">
                   <span className="tr-fl">
                     <i className="fa-solid fa-circle-check" />
@@ -964,7 +980,7 @@ function Bookmark() {
 
             </div>
 
-            <div className="btn-wrap exam-btn">
+            {/* <div className="btn-wrap exam-btn">
 
               {bookmark.count > 0 && <>
                 <button className="animate-btn" onClick={handleFirst}>
@@ -990,10 +1006,7 @@ function Bookmark() {
                 </button>
               </>}
 
-              {/* {bookmark.count === (bookmark.totalQuestion - 1) && <button className="animate-btn" onClick={answersubmit}>End</button>} */}
-
-
-            </div>
+            </div> */}
           </>}
 
 

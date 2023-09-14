@@ -379,7 +379,7 @@ function Review() {
           {/* ===== question and exam list ====== */}
 
           <div className="Money-Received-box">
-            <div className="money-header">
+            <div className="money-header review">
               <div className="money-h-left">
                 <h6>{question.subject_name}</h6>
                 {/* <select id="inputState" className="form-select">
@@ -387,24 +387,32 @@ function Review() {
                   <option>Section #2</option>
                 </select> */}
               </div>
-              <div className="money-h-right">
-                <span className="page-count">{question.count + 1}</span>
+              <div className="money-h-middle">
+              
+             
                 <ul className="pagination-wrap exam-pagination">
                   <li>
                     <a href="#" onClick={handlePrevious}>
                       <img src={prev} alt="prev" />
+                      Previous Question
                     </a>
                   </li>
-                  <li>
-                    <span>{question.count + 1}</span>/
-                    <span>{question.totalQuestion}</span>
+                  <li className="countnum">
+                    
+                    <span>{question.count + 1}</span>/<span>{question.totalQuestion}</span>
                   </li>
                   <li>
                     <a href="#" onClick={handleNext}>
+                      Next Question
                       <img src={next} alt="next" />
                     </a>
                   </li>
                 </ul>
+
+              </div>
+              <div className="money-h-right">
+
+              
                 {/* <div className="pagination-res">
                   <span className="tr-fl">
                     <i className="fa-solid fa-circle-check" />
@@ -598,7 +606,7 @@ function Review() {
 
           </div>
 
-          <div className="btn-wrap exam-btn">
+          {/* <div className="btn-wrap exam-btn">
             {question.count > 0 && (
               <>
                 <button className="animate-btn" onClick={handleFirst}>
@@ -636,7 +644,7 @@ function Review() {
                 End
               </button>
             )}
-          </div>
+          </div> */}
 
         </div>
       </section>

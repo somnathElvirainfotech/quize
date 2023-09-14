@@ -1,6 +1,16 @@
 @media only screen and (max-width: 1200px) {
 
 }
+
+/*14-9-23*/
+@media only screen and (max-width:1024px){
+  .nav > ul > li {
+    margin: 0 20px;
+}
+
+/*14-9-23*/
+
+}
 @media only screen and (max-width: 992px) {
     /********NAV BAR*****************/
   .nav {
@@ -66,10 +76,30 @@ a.comn__btn {
   align-items: center;
   justify-content: center;
 }
-.Money-Received .money-header{
+/*14-9-23*/.Money-Received .money-header{
   row-gap: 10px;
   justify-content: center;
+  gap:15px;
 }
+
+/*start-14-9-23*/
+.Money-Received .qiz p{
+display: flex;
+}
+.Money-Received .money-h-left h2{
+  font-size: 23px;
+}
+.Money-Received .money-header.book-mark .money-h-left {
+  width: auto;
+}
+.Money-Received .money-header.book-mark {
+  justify-content: center;
+}
+.Money-Received .money-h-left {
+  justify-content: center;
+}
+
+/*end-14-9-23*/
 }
 @media only screen and (max-width:767px){
   .services__item {
@@ -84,8 +114,9 @@ a.comn__btn {
 footer .footer-left::before{
   display: none;
 }
-.footer-right ul{
-  row-gap: 10px;
+
+/*14-9-23*/.footer-right ul{
+    row-gap: 0;
     justify-content: center;
 }
 .footer-right p.copy-right{
@@ -113,11 +144,77 @@ footer .footer-left::before{
 .text-engine .check-wrap ul{
   gap: 15px;
 }
+.Money-Received .money-header.book-mark .money-h-left {
+  width: auto;
 }
+.Money-Received .money-header.book-mark {
+  justify-content: center;
+}
+/*14-8-23*/
+
+button.checkAns.btn.btn-primary{
+  left: 16px;
+}
+.text-engine .mode-of-exam-wrap label.card_one,
+.text-engine .mode-of-exam-wrap label.card_two{
+width:100%;
+}
+.text-engine .mode-of-exam-wrap .m-exam-l {
+width: 100%;
+}
+.text-engine .text-engine-content h2{
+  font-size: 22px;
+}
+.footer-right ul {
+  margin-bottom: 12px;
+}
+.text-engine {
+  padding: 29px 0;
+}
+ul.pagination-wrap li a {
+  font-size: 0px;
+  padding-left: 5px;
+  padding-right: 6px;
+  /* text-indent: -9999px;
+  white-space: nowrap; */
+}
+
+.pagination-wrap li a img {
+  margin-top: 0px;
+  margin-left: 0;
+  width: 6px;
+
+}
+.Money-Received .money-header {
+  padding: 0 30px;
+  
+}
+ul.pagination-wrap {
+  height: auto;
+  align-items: center;
+  margin-right: 0;
+}
+.page-count {
+  height: auto;
+  width: 150px;
+}
+.Money-Received .money-h-left {
+  width: 100%;
+}
+
+
+/*14-8-23*/
+
+
+}
+
 @media only screen and (max-width:568px){
-  button.checkAns.btn.btn-primary{
+  /*button.checkAns.btn.btn-primary{
     position: static;
-  }
+  }*/
+
+  
+
 }
 
 
