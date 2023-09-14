@@ -18,15 +18,17 @@ jquery(document).ready(function($) {
     var menu = jquery('#menu-bg');
     var menuHeight  = menu.height();
     jquery(pull).on('click', function(e) {
+        alert(1)
         e.preventDefault();
         menu.slideToggle(500);
     });
-    jquery(window).resize(function(){
-        var w = jquery(window).width();
-    //     if(w > 320 && menu.is(':hidden')) {
-    //     menu.removeAttr('style');
-    // }
-    });
+    // jquery(window).resize(function(){
+    //     alert(1)
+    //     var w = jquery(window).width();
+    // //     if(w > 320 && menu.is(':hidden')) {
+    // //     menu.removeAttr('style');
+    // // }
+    // });
 
     // jquery(document).on('click', '.deletelanguage', function(){
     //     alert("success");
