@@ -111,6 +111,7 @@ function Home() {
             dispatch(questionActions.radMode(data.radMode));
             dispatch(questionActions.speedRefFileLink(responce.data.speed_reference_file_path))
             dispatch(questionActions.subject_id(data.lstSubject))
+            dispatch(questionActions.flag_type(responce.data.flag_type))
 
             Navigate('/exam')
 

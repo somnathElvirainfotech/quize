@@ -16,7 +16,7 @@ import { AuthContext } from '../App';
 import { useDispatch, useSelector } from "react-redux";
 import { questionActions } from "../redux/question";
 import { useForm } from "react-hook-form";
-import { newQID, removeDuplicates } from "../common";
+import { newQID, removeDuplicates, textcopy } from "../common";
 import SpeedRef from "./Modal/SpeedRef";
 import AskMentor from "./Modal/AskMentor";
 import { bookmarkActions } from "../redux/bookmark";
@@ -842,7 +842,7 @@ function Bookmark() {
                     <small>QID: {newQID(auth.user_id, bookmark.questionlist.id)} </small>
 
                   </div>
-                  <p className="question">
+                  <p onCopy={e=>textcopy(auth.user_id,auth.user_data.email)} className="question">
                     {bookmark.questionlist.question}
                   </p>
 
@@ -865,25 +865,25 @@ function Bookmark() {
                       <input type="hidden" {...register('ans_type')} value={"checkbox"} />
                       <p id="t_test1" className="clearfix">
                         <input type="checkbox" id="test1" {...register('test1')} value={"A"} disabled={bookmark.questionReseltChecked} />
-                        <label htmlFor="test1">
+                        <label htmlFor="test1" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {bookmark.questionlist.choice1}
                         </label>
                       </p>
                       <p id="t_test2" className="clearfix">
                         <input type="checkbox" id="test2"  {...register('test2')} value={"B"} disabled={bookmark.questionReseltChecked} />
-                        <label htmlFor="test2">
+                        <label htmlFor="test2" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {bookmark.questionlist.choice2}
                         </label>
                       </p>
                       <p id="t_test3" className="clearfix">
                         <input type="checkbox" id="test3"  {...register('test3')} value={"C"} disabled={bookmark.questionReseltChecked} />
-                        <label htmlFor="test3">
+                        <label htmlFor="test3" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {bookmark.questionlist.choice3}
                         </label>
                       </p>
                       <p id="t_test4" className="clearfix">
                         <input type="checkbox" id="test4"  {...register('test4')} value={"D"} disabled={bookmark.questionReseltChecked} />
-                        <label htmlFor="test4">
+                        <label htmlFor="test4" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {bookmark.questionlist.choice4}
                         </label>
                       </p>
@@ -893,25 +893,25 @@ function Bookmark() {
                       <input type="hidden" {...register('ans_type')} value={"radio"} />
                       <p id="t_test1">
                         <input type="radio" id="answer1"  {...register('answer')} value={"A"} disabled={bookmark.questionReseltChecked} />
-                        <label htmlFor="answer1">
+                        <label htmlFor="answer1" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {bookmark.questionlist.choice1}
                         </label>
                       </p>
                       <p id="t_test2">
                         <input type="radio" id="answer2"  {...register('answer')} value={"B"} disabled={bookmark.questionReseltChecked} />
-                        <label htmlFor="answer2">
+                        <label htmlFor="answer2" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {bookmark.questionlist.choice2}
                         </label>
                       </p>
                       <p id="t_test3">
                         <input type="radio" id="answer3"  {...register('answer')} value={"C"} disabled={bookmark.questionReseltChecked} />
-                        <label htmlFor="answer3">
+                        <label htmlFor="answer3" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {bookmark.questionlist.choice3}
                         </label>
                       </p>
                       <p id="t_test4">
                         <input type="radio" id="answer4"  {...register('answer')} value={"D"} disabled={bookmark.questionReseltChecked} />
-                        <label htmlFor="answer4">
+                        <label htmlFor="answer4" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {bookmark.questionlist.choice4}
                         </label>
                       </p>

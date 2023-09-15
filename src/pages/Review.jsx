@@ -26,10 +26,12 @@ import { AuthContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import { questionActions } from "../redux/question";
 import { useForm } from "react-hook-form";
-import { newQID, removeDuplicates } from "../common";
+import { newQID, removeDuplicates, textcopy } from "../common";
 import SpeedRef from "./Modal/SpeedRef";
 import AskMentor from "./Modal/AskMentor";
 import { bookmarkActions } from "../redux/bookmark";
+import report_error from '../assets/images/reporterror.png';
+import ReportError from "./Modal/ReportError";
 
 function Review() {
   const dispatch = useDispatch();
@@ -428,7 +430,7 @@ function Review() {
                   <h3>{question.subject_name}</h3>
                   <small>QID: {newQID(auth.user_id, question.questionlist.id)}</small>
                 </div>
-                <p>{question.questionlist.question}</p>
+                <p onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>{question.questionlist.question}</p>
 
                 <div id="monybgwater">
                   <p id="bg-text">{newQID(auth.user_id, question.questionlist.id)}</p>
@@ -458,7 +460,7 @@ function Review() {
                           value={"A"}
                           disabled={true}
                         />
-                        <label htmlFor="test1">
+                        <label htmlFor="test1" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {question.questionlist.choice1}
                         </label>
                       </p>
@@ -470,7 +472,7 @@ function Review() {
                           value={"B"}
                           disabled={true}
                         />
-                        <label htmlFor="test2">
+                        <label htmlFor="test2" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {question.questionlist.choice2}
                         </label>
                       </p>
@@ -482,7 +484,7 @@ function Review() {
                           value={"C"}
                           disabled={true}
                         />
-                        <label htmlFor="test3">
+                        <label htmlFor="test3" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {question.questionlist.choice3}
                         </label>
                       </p>
@@ -494,7 +496,7 @@ function Review() {
                           value={"D"}
                           disabled={true}
                         />
-                        <label htmlFor="test4">
+                        <label htmlFor="test4" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {question.questionlist.choice4}
                         </label>
                       </p>
@@ -516,7 +518,7 @@ function Review() {
                           value={"A"}
                           disabled={true}
                         />
-                        <label htmlFor="answer1">
+                        <label htmlFor="answer1"  onCopy={e=>textcopy(auth.user_id,auth.user_data.email)} >
                           {question.questionlist.choice1}
                         </label>
                       </p>
@@ -528,7 +530,7 @@ function Review() {
                           value={"B"}
                           disabled={true}
                         />
-                        <label htmlFor="answer2">
+                        <label htmlFor="answer2" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {question.questionlist.choice2}
                         </label>
                       </p>
@@ -540,7 +542,7 @@ function Review() {
                           value={"C"}
                           disabled={true}
                         />
-                        <label htmlFor="answer3">
+                        <label htmlFor="answer3" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {question.questionlist.choice3}
                         </label>
                       </p>
@@ -552,7 +554,7 @@ function Review() {
                           value={"D"}
                           disabled={true}
                         />
-                        <label htmlFor="answer4">
+                        <label htmlFor="answer4" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {question.questionlist.choice4}
                         </label>
                       </p>
@@ -584,16 +586,33 @@ function Review() {
                         <img src={translate} alt="translate" />
                       </a>
                     </li>
-                    <li>
+                    {question.flag_type === "ask_mentor" ? (
+                      <li>
                       <a
                         href="#"
                         data-bs-toggle="modal"
                         data-bs-target="#mentorpopup"
                         title="Ask a Mentor"
+                      // onClick={aksMentorRefhandleShow}
                       >
                         <img src={query} alt="query" />
                       </a>
                     </li>
+
+                    ):(
+                      <li>
+                      <a
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#Rerrorpopup"
+                        title="Report an Erroneous Question"
+                      // onClick={aksMentorRefhandleShow}
+                      >
+                        <img src={report_error} alt="report_error" />
+                      </a>
+                    </li>
+
+                    )}
                   </ul>
                 </div>
                 <div id="monybgwater">
@@ -653,6 +672,8 @@ function Review() {
       <SpeedRef />
 
       <AskMentor />
+
+      <ReportError />
     </>
   );
 }

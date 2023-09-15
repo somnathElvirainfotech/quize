@@ -61,6 +61,16 @@ class UserService {
 
   }
 
+  async ReportQuestion(data) {
+    return axios.post('https://www.cmfasacademy.com/api.php?params=report_question', data, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+    });
+
+
+  }
+
 
   async AddBookmark(data) {
     return axios.post('https://www.cmfasacademy.com/api.php?params=add_bookmark', data, {
@@ -84,6 +94,15 @@ class UserService {
 
   async BookmarkList(data) {
     return axios.post('https://www.cmfasacademy.com/api.php?params=bookmark_list', data, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+    });
+
+
+  }
+  async addcopytext(data) {
+    return axios.post('https://www.cmfasacademy.com/api.php?params=copy_track', data, {
       headers: {
         "Content-Type": "application/json"
       },

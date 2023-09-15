@@ -13,6 +13,7 @@ const initialState = {
     questionReseltStatus:true,
     questionReseltChecked:false,
     speedRefFileLink:"",
+    flag_type:"",
     
 };
 
@@ -60,6 +61,8 @@ const questionSlice = createSlice({
             state.totalCurrectAns=0;
             state.speedRefFileLink="";
             state.subject_id="";
+            state.flag_type="";
+            
         },
         ansSubmit(state,action){
             state.ansSubmit=action.payload;
@@ -78,7 +81,11 @@ const questionSlice = createSlice({
         },
         subject_id(state,action){
             state.subject_id=action.payload;
+        },
+        flag_type(state,action){
+            state.flag_type=action.payload;
         }
+        
     },
 });
 

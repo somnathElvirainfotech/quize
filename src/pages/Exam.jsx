@@ -16,10 +16,12 @@ import { AuthContext } from '../App';
 import { useDispatch, useSelector } from "react-redux";
 import { questionActions } from "../redux/question";
 import { useForm } from "react-hook-form";
-import { newQID, removeDuplicates } from "../common";
+import { newQID, removeDuplicates, textcopy } from "../common";
 import SpeedRef from "./Modal/SpeedRef";
 import AskMentor from "./Modal/AskMentor";
 import { bookmarkActions } from "../redux/bookmark";
+import report_error from '../assets/images/reporterror.png';
+import ReportError from "./Modal/ReportError";
 
 function Exam() {
   const dispatch = useDispatch();
@@ -760,8 +762,8 @@ function Exam() {
       finalAnsSubmit();
     }
   }, [question.ansSubmit])
-
-
+  
+  
   return (
     <>
       <section className="Money-Received">
@@ -833,7 +835,7 @@ function Exam() {
                   <small>QID: {newQID(auth.user_id, question.questionlist.id)} </small>
 
                 </div>
-                <p className="question" style={{ fontSize: `${fontSize}px`, lineHeight: `${lineHeight}px` }}>
+                <p onCopy={e=>textcopy(auth.user_id,auth.user_data.email)} className="question" style={{ fontSize: `${fontSize}px`, lineHeight: `${lineHeight}px` }}>
                   {question.questionlist.question}
                 </p>
 
@@ -856,25 +858,25 @@ function Exam() {
                     <input type="hidden" {...register('ans_type')} value={"checkbox"} />
                     <p id="t_test1" className="clearfix">
                       <input type="checkbox" id="test1" {...register('test1')} value={"A"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="test1">
+                      <label htmlFor="test1" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                         {question.questionlist.choice1}
                       </label>
                     </p>
                     <p id="t_test2" className="clearfix">
                       <input type="checkbox" id="test2"  {...register('test2')} value={"B"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="test2">
+                      <label htmlFor="test2" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                         {question.questionlist.choice2}
                       </label>
                     </p>
                     <p id="t_test3" className="clearfix">
                       <input type="checkbox" id="test3"  {...register('test3')} value={"C"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="test3">
+                      <label htmlFor="test3" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                         {question.questionlist.choice3}
                       </label>
                     </p>
                     <p id="t_test4" className="clearfix">
                       <input type="checkbox" id="test4"  {...register('test4')} value={"D"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="test4">
+                      <label htmlFor="test4" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                         {question.questionlist.choice4}
                       </label>
                     </p>
@@ -882,27 +884,27 @@ function Exam() {
 
                   {question.questionlist.ans.length === 1 && <>
                     <input type="hidden" {...register('ans_type')} value={"radio"} />
-                    <p id="t_test1">
+                    <p id="t_test1" >
                       <input type="radio" id="answer1"  {...register('answer')} value={"A"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="answer1">
+                      <label htmlFor="answer1" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)} >
                         {question.questionlist.choice1}
                       </label>
                     </p>
-                    <p id="t_test2">
+                    <p id="t_test2"  >
                       <input type="radio" id="answer2"  {...register('answer')} value={"B"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="answer2">
+                      <label htmlFor="answer2" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                         {question.questionlist.choice2}
                       </label>
                     </p>
-                    <p id="t_test3">
+                    <p id="t_test3"  >
                       <input type="radio" id="answer3"  {...register('answer')} value={"C"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="answer3">
+                      <label htmlFor="answer3" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                         {question.questionlist.choice3}
                       </label>
                     </p>
-                    <p id="t_test4">
+                    <p id="t_test4"  >
                       <input type="radio" id="answer4"  {...register('answer')} value={"D"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="answer4">
+                      <label htmlFor="answer4" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                         {question.questionlist.choice4}
                       </label>
                     </p>
@@ -921,7 +923,7 @@ function Exam() {
                  <span style={{color:'green',fontWeight:'bold'}}>
                  Explanation :
                   </span>
-                  <span style={{marginLeft:"5px",color:'green'}} > 
+                  <span style={{marginLeft:"5px",color:'green'}} onCopy={e=>textcopy(auth.user_id,auth.user_data.email)} > 
                   {question.questionlist.explanation}
                   </span>                    
                 </p>
@@ -955,7 +957,8 @@ function Exam() {
                         <img src={translate} alt="translate" />
                       </a>
                     </li>
-                    <li>
+                    {question.flag_type === "ask_mentor" ? (
+                      <li>
                       <a
                         href="#"
                         data-bs-toggle="modal"
@@ -966,6 +969,22 @@ function Exam() {
                         <img src={query} alt="query" />
                       </a>
                     </li>
+
+                    ):(
+                      <li>
+                      <a
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#Rerrorpopup"
+                        title="Report an Erroneous Question"
+                      // onClick={aksMentorRefhandleShow}
+                      >
+                        <img src={report_error} alt="report_error" />
+                      </a>
+                    </li>
+
+                    )}
+                    
                   </ul>
                 </div>
 
@@ -1025,6 +1044,8 @@ function Exam() {
       <SpeedRef />
 
       <AskMentor />
+
+      <ReportError />
 
     </>
   )
