@@ -54,6 +54,8 @@ function AskMentor() {
   };
 
   const submit = async (data) => {
+    modalClose.current.click();
+    
     setLoader(true);
 
     data.qid = question.questionlist.id;
@@ -62,7 +64,7 @@ function AskMentor() {
     var responce = await userService.AsksMentor(data);
 
     //   console.log(responce.data);
-    modalClose.current.click();
+    
     clearState();
 
     if (responce.data.status) {
