@@ -10,10 +10,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { AsksMentorSchama } from "../../schema";
 import userService from "../../services/user.service";
 import { toast } from "react-toastify";
+import Loader from "../Loader";
 
 function AskMentor() {
   const question = useSelector((state) => state.question);
   const auth = useSelector((state) => state.auth);
+  const [loader, setLoader] = useState(false);
   const modalClose = useRef(null);
   const {
     register,
@@ -52,6 +54,8 @@ function AskMentor() {
   };
 
   const submit = async (data) => {
+    setLoader(true);
+
     data.qid = question.questionlist.id;
     console.log(data);
 
@@ -62,6 +66,7 @@ function AskMentor() {
     clearState();
 
     if (responce.data.status) {
+      setLoader(false);
       if (responce.data.waring_status) {
         Swal.fire({
           title: "Warning",
@@ -78,12 +83,13 @@ function AskMentor() {
         });
       }
     } else {
-        Swal.fire({
-            title: "Error",
-            text: responce.data.error,
-            icon: "error",
-            confirmButtonText: "Ok",
-          });
+      setLoader(false);
+      Swal.fire({
+        title: "Error",
+        text: responce.data.error,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
     }
   };
 
@@ -93,6 +99,7 @@ function AskMentor() {
 
   return (
     <>
+      {loader && <Loader />}
       <section className="mentor-Popup">
         <div
           className="modal fade"
@@ -247,7 +254,7 @@ function AskMentor() {
                         <button className="sign-in " type="submit">
                           Click Once & Wait
                         </button>
-                        
+
                       </div>
                     </form>
                   </>
