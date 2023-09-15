@@ -10,12 +10,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { AsksMentorSchama } from "../../schema";
 import userService from "../../services/user.service";
 import { toast } from "react-toastify";
-import Loader from "../Loader";
+import { ColorRing } from 'react-loader-spinner'
+
 
 function AskMentor() {
   const question = useSelector((state) => state.question);
   const auth = useSelector((state) => state.auth);
-  const [loader, setLoader] = useState(false);
+  const [loader,setLoader]=useState(false);
   const modalClose = useRef(null);
   const {
     register,
@@ -54,9 +55,8 @@ function AskMentor() {
   };
 
   const submit = async (data) => {
-    modalClose.current.click();
-    
     setLoader(true);
+
 
     data.qid = question.questionlist.id;
     console.log(data);
@@ -64,11 +64,12 @@ function AskMentor() {
     var responce = await userService.AsksMentor(data);
 
     //   console.log(responce.data);
-    
+    modalClose.current.click();
     clearState();
 
     if (responce.data.status) {
       setLoader(false);
+
       if (responce.data.waring_status) {
         Swal.fire({
           title: "Warning",
@@ -101,7 +102,7 @@ function AskMentor() {
 
   return (
     <>
-      {loader && <Loader />}
+
       <section className="mentor-Popup">
         <div
           className="modal fade"
@@ -256,6 +257,16 @@ function AskMentor() {
                         <button className="sign-in " type="submit">
                           Click Once & Wait
                         </button>
+
+                        <ColorRing
+                            visible={loader}
+                            height="80"
+                            width="80"
+                            ariaLabel="blocks-loading"
+                            wrapperStyle={{}}
+                            wrapperClass="blocks-wrapper"
+                            colors={['#8dc63f','#8dc63f','#8dc63f','#8dc63f','#8dc63f']}
+                          />
 
                       </div>
                     </form>
