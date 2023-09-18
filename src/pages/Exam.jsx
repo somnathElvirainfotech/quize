@@ -22,6 +22,9 @@ import AskMentor from "./Modal/AskMentor";
 import { bookmarkActions } from "../redux/bookmark";
 import report_error from '../assets/images/reporterror.png';
 import ReportError from "./Modal/ReportError";
+import parse from 'html-react-parser';
+import { Helmet } from "react-helmet";
+import ScientificCalculator from "./Modal/ScientificCalculator";
 
 function Exam() {
   const dispatch = useDispatch();
@@ -47,8 +50,7 @@ function Exam() {
   const FontDnc = () => {
     if (fontSize > 12) {
       setFontSize((e) => e - 1);
-      if(fontSize>14)
-      {
+      if (fontSize > 14) {
         setLineHeight((e) => e - 4);
       }
     }
@@ -279,7 +281,7 @@ function Exam() {
       // console.log("user answer ", answer);
 
       if (question.questionlist.ans === answer) {
-       
+
 
         // toast.success("your answer right");
 
@@ -608,9 +610,9 @@ function Exam() {
 
 
   const answersubmit = async () => {
-//alert("123")
+    //alert("123")
 
-    if ((Number(question.count) === Number(question.totalQuestion - 1)) ) {
+    if ((Number(question.count) === Number(question.totalQuestion - 1))) {
       //alert("999")
 
       // ======= checking ======== 
@@ -625,7 +627,7 @@ function Exam() {
 
         if (test1 || test2 || test3 || test4) {
           await saveAnswerObj();
-        } 
+        }
         dispatch(questionActions.ansSubmit(true));
 
       }
@@ -634,7 +636,7 @@ function Exam() {
 
         if (answer !== null) {
           await saveAnswerObj();
-        } 
+        }
         dispatch(questionActions.ansSubmit(true));
       }
 
@@ -679,43 +681,43 @@ function Exam() {
     // alert(question.answerObj.length)
     //if ((Number(question.count) === Number(question.totalQuestion - 1)) && (Number(question.answerObj.length) === Number(question.totalQuestion))) {
 
-      // toast.success("answer submit successfull");
+    // toast.success("answer submit successfull");
 
-      var currectQns = 0;
-      var new_answerObj = [];
+    var currectQns = 0;
+    var new_answerObj = [];
 
-      for (var i of question.answerObj) {
+    for (var i of question.answerObj) {
 
-        if (i.status === true) {
-          var newQA_obj = { "qid": i.qid, "ans": i.ans, "status": 1 }
-          new_answerObj.push(newQA_obj)
-          currectQns++;
-        } else {
-          var newQA_obj = { "qid": i.qid, "ans": i.ans, "status": 0 }
-          new_answerObj.push(newQA_obj)
-        }
+      if (i.status === true) {
+        var newQA_obj = { "qid": i.qid, "ans": i.ans, "status": 1 }
+        new_answerObj.push(newQA_obj)
+        currectQns++;
+      } else {
+        var newQA_obj = { "qid": i.qid, "ans": i.ans, "status": 0 }
+        new_answerObj.push(newQA_obj)
       }
+    }
 
-      console.log("new_answerObj  ", new_answerObj)
+    console.log("new_answerObj  ", new_answerObj)
 
-      var data = {
-        "subid": question.subject_id,
-        "userId": auth.user_id,
-        "ans_data": new_answerObj
-      };
+    var data = {
+      "subid": question.subject_id,
+      "userId": auth.user_id,
+      "ans_data": new_answerObj
+    };
 
-      var responce = await userService.AnswerSubmit(data);
+    var responce = await userService.AnswerSubmit(data);
 
-      console.log("responce ans submit", responce.data)
+    console.log("responce ans submit", responce.data)
 
-      dispatch(questionActions.ansSubmit(false));
-      dispatch(questionActions.totalCurrectAns(currectQns))
-      // dispatch(questionActions.questionReseltStatus(true))
-      // dispatch(questionActions.questionReseltChecked(true));
-      dispatch(questionActions.count(0));
-      // await getquestiondata(`qid0`);
+    dispatch(questionActions.ansSubmit(false));
+    dispatch(questionActions.totalCurrectAns(currectQns))
+    // dispatch(questionActions.questionReseltStatus(true))
+    // dispatch(questionActions.questionReseltChecked(true));
+    dispatch(questionActions.count(0));
+    // await getquestiondata(`qid0`);
 
-      navigate('/result');
+    navigate('/result');
 
 
     //}
@@ -753,17 +755,17 @@ function Exam() {
     if (question.answerObj.length > 0) {
       setPreviousAnsValue();
     }
-    console.log(question.answerObj,"fdlkjglk sdfg");
+    console.log(question.answerObj, "fdlkjglk sdfg");
   }, [question.questionlist])
 
   useEffect(() => {
 
-    if ((Number(question.count) === Number(question.totalQuestion-1))  && question.ansSubmit === true) {
+    if ((Number(question.count) === Number(question.totalQuestion - 1)) && question.ansSubmit === true) {
       finalAnsSubmit();
     }
   }, [question.ansSubmit])
-  
-  
+
+
   return (
     <>
       <section className="Money-Received">
@@ -780,8 +782,8 @@ function Exam() {
                 </select> */}
               </div>
               <div className="money-h-middle">
-              
-              <span className="page-count">Attempted : {question.answerObj.length}/{question.totalQuestion}</span>
+
+                <span className="page-count">Attempted : {question.answerObj.length}/{question.totalQuestion}</span>
                 <ul className="pagination-wrap exam-pagination">
                   <li>
                     <a href="#" onClick={handlePrevious}>
@@ -790,35 +792,35 @@ function Exam() {
                     </a>
                   </li>
                   <li className="countnum">
-                    
+
                     <span>{question.count + 1}</span>/<span>{question.totalQuestion}</span>
                   </li>
-                  
-                  {question.count === (question.totalQuestion - 1) ?  (
-                  <li>
-                    <a href="#" onClick={answersubmit}>
-                      End
-                     
-                    </a>
-                  </li>
-                    ):(
-                      <li>
-                                      <a href="#" onClick={handleNext}>
-                                        Next Question
-                                        <img src={next} alt="next" />
-                                      </a>
-                                    </li>
 
-                    )
+                  {question.count === (question.totalQuestion - 1) ? (
+                    <li>
+                      <a href="#" onClick={answersubmit}>
+                        End
+
+                      </a>
+                    </li>
+                  ) : (
+                    <li>
+                      <a href="#" onClick={handleNext}>
+                        Next Question
+                        <img src={next} alt="next" />
+                      </a>
+                    </li>
+
+                  )
                   }
-                
+
                 </ul>
 
               </div>
               <div className="money-h-right">
                 <span className="inc_dnc_btn text-inc-dec" onClick={FontInc}>A+</span>
                 <span className="inc_dnc_btn text-inc-dec" onClick={FontDnc}>A-</span>
-                
+
 
               </div>
             </div>
@@ -835,7 +837,7 @@ function Exam() {
                   <small>QID: {newQID(auth.user_id, question.questionlist.id)} </small>
 
                 </div>
-                <p onCopy={e=>textcopy(auth.user_id,auth.user_data.email)} className="question" style={{ fontSize: `${fontSize}px`, lineHeight: `${lineHeight}px` }}>
+                <p onCopy={e => textcopy(auth.user_id, auth.user_data.email)} className="question" style={{ fontSize: `${fontSize}px`, lineHeight: `${lineHeight}px` }}>
                   {question.questionlist.question}
                 </p>
 
@@ -858,25 +860,25 @@ function Exam() {
                     <input type="hidden" {...register('ans_type')} value={"checkbox"} />
                     <p id="t_test1" className="clearfix">
                       <input type="checkbox" id="test1" {...register('test1')} value={"A"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="test1" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
+                      <label htmlFor="test1" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
                         {question.questionlist.choice1}
                       </label>
                     </p>
                     <p id="t_test2" className="clearfix">
                       <input type="checkbox" id="test2"  {...register('test2')} value={"B"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="test2" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
+                      <label htmlFor="test2" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
                         {question.questionlist.choice2}
                       </label>
                     </p>
                     <p id="t_test3" className="clearfix">
                       <input type="checkbox" id="test3"  {...register('test3')} value={"C"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="test3" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
+                      <label htmlFor="test3" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
                         {question.questionlist.choice3}
                       </label>
                     </p>
                     <p id="t_test4" className="clearfix">
                       <input type="checkbox" id="test4"  {...register('test4')} value={"D"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="test4" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
+                      <label htmlFor="test4" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
                         {question.questionlist.choice4}
                       </label>
                     </p>
@@ -886,25 +888,25 @@ function Exam() {
                     <input type="hidden" {...register('ans_type')} value={"radio"} />
                     <p id="t_test1" >
                       <input type="radio" id="answer1"  {...register('answer')} value={"A"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="answer1" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)} >
+                      <label htmlFor="answer1" onCopy={e => textcopy(auth.user_id, auth.user_data.email)} >
                         {question.questionlist.choice1}
                       </label>
                     </p>
                     <p id="t_test2"  >
                       <input type="radio" id="answer2"  {...register('answer')} value={"B"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="answer2" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
+                      <label htmlFor="answer2" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
                         {question.questionlist.choice2}
                       </label>
                     </p>
                     <p id="t_test3"  >
                       <input type="radio" id="answer3"  {...register('answer')} value={"C"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="answer3" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
+                      <label htmlFor="answer3" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
                         {question.questionlist.choice3}
                       </label>
                     </p>
                     <p id="t_test4"  >
                       <input type="radio" id="answer4"  {...register('answer')} value={"D"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="answer4" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
+                      <label htmlFor="answer4" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
                         {question.questionlist.choice4}
                       </label>
                     </p>
@@ -919,14 +921,14 @@ function Exam() {
 
                 </form>
                 {(explanationdisplay) && <>
-                <p style={{fontSize:"12px",lineHeight:2}}>
-                 <span style={{color:'green',fontWeight:'bold'}}>
-                 Explanation :
-                  </span>
-                  <span style={{marginLeft:"5px",color:'green'}} onCopy={e=>textcopy(auth.user_id,auth.user_data.email)} > 
-                  {question.questionlist.explanation}
-                  </span>                    
-                </p>
+                  <p style={{ fontSize: "12px", lineHeight: 2 }}>
+                    <span style={{ color: 'green', fontWeight: 'bold' }}>
+                      Explanation :
+                    </span>
+                    <span style={{ marginLeft: "5px", color: 'green' }} onCopy={e => textcopy(auth.user_id, auth.user_data.email)} >
+                      {question.questionlist.explanation}
+                    </span>
+                  </p>
                 </>}
 
 
@@ -936,6 +938,16 @@ function Exam() {
 
                 <div className="multiple-options">
                   <ul>
+                    <li>
+                      <a
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#scientificCalculatorPopup"
+                        title="Scientific Calculator"
+                      >
+                        <img src={query} alt="query" />
+                      </a>
+                    </li>
                     <li >
                       <a href="#" title="Add Bookmark" onClick={addBookmark}>
                         <img src={add} alt="add" />
@@ -959,32 +971,32 @@ function Exam() {
                     </li>
                     {question.flag_type === "ask_mentor" ? (
                       <li>
-                      <a
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#mentorpopup"
-                        title="Ask a Mentor"
-                      // onClick={aksMentorRefhandleShow}
-                      >
-                        <img src={query} alt="query" />
-                      </a>
-                    </li>
+                        <a
+                          href="#"
+                          data-bs-toggle="modal"
+                          data-bs-target="#mentorpopup"
+                          title="Ask a Mentor"
+                        // onClick={aksMentorRefhandleShow}
+                        >
+                          <img src={query} alt="query" />
+                        </a>
+                      </li>
 
-                    ):(
+                    ) : (
                       <li>
-                      <a
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#Rerrorpopup"
-                        title="Report an Erroneous Question"
-                      // onClick={aksMentorRefhandleShow}
-                      >
-                        <img src={report_error} alt="report_error" />
-                      </a>
-                    </li>
+                        <a
+                          href="#"
+                          data-bs-toggle="modal"
+                          data-bs-target="#Rerrorpopup"
+                          title="Report an Erroneous Question"
+                        // onClick={aksMentorRefhandleShow}
+                        >
+                          <img src={report_error} alt="report_error" />
+                        </a>
+                      </li>
 
                     )}
-                    
+
                   </ul>
                 </div>
 
@@ -998,7 +1010,7 @@ function Exam() {
           </div>
 
 
-{/* 
+          {/* 
           <div className="btn-wrap exam-btn">
 
             {question.count > 0 && <>
@@ -1038,6 +1050,8 @@ function Exam() {
 
       </section>
 
+      {/* =========== custom script add ================ */}
+
 
 
       {/* ======== custom modal ======== */}
@@ -1046,6 +1060,8 @@ function Exam() {
       <AskMentor />
 
       <ReportError />
+
+      <ScientificCalculator />
 
     </>
   )

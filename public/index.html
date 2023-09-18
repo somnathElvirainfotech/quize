@@ -11,8 +11,6 @@
       content="Web site created using create-react-app"
     />
 
-    
-
     <!-- fontaawesomecdn -->
     <link
       rel="stylesheet"
@@ -42,8 +40,6 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
-    
- 
     <div id="root"></div>
     <!--
       This HTML file is a template.
@@ -79,5 +75,32 @@
       async
     ></script>
 
+    <!-- ---- botsonic------- -->
+    <script>
+      !(function (e, t, n, i, o, s, c) {
+        (e.botsonic_widget = i),
+          (e[i] =
+            e[i] ||
+            function () {
+              (e[i].q = e[i].q || []).push(arguments);
+            }),
+          (s = t.createElement(n)),
+          (c = t.getElementsByTagName(n)[0]),
+          (s.id = i),
+          (s.src = o),
+          (s.async = 1),
+          c.parentNode.insertBefore(s, c);
+      })(
+        window,
+        document,
+        "script",
+        "Botsonic",
+        "https://d1m9uqhmlogh4h.cloudfront.net/CDN/botsonic.min.js"
+      ),
+        Botsonic("init", {
+          serviceBaseUrl: "https://api.writesonic.com",
+          token: "2b82d03e-65b3-4458-96c1-8891004ef734",
+        });
+    </script>
   </body>
 </html>

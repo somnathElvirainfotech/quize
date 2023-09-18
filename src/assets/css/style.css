@@ -1586,3 +1586,62 @@ h5.speed-ref{
   margin-right: 10px;
   cursor: pointer;
 }
+
+
+/* ===== 18.09.23 ===== */
+.calculator {
+  width: 350px !important;
+  height: 320px !important;
+  background-color: #c0c0c0 !important;
+  box-shadow: 0px 0px 0px 10px #666 !important;
+  border: 5px solid black !important;
+  border-radius: 10px !important;
+}
+
+#display {
+  width: 320px !important;
+  height: 40px !important;
+  text-align: right !important;
+  background-color: black !important;
+  border: 3px solid white !important;
+  font-size: 18px !important;
+  left: 2px !important;
+  top: 2px !important;
+  color: #7fff00 !important;
+}
+
+.btnTop {
+  color: white !important;
+  background-color: #6f6f6f !important;
+  font-size: 14px !important;
+  margin: auto !important;
+  width: 50px !important;
+  height: 25px !important;
+}
+
+.btnNum {
+  color: white !important;
+  background-color: black !important;
+  font-size: 14px !important;
+  margin: auto !important;
+  width: 50px !important;
+  height: 25px !important;
+}
+
+.btnMath {
+  color: white !important;
+  background-color: #ff4561 !important;
+  font-size: 14px !important;
+  margin: auto !important;
+  width: 50px !important;
+  height: 25px !important;
+}
+
+.btnOpps {
+  color: white !important;
+  background-color: #ff9933 !important;
+  font-size: 14px !important;
+  margin: auto !important;
+  width: 50px !important;
+  height: 25px !important;
+}
