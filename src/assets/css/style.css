@@ -599,6 +599,9 @@ footer .footer-left::before {
   font-weight: normal;
   letter-spacing: 0px;
   color: #58595b;
+ /* =-===-18-09-2023=-==- */
+ margin-bottom: 0;
+ margin-top: 44px;
 }
 /* ======== Footer End========= */
 
@@ -997,6 +1000,11 @@ ul.exam-pagination li {
   gap: 10px;
   flex-direction: column;
 }
+.mentor-Popup .modal-content .check-wrap h3{
+  font-size: 18px;
+}
+
+.mentor-Popup .modal-content .check-wrap
 .mentor-Popup .modal-content ul input[type="checkbox"] {
   position: relative;
   max-width: 18px;
@@ -1590,8 +1598,10 @@ h5.speed-ref{
 
 /* ===== 18.09.23 ===== */
 .calculator {
-  width: 350px !important;
-  height: 320px !important;
+  /* width: 350px !important; */
+  width: 100% !important;
+  height: 231px !important;
+  /* height: 320px !important; */
   background-color: #c0c0c0 !important;
   box-shadow: 0px 0px 0px 10px #666 !important;
   border: 5px solid black !important;
@@ -1599,7 +1609,8 @@ h5.speed-ref{
 }
 
 #display {
-  width: 320px !important;
+  /* width: 340px !important; */
+  width: 100% !important;
   height: 40px !important;
   text-align: right !important;
   background-color: black !important;
@@ -1617,6 +1628,8 @@ h5.speed-ref{
   margin: auto !important;
   width: 50px !important;
   height: 25px !important;
+  /* =-===-18-09-2023=-==- */
+  line-height: 2px;
 }
 
 .btnNum {
@@ -1626,6 +1639,8 @@ h5.speed-ref{
   margin: auto !important;
   width: 50px !important;
   height: 25px !important;
+   /* =-===-18-09-2023=-==- */
+  line-height: 2px;
 }
 
 .btnMath {
@@ -1635,6 +1650,8 @@ h5.speed-ref{
   margin: auto !important;
   width: 50px !important;
   height: 25px !important;
+   /* =-===-18-09-2023=-==- */
+  line-height: 2px;
 }
 
 .btnOpps {
@@ -1644,4 +1661,27 @@ h5.speed-ref{
   margin: auto !important;
   width: 50px !important;
   height: 25px !important;
+   /* =-===-18-09-2023=-==- */
+  line-height: 2px;
+}
+
+/* =-=-=-18-09-2023=-=-=-=-=-calculator=-=-=-18-09-2023=-=-=-=- */
+table.calculator{
+  display: flex;
+  flex-direction: column;
+}
+table.calculator tr:first-child{
+  display: flex;
+}
+table.calculator tr:first-child td{
+  width: 100%;
+}
+section.model-Search-Popup.calculator-popup .modal-dialog{
+  max-width: 345px;
+}
+section.model-Search-Popup.calculator-popup button.btn-close{
+  top: 5px;
+  right: 4px;
+  width: 15px;
+  height: 15px;
 }

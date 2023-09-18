@@ -121,6 +121,7 @@ footer .footer-left::before{
 }
 .footer-right p.copy-right{
   text-align: center;
+  margin-top: 0;
 }
 .Money-Received .money-re-content .content-left,
 .Money-Received .money-re-content .content-right{
@@ -213,7 +214,14 @@ ul.pagination-wrap {
     position: static;
   }*/
 
-  
+  .Money-Received .money-re-content .content-left, .Money-Received .money-re-content .content-right{
+    padding-bottom: 68px;
+  }
+  button.checkAns.btn.btn-primary{
+    left: 50%;
+    bottom: 11px;
+    transform: translateX(-50%);
+  }
 
 }
 

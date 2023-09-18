@@ -22,7 +22,7 @@ function Footer() {
             </div>
             <div className="col-md-7 mt-4 mt-md-0">
               <div className="footer-right">
-                <ul>
+                {/* <ul>
                   <li>
                     <a href="#">Terms &amp; Conditions</a>
                   </li>
@@ -35,7 +35,7 @@ function Footer() {
                   <li>
                     <a href="#">Refund Policy</a>
                   </li>
-                </ul>
+                </ul> */}
                 <p className="copy-right">
                   CMFAS Academy - Copyright © 2023. All rights reserved.
                 </p>

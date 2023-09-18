@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { questionActions } from "../redux/question";
 import { useForm } from "react-hook-form";
 import { removeDuplicates } from "../common";
+import Reporticon from "../assets/images/report.png";
 
 function Result() {
   const dispatch = useDispatch();

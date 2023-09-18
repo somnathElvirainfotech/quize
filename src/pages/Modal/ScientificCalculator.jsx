@@ -121,7 +121,7 @@ function ScientificCalculator(props) {
     return (
         <>
 
-            <section className="model-Search-Popup">
+            <section className="model-Search-Popup calculator-popup">
                 <div
                     className="modal fade"
                     id="scientificCalculatorPopup"

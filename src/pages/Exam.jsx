@@ -25,6 +25,8 @@ import ReportError from "./Modal/ReportError";
 import parse from 'html-react-parser';
 import { Helmet } from "react-helmet";
 import ScientificCalculator from "./Modal/ScientificCalculator";
+import Reporticon from "../assets/images/report.png";
+import Calculatoricon from "../assets/images/calculator.png";
 
 function Exam() {
   const dispatch = useDispatch();
@@ -854,31 +856,31 @@ function Exam() {
                 {/* ======== FORM 2 ANS length check =========  */}
 
 
-                <form ref={formref} onSubmit={handleSubmit(checkAns)} className="qiz" style={{ fontSize: `${fontSize}px`, lineHeight: `${lineHeight}px` }} >
+                <form ref={formref} onSubmit={handleSubmit(checkAns)} className="qiz" style={{ fontSize: `${fontSize}px`, lineHeight: 2}} >
 
                   {question.questionlist.ans.length > 1 && <>
                     <input type="hidden" {...register('ans_type')} value={"checkbox"} />
                     <p id="t_test1" className="clearfix">
                       <input type="checkbox" id="test1" {...register('test1')} value={"A"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="test1" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                      <label htmlFor="test1" style={{ fontSize: `${fontSize}px`, lineHeight: 2}} onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
                         {question.questionlist.choice1}
                       </label>
                     </p>
                     <p id="t_test2" className="clearfix">
                       <input type="checkbox" id="test2"  {...register('test2')} value={"B"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="test2" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                      <label htmlFor="test2" style={{ fontSize: `${fontSize}px`, lineHeight: 2}} onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
                         {question.questionlist.choice2}
                       </label>
                     </p>
                     <p id="t_test3" className="clearfix">
                       <input type="checkbox" id="test3"  {...register('test3')} value={"C"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="test3" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                      <label htmlFor="test3" style={{ fontSize: `${fontSize}px`, lineHeight: 2}} onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
                         {question.questionlist.choice3}
                       </label>
                     </p>
                     <p id="t_test4" className="clearfix">
                       <input type="checkbox" id="test4"  {...register('test4')} value={"D"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="test4" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                      <label htmlFor="test4" style={{ fontSize: `${fontSize}px`, lineHeight: 2}} onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
                         {question.questionlist.choice4}
                       </label>
                     </p>
@@ -888,25 +890,25 @@ function Exam() {
                     <input type="hidden" {...register('ans_type')} value={"radio"} />
                     <p id="t_test1" >
                       <input type="radio" id="answer1"  {...register('answer')} value={"A"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="answer1" onCopy={e => textcopy(auth.user_id, auth.user_data.email)} >
+                      <label htmlFor="answer1" style={{ fontSize: `${fontSize}px`, lineHeight: 2}} onCopy={e => textcopy(auth.user_id, auth.user_data.email)} >
                         {question.questionlist.choice1}
                       </label>
                     </p>
                     <p id="t_test2"  >
                       <input type="radio" id="answer2"  {...register('answer')} value={"B"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="answer2" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                      <label htmlFor="answer2" style={{ fontSize: `${fontSize}px`, lineHeight: 2}} onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
                         {question.questionlist.choice2}
                       </label>
                     </p>
                     <p id="t_test3"  >
                       <input type="radio" id="answer3"  {...register('answer')} value={"C"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="answer3" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                      <label htmlFor="answer3" style={{ fontSize: `${fontSize}px`, lineHeight: 2}} onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
                         {question.questionlist.choice3}
                       </label>
                     </p>
                     <p id="t_test4"  >
                       <input type="radio" id="answer4"  {...register('answer')} value={"D"} disabled={question.questionReseltChecked} />
-                      <label htmlFor="answer4" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                      <label htmlFor="answer4" style={{ fontSize: `${fontSize}px`, lineHeight: 2}} onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
                         {question.questionlist.choice4}
                       </label>
                     </p>
@@ -945,7 +947,7 @@ function Exam() {
                         data-bs-target="#scientificCalculatorPopup"
                         title="Scientific Calculator"
                       >
-                        <img src={query} alt="query" />
+                        <img src={Calculatoricon} alt="query" />
                       </a>
                     </li>
                     <li >
@@ -991,7 +993,7 @@ function Exam() {
                           title="Report an Erroneous Question"
                         // onClick={aksMentorRefhandleShow}
                         >
-                          <img src={report_error} alt="report_error" />
+                          <img src={Reporticon} alt="report_error" />
                         </a>
                       </li>
 

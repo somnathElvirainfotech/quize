@@ -73,7 +73,7 @@ function Header() {
                 {isAuthenticated && <li>
                   <NavLink to="/bookmark">bookmark</NavLink>
                 </li> }
-                <li>
+                {/* <li>
                   <Link to="/"> about us </Link>
                 </li>
                 <li>
@@ -81,7 +81,7 @@ function Header() {
                 </li>
                 <li>
                   <Link to="/"> contact </Link>
-                </li>
+                </li> */}
                 <li className="header-btn1">
                   {isAuthenticated ? (
                     <p className="login">{user_data.name}</p>
