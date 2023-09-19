@@ -37,7 +37,7 @@ function Review() {
   const dispatch = useDispatch();
   const question = useSelector((state) => state.question);
   const auth = useSelector((state) => state.auth);
-
+  const [answerstatus, setAnswerstatus] = useState(0);
   console.log("questionid  ", question.questionid);
   console.log("questionlist  ", question.questionlist);
 
@@ -175,6 +175,7 @@ function Review() {
     for (const [index, i] of oldQA_obj.entries()) {
       if (question.questionlist.id === i.qid) {
         console.log("fffffff " + i.ans.length);
+        //alert(i.ans);
 
         var form = formref.current;
 
@@ -203,10 +204,13 @@ function Review() {
           }
 
           if (question.questionlist.ans === answer) {
+            
             // toast.success("your answer right");
-
+            setAnswerstatus(1);
             if (answer.includes("A")) {
               form.querySelector("#t_test1").className = "right_ans";
+              
+
             }
 
             if (answer.includes("B")) {
@@ -221,6 +225,8 @@ function Review() {
               form.querySelector("#t_test4").className = "right_ans";
             }
           } else {
+            setAnswerstatus(2);
+           // toast.success("your answer is wrong");
             if (question.questionlist.ans.includes("A")) {
               if (answer.includes("A")) {
                 form.querySelector("#t_test1").className = "right_ans";
@@ -286,7 +292,7 @@ function Review() {
           // console.log("newForm ",newForm)
           if (question.questionlist.ans === answer) {
             // toast.success("your answer right");
-
+            setAnswerstatus(1);
             if (answer.includes("A")) {
               form.querySelector("#t_test1").className = "right_ans";
             } else if (answer.includes("B")) {
@@ -297,6 +303,7 @@ function Review() {
               form.querySelector("#t_test4").className = "right_ans";
             }
           } else {
+            setAnswerstatus(2);
             // toast.error("Your answer wrong");
 
             // var form = formref.current;
@@ -391,7 +398,7 @@ function Review() {
               </div>
               <div className="money-h-middle">
               
-             
+              <span className="page-count">Attempted : {question.answerObj.length}/{question.totalQuestion}</span>
                 <ul className="pagination-wrap exam-pagination">
                   <li>
                     <a href="#" onClick={handlePrevious}>
@@ -413,8 +420,23 @@ function Review() {
 
               </div>
               <div className="money-h-right">
-
-              
+                
+            
+              {answerstatus === 1 && 
+                   <span style={{color:"#090"}}>
+                   Correct answer
+                 </span>
+              }
+              {answerstatus === 2 && 
+                   <span style={{color:"#ff0000"}}>
+                   Wrong answer
+                 </span>
+              }
+              {answerstatus === 0 && 
+                   <span >
+                   Not attempted
+                 </span>
+              }
                 {/* <div className="pagination-res">
                   <span className="tr-fl">
                     <i className="fa-solid fa-circle-check" />
