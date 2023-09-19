@@ -423,17 +423,17 @@ function Review() {
                 
             
               {answerstatus === 1 && 
-                   <span style={{color:"#090"}}>
+                   <span style={{color:"#090",fontSize: "16px"}}>
                    Correct answer
                  </span>
               }
               {answerstatus === 2 && 
-                   <span style={{color:"#ff0000"}}>
+                   <span style={{color:"#ff0000",fontSize: "16px"}}>
                    Wrong answer
                  </span>
               }
               {answerstatus === 0 && 
-                   <span >
+                   <span style={{fontSize: "16px"}}>
                    Not attempted
                  </span>
               }
