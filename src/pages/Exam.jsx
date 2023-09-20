@@ -316,7 +316,7 @@ function Exam() {
           if (answer.includes('A')) {
             form.querySelector('#t_test1').className = 'right_ans';
           } else {
-            form.querySelector('#t_test1').className = 'right_ans';
+            form.querySelector('#t_test1').className = 'user_not_select_right_ans';
           }
         } else if (answer.includes('A')) {
           form.querySelector('#t_test1').className = 'wrong_ans';
@@ -326,7 +326,7 @@ function Exam() {
           if (answer.includes('B')) {
             form.querySelector('#t_test2').className = 'right_ans';
           } else {
-            form.querySelector('#t_test2').className = 'right_ans';
+            form.querySelector('#t_test2').className = 'user_not_select_right_ans';
           }
         } else if (answer.includes('B')) {
           form.querySelector('#t_test2').className = 'wrong_ans';
@@ -336,7 +336,7 @@ function Exam() {
           if (answer.includes('C')) {
             form.querySelector('#t_test3').className = 'right_ans';
           } else {
-            form.querySelector('#t_test3').className = 'right_ans';
+            form.querySelector('#t_test3').className = 'user_not_select_right_ans';
           }
         } else if (answer.includes('C')) {
           form.querySelector('#t_test3').className = 'wrong_ans';
@@ -346,7 +346,7 @@ function Exam() {
           if (answer.includes('D')) {
             form.querySelector('#t_test4').className = 'right_ans';
           } else {
-            form.querySelector('#t_test4').className = 'right_ans';
+            form.querySelector('#t_test4').className = 'user_not_select_right_ans';
           }
         } else if (answer.includes('D')) {
           form.querySelector('#t_test4').className = 'wrong_ans';
