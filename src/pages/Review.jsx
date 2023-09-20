@@ -32,7 +32,7 @@ import AskMentor from "./Modal/AskMentor";
 import { bookmarkActions } from "../redux/bookmark";
 import report_error from '../assets/images/reporterror.png';
 import ReportError from "./Modal/ReportError";
-
+import parse from 'html-react-parser';
 function Review() {
   const dispatch = useDispatch();
   const question = useSelector((state) => state.question);
@@ -452,7 +452,10 @@ function Review() {
                   <h3>{question.subject_name}</h3>
                   <small>QID: {newQID(auth.user_id, question.questionlist.id)}</small>
                 </div>
-                <p onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>{question.questionlist.question}</p>
+                <p onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
+                { parse(question.questionlist.question)}
+                  
+                  </p>
 
                 <div id="monybgwater">
                   <p id="bg-text">{newQID(auth.user_id, question.questionlist.id)}</p>

@@ -251,7 +251,7 @@ function Exam() {
     if (data.ans_type === "checkbox") {
 
       if (!data.test1 && !data.test2 && !data.test3 && !data.test4) {
-        toast.warning("Please select answer!!");
+        toast.warning("Please select at least one option !!");
         return;
       }
       setExplanationdisplay(true);
@@ -361,7 +361,7 @@ function Exam() {
 
     } else {
       if (data.answer === null) {
-        toast.warning("Please select answer!!");
+        toast.warning("Please select at least one option !!");
         return;
       }
 
@@ -840,7 +840,7 @@ function Exam() {
 
                 </div>
                 <p onCopy={e => textcopy(auth.user_id, auth.user_data.email)} className="question" style={{ fontSize: `${fontSize}px`, lineHeight: `${lineHeight}px` }}>
-                  {question.questionlist.question}
+               { parse(question.questionlist.question)}
                 </p>
 
                 <div id="monybgwater">
@@ -939,7 +939,7 @@ function Exam() {
                   </>}
 
                   {(Number(question.radMode) === 1) && <>
-                    <Button type="submit" className="checkAns ">Check Ans</Button>
+                    <Button type="submit" className="checkAns ">Check Answer</Button>
                   </>}
 
 

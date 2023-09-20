@@ -21,6 +21,7 @@ import SpeedRef from "./Modal/SpeedRef";
 import AskMentor from "./Modal/AskMentor";
 import { bookmarkActions } from "../redux/bookmark";
 import Loader from "./Loader";
+import parse from 'html-react-parser';
 
 function Bookmark() {
   const dispatch = useDispatch();
@@ -843,7 +844,7 @@ function Bookmark() {
 
                   </div>
                   <p onCopy={e=>textcopy(auth.user_id,auth.user_data.email)} className="question">
-                    {bookmark.questionlist.question}
+                   { parse(bookmark.questionlist.question)}
                   </p>
 
                   <div id="monybgwater">

@@ -912,11 +912,15 @@ ul.exam-pagination li {
 
 /* ======== Search-popup-Start ========= */
 .model-Search-Popup .modal-dialog {
-  max-width: 750px;
+  max-width: 1000px;
 }
 .model-Search-Popup .modal-content {
   position: relative;
   padding: 30px 40px;
+  height:550px
+}
+.model-Search-Popup .modal-content iframe{
+  height:100%;
 }
 .model-Search-Popup button.btn-close {
   position: absolute;
@@ -1528,12 +1532,12 @@ h5.speed-ref{
 }
 #monybgwater {
   position: absolute;
-  top: 160px;
-  left: 0;
+  top: 120px;
+  left: 90px;
   z-index: -1;
 }
 #monybgwater #bg-text{
-  font-size: 50px;
+  font-size: 35px;
 }
 .Money-Received .money-re-content .content-left,
 .Money-Received .money-re-content .content-right{
