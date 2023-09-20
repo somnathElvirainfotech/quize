@@ -159,7 +159,7 @@ function ScientificCalculator(props) {
                                         <td><input type="button" class="btnNum" name="btnNum" value="8" onClick={()=>addChar('8')} /></td>
                                         <td><input type="button" class="btnNum" name="btnNum" value="9" onClick={()=>addChar('9')} /></td>
                                         <td><input type="button" class="btnOpps" name="btnOpps" value="x&#94;" onClick={()=>(checkNum(displayValue) && exp())} /></td>
-                                        <td><input type="button" class="btnMath" name="btnMath" value="/" onClick={()=>addChar('/')} /></td>
+                                        <td><input type="button" class="btnMath" name="btnMath" value="÷" onClick={()=>addChar('/')} /></td>
                                         <tr>
                                             <td><input type="button" class="btnNum" name="btnNum" value="4" onClick={()=>addChar('4')} /></td>
                                             <td><input type="button" class="btnNum" name="btnNum" value="5" onClick={()=>addChar('5')} /></td>
@@ -178,15 +178,15 @@ function ScientificCalculator(props) {
                                             <td><input type="button" class="btnMath" name="btnMath" value="&#177;" onClick={()=>changeSign} /></td>
                                             <td><input type="button" class="btnNum" name="btnNum" value="0" onClick={()=>addChar('0')} /></td>
                                             <td><input type="button" class="btnMath" name="btnMath" value="&#46;" onClick={()=>addChar('&#46;')} /></td>
-                                            <td><input type="button" class="btnOpps" name="btnOpps" value="x&#50;" onClick={()=>(checkNum(displayValue) && square())} /></td>
+                                            <td className='btn-sq'><input type="button" class="btnOpps" name="btnOpps" value="x" onClick={()=>(checkNum(displayValue) && square())} /></td>
                                             <td><input type="button" class="btnMath" name="btnMath" value="+" onClick={()=>addChar('+')} /></td>
                                         </tr>
-                                        <tr>
+                                        <tr className='sq-wrap'>
                                             <td><input type="button" class="btnMath" name="btnMath" value="(" onClick={()=>addChar('(')} /></td>
                                             <td><input type="button" class="btnMath" name="btnMath" value=")" onClick={()=>addChar(')')} /></td>
-                                            <td><input type="button" class="btnMath" name="btnMath" value="cos" onClick={()=>(checkNum(displayValue) && cos())} /></td>
+                                            {/* <td><input type="button" class="btnMath" name="btnMath" value="cos" onClick={()=>(checkNum(displayValue) && cos())} /></td>
                                             <td><input type="button" class="btnMath" name="btnMath" value="sin" onClick={()=>(checkNum(displayValue) && sin())} /></td>
-                                            <td><input type="button" class="btnMath" name="btnMath" value="tan" onClick={()=>(checkNum(displayValue) && tan())} /></td>
+                                            <td><input type="button" class="btnMath" name="btnMath" value="tan" onClick={()=>(checkNum(displayValue) && tan())} /></td> */}
                                         </tr>
                                     </tr>
                                 </table>

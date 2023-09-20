@@ -23,7 +23,7 @@ import LoginPage from "./LoginPage";
 import { useDispatch, useSelector } from "react-redux";
 import question, { questionActions } from "../redux/question";
 import { removeDuplicates } from "../common";
-
+import { Tooltip } from 'react-tooltip'
 function Home() {
     // const { user, dispatch } = useContext(userContext);
 
@@ -226,12 +226,22 @@ function Home() {
                                 <ul>
                                     <li>
                                         <input type="checkbox" defaultChecked {...register('chkRandom')} />
-                                        <label htmlFor="">Random Sequence</label>
+                                        <label htmlFor="" >Random Sequence</label>
+                                        <a data-tooltip-id="my-tooltip" data-tooltip-content="Questions will be sorted randomly">
+                                        ⓘ
+</a>
+<Tooltip id="my-tooltip" />
+
                                         <p style={{ color: 'red' }} className='form-field-error'>{errors.chkRandom?.message}</p>
+                                       
                                     </li>
                                     <li>
                                         <input type="checkbox" defaultChecked {...register('chkHide')} />
                                         <label htmlFor="">Skip Cleared Questions</label>
+                                        <a data-tooltip-id="my-skip" data-tooltip-content="Fetch only questions that had not ever been answered correctly before">
+                                        ⓘ
+</a>
+<Tooltip id="my-skip" />
                                         <p style={{ color: 'red' }} className='form-field-error'>{errors.chkHide?.message}</p>
                                     </li>
                                 </ul>

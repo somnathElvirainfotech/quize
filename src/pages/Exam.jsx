@@ -799,7 +799,7 @@ function Exam() {
                   </li>
 
                   {question.count === (question.totalQuestion - 1) ? (
-                    <li>
+                    <li className="end-text">
                       <a href="#" onClick={answersubmit}>
                         End
 
@@ -947,7 +947,7 @@ function Exam() {
 
                 </form>
                 {(explanationdisplay) && <>
-                  <p style={{ fontSize: "12px", lineHeight: 2 }}>
+                  <p className="ex-custom-bor" style={{ fontSize: "12px", lineHeight: 2 }}>
                     <span style={{ color: 'green', fontWeight: 'bold' }}>
                       Explanation :
                     </span>
