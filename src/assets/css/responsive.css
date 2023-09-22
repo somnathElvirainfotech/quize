@@ -306,4 +306,13 @@
     flex-wrap: wrap;
     row-gap: 10px;
   }
+  /*=-=-=-=- 21-09-2023=-=-=-=- */
+  body.bg-salmon footer,
+  body.bg-salmon header{
+    display: none;
+  }
+  /* -=-==-=-=-22-09-2023=-=-=- */
+  .text-engine .mode-of-exam ul{
+    flex-direction: column;
+  }
 }

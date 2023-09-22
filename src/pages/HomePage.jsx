@@ -47,7 +47,7 @@ function Home() {
 
     var submit = async (data) => {
 
-
+//alert("ok");
         if (!auth.isAuthenticated) {
             toast.warning("Login Is Required!")
             return;
@@ -106,10 +106,11 @@ function Home() {
 
             dispatch(questionActions.questionlist(responce.data.ques));
             dispatch(questionActions.questionid(responce.data.question_ids));
-            dispatch(questionActions.totalQuestion(data.lstNum));
+            dispatch(questionActions.totalQuestion(responce.data.question_count));
             dispatch(questionActions.subject_name(responce.data.subject_name));
             dispatch(questionActions.radMode(data.radMode));
             dispatch(questionActions.speedRefFileLink(responce.data.speed_reference_file_path))
+            
             dispatch(questionActions.subject_id(data.lstSubject))
             dispatch(questionActions.flag_type(responce.data.flag_type))
 
@@ -172,11 +173,13 @@ function Home() {
     // var arr=[]
 
 
-    console.log(Dropdowndata, 'Dropdowndata')
+   // console.log(Dropdowndata, 'Dropdowndata')
+   // console.log(errors)
     // console.log(itemdata,'itemdatalength')
     useEffect(() => {
         getdropdowndata();
         // setDropdowndatavalue(itemdata)
+        document.body.classList.remove('bg-salmon');
     }, [auth.isAuthenticated]);
 
     return (
@@ -246,11 +249,10 @@ function Home() {
                                     </li>
                                 </ul>
                             </div>
-
                             <div className="mode-of-exam">
-                                <h5>Mode Of Exam:</h5>
-                                <div className="mode-of-exam-wrap subscription-container select-theme-wrap">
-                                    <input type="radio" name="theme_id" id="card_one" value={1} defaultChecked {...register('radMode')} />
+                <h5>Mode Of Exam:</h5>
+                <div className="mode-of-exam-wrap subscription-container select-theme-wrap">
+                  {/* <input type="radio" name="theme_id" id="card_one" value={1} defaultChecked {...register('radMode')} />
                                     <label htmlFor="card_one" className="card_one">
                                         <p style={{ color: 'red' }} className='form-field-error'>{errors.radMode?.message}</p>
                                         <div className="m-exam-l card">
@@ -274,13 +276,55 @@ function Home() {
                                             <img src={exam} alt="exam-mode" />
                                             <span>Exam Mode</span>
                                         </div>
-                                    </label>
-                                </div>
-
-                                <button type="submit" className="enter animate-btn" >
-                                    Submit
-                                </button>
-                            </div>
+                                    </label> */}
+                  <ul>
+                    <li>
+                      <p id="t_test1">
+                        <input
+                          type="radio"
+                          id="answer1"
+                          name="answer"
+                          value={1}
+                          checked
+                          {...register('radMode')}
+                        />
+                        <label for="answer1">
+                          <span>Learning Mode</span>
+                        </label>{" "}
+                        <a
+                          data-tooltip-id="my-tooltip"
+                          data-tooltip-content="Upon answering, answer will be marked instantly and explanation will appear"
+                        >
+                          ⓘ
+                        </a>
+                      </p>
+                    </li>
+                    <li>
+                      <p id="t_test2">
+                        <input
+                          type="radio"
+                          id="answer2"
+                          name="answer"
+                          value={2}
+                          {...register('radMode')}
+                        />
+                        <label for="answer2">
+                          <span>Exam Mode</span>
+                        </label>{" "}
+                        <a
+                          data-tooltip-id="my-skip"
+                          data-tooltip-content="Simulated exam mode. No instant marking, no showing of explanation. Score will be shown at the end"
+                        >
+                          ⓘ
+                        </a>
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+                <button type="submit" className="enter animate-btn">
+                  Submit
+                </button>
+              </div>
                         </form>
                     </div>
                 </div>

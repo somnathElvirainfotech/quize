@@ -99,6 +99,7 @@ function Result() {
 
   useEffect(()=>{
     getquestiondata(`qid0`);
+    document.body.classList.remove('bg-salmon');
   },[])
 
 

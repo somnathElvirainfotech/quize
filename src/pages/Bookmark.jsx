@@ -766,6 +766,7 @@ function Bookmark() {
     if (bookmark.totalQuestion === 0) {
       getFristquestiondata();
     }
+    document.body.classList.remove('bg-salmon');
   }, [])
 
   // useEffect(() => {

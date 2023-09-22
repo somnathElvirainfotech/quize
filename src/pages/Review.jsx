@@ -379,6 +379,7 @@ function Review() {
     if (question.answerObj.length > 0) {
       setPreviousAnsValue();
     }
+    document.body.classList.remove('bg-salmon');
   }, [question.questionlist]);
 
   return (

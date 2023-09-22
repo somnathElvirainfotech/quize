@@ -1925,3 +1925,112 @@ p.user_not_select_right_ans label{
 li.end-text a{
   font-size: 12px !important;
 }
+/* =-=-=-=-=-21-09-2023=-=-=-=-=- */
+.check-wrap ul li input[type="checkbox"]{
+  position: relative;
+  max-width: 18px;
+  width: 100%;
+  height: 18px;
+  border: 2px solid #bcbcbc;
+  appearance: none;
+  cursor: pointer;
+  border-radius: 4px; 
+}
+.index-chat-panel-container-z6ffC{
+  z-index: -9 !important;
+}
+
+
+
+/* =-=-=-=-22-09-2023=-=-=-=-=- */
+.text-engine .mode-of-exam ul{
+display: flex;
+padding: 0;
+margin: 0;
+column-gap: 30px;
+}
+.text-engine .mode-of-exam ul li{
+  list-style: none;
+}
+
+
+
+/* =-=-=--=-= form-check =-=--= */
+.text-engine .mode-of-exam ul li [type="radio"]:checked,
+.text-engine .mode-of-exam ul li [type="radio"]:not(:checked) {
+  position: absolute;
+  left: -9999px;
+}
+
+.text-engine .mode-of-exam ul li [type="radio"]:checked+label,
+.text-engine .mode-of-exam ul li [type="radio"]:not(:checked)+label {
+  position: relative;
+  padding-left: 24px;
+  cursor: pointer;
+  line-height: 18px;
+  display: inline-block;
+  color: #666;
+}
+
+.text-engine .mode-of-exam ul li [type="radio"]:checked+label:before,
+.text-engine .mode-of-exam ul li [type="radio"]:not(:checked)+label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0px;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #ddd;
+  border-radius: 100%;
+  background: #fff;
+}
+
+.text-engine .mode-of-exam ul li [type="radio"]:checked+label:after,
+.text-engine .mode-of-exam ul li [type="radio"]:not(:checked)+label:after {
+  content: "\f058";
+  font-family: FontAwesome;
+  position: absolute;
+  top: 0px;
+  left: 1px;
+  border-radius: 100%;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  color: #8dc63f;
+  font-size: 17px;
+}
+
+.text-engine .mode-of-exam ul li [type="radio"]:not(:checked)+label:before,
+.text-engine .mode-of-exam ul [type="radio"]:checked+label:before,
+.text-engine .mode-of-exam ul [type="radio"]:checked+label:after {
+  left: 0;
+}
+
+.text-engine .mode-of-exam ul li [type="radio"]:not(:checked)+label:after {
+  opacity: 0;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+
+.text-engine .mode-of-exam ul li [type="radio"]:checked+label:after {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+.text-engine .mode-of-exam ul li p{
+margin-bottom: 0;
+font-size: 16px;
+font-weight: 500;
+font-style: normal;
+letter-spacing: 0px;
+color: #58595b;
+}
+a:not([href]):not([class]), a:not([href]):not([class]):hover
+
+{
+  text-decoration: none;
+    font-size: 15px;
+    color: #000;
+}
+/*** form-check ****/
+/* =-=-=-=-22-09-2023=-=-=-=-=- */

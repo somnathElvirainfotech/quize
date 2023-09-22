@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../assets/css/translator.css";
 import { useSelector } from "react-redux";
 import logo from "../assets/images/logo.png";
@@ -8,7 +8,9 @@ import { newQID } from "../common";
 function Translate() {
   const question = useSelector((state) => state.question);
   const auth = useSelector((state) => state.auth);
-
+useEffect(()=>{
+  document.body.classList.remove('bg-salmon');
+},[])
   return (
     <>
       <div id="google_translate_element"></div>

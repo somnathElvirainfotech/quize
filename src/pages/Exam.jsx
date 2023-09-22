@@ -767,6 +767,9 @@ function Exam() {
     }
   }, [question.ansSubmit])
 
+  useEffect(()=>{
+    document.body.classList.add('bg-salmon');
+  },[])
 
   return (
     <>
