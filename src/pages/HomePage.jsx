@@ -47,7 +47,7 @@ function Home() {
 
     var submit = async (data) => {
 
-//alert("ok");
+        //alert("ok");
         if (!auth.isAuthenticated) {
             toast.warning("Login Is Required!")
             return;
@@ -110,7 +110,7 @@ function Home() {
             dispatch(questionActions.subject_name(responce.data.subject_name));
             dispatch(questionActions.radMode(data.radMode));
             dispatch(questionActions.speedRefFileLink(responce.data.speed_reference_file_path))
-            
+
             dispatch(questionActions.subject_id(data.lstSubject))
             dispatch(questionActions.flag_type(responce.data.flag_type))
 
@@ -169,12 +169,12 @@ function Home() {
         reset();
     }
 
-
+    console.log(auth, '!auth.isAuthenticated')
     // var arr=[]
 
 
-   // console.log(Dropdowndata, 'Dropdowndata')
-   // console.log(errors)
+    // console.log(Dropdowndata, 'Dropdowndata')
+    // console.log(errors)
     // console.log(itemdata,'itemdatalength')
     useEffect(() => {
         getdropdowndata();
@@ -194,7 +194,11 @@ function Home() {
                                 <label htmlFor="inputState" className="form-label">
                                     Pick A Question Set:
                                 </label>
-                                <select id="inputState" className="form-select" {...register('lstSubject')}>
+                                {!auth.isAuthenticated && <select id="inputState" className="form-select" {...register('lstSubject')}>
+                                    {/* <option Value={""}>Choose a Filter below</option> */}
+                                    <option Value={"free_trial"}>Free Trial</option>
+                                </select>}
+                                {auth.isAuthenticated && <select id="inputState" className="form-select" {...register('lstSubject')}>
                                     <option Value={""}>Choose a Filter below</option>
 
                                     {Dropdowndata && Dropdowndata.map((item) => {
@@ -205,14 +209,17 @@ function Home() {
 
                                     }
                                     )}
-                                </select>
+                                </select>}
                                 <p style={{ color: 'red' }} className='form-field-error'>{errors.lstSubject?.message}</p>
                             </div>
                             <div className="col-md-6 ">
                                 <label htmlFor="inputState" className="form-label">
                                     How Many Questions To Load?
                                 </label>
-                                <select id="inputState" className="form-select" {...register('lstNum')}>
+                                {!auth.isAuthenticated && <select id="inputState" className="form-select" {...register('lstNum')}>
+                                    <option selected="" value={10}>5 Questions</option>
+                                </select>}
+                                {auth.isAuthenticated && <select id="inputState" className="form-select" {...register('lstNum')}>
                                     <option selected="" value={10}>10 Questions</option>
                                     <option value={25}>25 Questions</option>
                                     <option value={40}>40 Questions</option>
@@ -222,7 +229,7 @@ function Home() {
                                     <option value={80}>80 Questions</option>
                                     <option value={100}>100 Questions</option>
                                     <option value={200}>200 Questions</option>
-                                </select>
+                                </select>}
                                 <p style={{ color: 'red' }} className='form-field-error'>{errors.lstNum?.message}</p>
                             </div>
                             <div className="check-wrap">
@@ -231,28 +238,28 @@ function Home() {
                                         <input type="checkbox" defaultChecked {...register('chkRandom')} />
                                         <label htmlFor="" >Random Sequence</label>
                                         <a data-tooltip-id="my-tooltip" data-tooltip-content="Questions will be sorted randomly">
-                                        ⓘ
-</a>
-<Tooltip id="my-tooltip" />
+                                            ⓘ
+                                        </a>
+                                        <Tooltip id="my-tooltip" />
 
                                         <p style={{ color: 'red' }} className='form-field-error'>{errors.chkRandom?.message}</p>
-                                       
+
                                     </li>
                                     <li>
                                         <input type="checkbox" defaultChecked {...register('chkHide')} />
                                         <label htmlFor="">Skip Cleared Questions</label>
                                         <a data-tooltip-id="my-skip" data-tooltip-content="Fetch only questions that had not ever been answered correctly before">
-                                        ⓘ
-</a>
-<Tooltip id="my-skip" />
+                                            ⓘ
+                                        </a>
+                                        <Tooltip id="my-skip" />
                                         <p style={{ color: 'red' }} className='form-field-error'>{errors.chkHide?.message}</p>
                                     </li>
                                 </ul>
                             </div>
                             <div className="mode-of-exam">
-                <h5>Mode Of Exam:</h5>
-                <div className="mode-of-exam-wrap subscription-container select-theme-wrap">
-                  {/* <input type="radio" name="theme_id" id="card_one" value={1} defaultChecked {...register('radMode')} />
+                                <h5>Mode Of Exam:</h5>
+                                <div className="mode-of-exam-wrap subscription-container select-theme-wrap">
+                                    {/* <input type="radio" name="theme_id" id="card_one" value={1} defaultChecked {...register('radMode')} />
                                     <label htmlFor="card_one" className="card_one">
                                         <p style={{ color: 'red' }} className='form-field-error'>{errors.radMode?.message}</p>
                                         <div className="m-exam-l card">
@@ -277,54 +284,54 @@ function Home() {
                                             <span>Exam Mode</span>
                                         </div>
                                     </label> */}
-                  <ul>
-                    <li>
-                      <p id="t_test1">
-                        <input
-                          type="radio"
-                          id="answer1"
-                          name="answer"
-                          value={1}
-                          checked
-                          {...register('radMode')}
-                        />
-                        <label for="answer1">
-                          <span>Learning Mode</span>
-                        </label>{" "}
-                        <a
-                          data-tooltip-id="my-tooltip"
-                          data-tooltip-content="Upon answering, answer will be marked instantly and explanation will appear"
-                        >
-                          ⓘ
-                        </a>
-                      </p>
-                    </li>
-                    <li>
-                      <p id="t_test2">
-                        <input
-                          type="radio"
-                          id="answer2"
-                          name="answer"
-                          value={2}
-                          {...register('radMode')}
-                        />
-                        <label for="answer2">
-                          <span>Exam Mode</span>
-                        </label>{" "}
-                        <a
-                          data-tooltip-id="my-skip"
-                          data-tooltip-content="Simulated exam mode. No instant marking, no showing of explanation. Score will be shown at the end"
-                        >
-                          ⓘ
-                        </a>
-                      </p>
-                    </li>
-                  </ul>
-                </div>
-                <button type="submit" className="enter animate-btn">
-                  Submit
-                </button>
-              </div>
+                                    <ul>
+                                        <li>
+                                            <p id="t_test1">
+                                                <input
+                                                    type="radio"
+                                                    id="answer1"
+                                                    name="answer"
+                                                    value={1}
+                                                    checked
+                                                    {...register('radMode')}
+                                                />
+                                                <label for="answer1">
+                                                    <span>Learning Mode</span>
+                                                </label>{" "}
+                                                <a
+                                                    data-tooltip-id="my-tooltip"
+                                                    data-tooltip-content="Upon answering, answer will be marked instantly and explanation will appear"
+                                                >
+                                                    ⓘ
+                                                </a>
+                                            </p>
+                                        </li>
+                                        {auth.isAuthenticated &&<li>
+                                            <p id="t_test2">
+                                                <input
+                                                    type="radio"
+                                                    id="answer2"
+                                                    name="answer"
+                                                    value={2}
+                                                    {...register('radMode')}
+                                                />
+                                                <label for="answer2">
+                                                    <span>Exam Mode</span>
+                                                </label>{" "}
+                                                <a
+                                                    data-tooltip-id="my-skip"
+                                                    data-tooltip-content="Simulated exam mode. No instant marking, no showing of explanation. Score will be shown at the end"
+                                                >
+                                                    ⓘ
+                                                </a>
+                                            </p>
+                                        </li>}
+                                    </ul>
+                                </div>
+                                <button type="submit" className="enter animate-btn">
+                                    Submit
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
