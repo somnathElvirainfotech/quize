@@ -126,10 +126,10 @@ function Result() {
               <div className="content-middle">
                   <h4>You've answered</h4>
                   <h4>{question.totalCurrectAns} out of {question.totalQuestion} Qs correctly.</h4>
-                  <h4>Passing Score : 75 %</h4>
+                  <h4>Passing Score : {question.passing_percentage} %</h4>
                   <h4>Your Score : {((question.totalCurrectAns/question.totalQuestion)*100)} %</h4>
                   
-                  <h4>{((question.totalCurrectAns/question.totalQuestion)*100) >= 75 ? "PASSED":"FAILED"}</h4>
+                  <h4>{((question.totalCurrectAns/question.totalQuestion)*100) >= question.passing_percentage ? "PASSED":"FAILED"}</h4>
                   
                   <div class="btn-wrap">
                     <button className="animate-btn" onClick={()=>{

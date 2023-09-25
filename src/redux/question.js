@@ -14,6 +14,7 @@ const initialState = {
     questionReseltChecked:false,
     speedRefFileLink:"",
     flag_type:"",
+    passing_percentage:0,
     
 };
 
@@ -62,6 +63,7 @@ const questionSlice = createSlice({
             state.speedRefFileLink="";
             state.subject_id="";
             state.flag_type="";
+            state.passing_percentage=0;
             
         },
         ansSubmit(state,action){
@@ -84,6 +86,9 @@ const questionSlice = createSlice({
         },
         flag_type(state,action){
             state.flag_type=action.payload;
+        },
+        passing_percentage(state,action){
+            state.passing_percentage=action.payload;
         }
         
     },

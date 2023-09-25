@@ -33,6 +33,7 @@ import { bookmarkActions } from "../redux/bookmark";
 import report_error from '../assets/images/reporterror.png';
 import ReportError from "./Modal/ReportError";
 import parse from 'html-react-parser';
+import Swal from "sweetalert2";
 
 function FreeReview() {
   const dispatch = useDispatch();
@@ -190,6 +191,7 @@ function FreeReview() {
           const myArray = i.ans.split("");
           var answer = i.ans;
 
+
           console.log(`ans id == ${i.qid} === ${myArray}`);
 
           for (var j of myArray) {
@@ -333,6 +335,8 @@ function FreeReview() {
           }
         }
         break;
+      }else{
+        setAnswerstatus(0);
       }
     }
   };
@@ -452,7 +456,7 @@ function FreeReview() {
               <div className="content-left">
                 <div className="ch-h">
                   <h3>{question.subject_name}</h3>
-                  <small>QID: {newQID(auth.user_id, question.questionlist.id)}</small>
+                  <small>QID: {newQID('00000', question.questionlist.id)}</small>
                 </div>
                 <p onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                 { parse(question.questionlist.question)}
@@ -460,7 +464,7 @@ function FreeReview() {
                   </p>
 
                 <div id="monybgwater">
-                  <p id="bg-text">{newQID(auth.user_id, question.questionlist.id)}</p>
+                  <p id="bg-text">{newQID('00000', question.questionlist.id)}</p>
                 </div>
 
               </div>
@@ -597,15 +601,30 @@ function FreeReview() {
                     <li>
                       <a
                         href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#searchpopup"
                         title="Speed Reference"
+                        onClick={() =>
+                          Swal.fire({
+                            title: "Notice",
+                            html: '<br/><br/>SpeedRef™ is an on-screen integration with the official study guide for quick referencing.<br/><br/><br/>Upgrade to Silver Plan or higher through the Dashboard page in order to use this feature.',
+                            icon: "notice",
+                            confirmButtonText: "Ok",
+                          })
+                        }
                       >
                         <img src={search} alt="search" />
                       </a>
                     </li>
                     <li>
-                      <a href="/translate" target="_blank" rel="noopener noreferrer" title="Translation">
+                      <a href="#" 
+                      title="Translation"
+                      onClick={() =>
+                          Swal.fire({
+                            title: "Notice",
+                            html: '<br/><br/>Questions, choices and explanations can now be shown in your native language.<br/><br/><br/>Upgrade to Silver Plan or higher through the Dashboard page to use this feature.',
+                            icon: "notice",
+                            confirmButtonText: "Ok",
+                          })}
+                      >
                         <img src={translate} alt="translate" />
                       </a>
                     </li>
@@ -639,7 +658,7 @@ function FreeReview() {
                   </ul>
                 </div>
                 <div id="monybgwater">
-                  <p id="bg-text">{newQID(auth.user_id, question.questionlist.id)}</p>
+                  <p id="bg-text">{newQID('00000', question.questionlist.id)}</p>
                 </div>
               </div>
             </div>
@@ -692,7 +711,7 @@ function FreeReview() {
       </section>
 
       {/* ======== custom modal ======== */}
-      <SpeedRef />
+      {/* <SpeedRef /> */}
 
       <AskMentor />
 

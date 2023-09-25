@@ -332,6 +332,8 @@ function Review() {
           }
         }
         break;
+      }else{
+        setAnswerstatus(0);
       }
     }
   };

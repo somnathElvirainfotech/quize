@@ -29,11 +29,13 @@ import leftbanner from "../assets/images/login-left-img.png";
 import { AuthContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../redux/auth";
+import { questionActions } from "../redux/question";
 
 function LoginPage(props) {
   // const { user, dispatch } = useContext(userContext);
 
   const modalCloseRef = useRef();
+  const navigate=useNavigate();
 
   // const handleClose = () => dispatch({type:"showLoginModal",value:false});
   // const {isAuthenticated,user_id,user_data}=useSelector(state=>state.auth)
@@ -79,6 +81,8 @@ function LoginPage(props) {
       // dispatch({ type: "name", value: responce.data.data[0].name });
       // dispatch({ type: "email", value: responce.data.data[0].email });
 
+      // dispatch(questionActions.questionReset());
+
       dispatch(authActions.Login(responce.data.data[0]));
 
       modalCloseRef.current.click();
@@ -97,6 +101,8 @@ function LoginPage(props) {
     //   toast.error(responce.data.error)
     // }
     reset();
+
+    navigate('/');
   };
   return (
     <>

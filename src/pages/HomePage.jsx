@@ -113,6 +113,8 @@ function Home() {
                 dispatch(questionActions.subject_id(data.lstSubject))
                 dispatch(questionActions.flag_type(responce.data.flag_type))
 
+                dispatch(questionActions.passing_percentage(Number(responce.data.passing_percentage)))
+
                 Navigate('/free-exam')
 
 
@@ -174,6 +176,10 @@ function Home() {
 
                 dispatch(questionActions.subject_id(data.lstSubject))
                 dispatch(questionActions.flag_type(responce.data.flag_type))
+
+        
+
+                dispatch(questionActions.passing_percentage(Number(responce.data.passing_percentage)))
 
                 Navigate('/exam')
 
