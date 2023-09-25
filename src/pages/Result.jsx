@@ -24,6 +24,7 @@ import Reporticon from "../assets/images/report.png";
 function Result() {
   const dispatch = useDispatch();
   const question = useSelector(state => state.question);
+  const auth=useSelector(state=>state.auth);
 
  
   console.log("questionlist  ", question.questionlist);
@@ -131,7 +132,13 @@ function Result() {
                   <h4>{((question.totalCurrectAns/question.totalQuestion)*100) >= 75 ? "PASSED":"FAILED"}</h4>
                   
                   <div class="btn-wrap">
-                    <button className="animate-btn" onClick={()=>navigate('/review')} >Review</button>
+                    <button className="animate-btn" onClick={()=>{
+                      if(auth.isAuthenticated){
+                        navigate('/review');
+                      }else{
+                        navigate('/free-review');
+                      }
+                    }} >Review</button>
                     <button className="animate-btn" onClick={()=>navigate("/")}>New Test</button>
                   </div>
                   

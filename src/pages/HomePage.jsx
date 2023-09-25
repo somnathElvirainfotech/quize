@@ -48,10 +48,10 @@ function Home() {
     var submit = async (data) => {
 
         //alert("ok");
-        if (!auth.isAuthenticated) {
-            toast.warning("Login Is Required!")
-            return;
-        }
+        // if (!auth.isAuthenticated) {
+        //     toast.warning("Login Is Required!")
+        //     return;
+        // }
 
         // alert(1)
         console.log(data)
@@ -67,62 +67,123 @@ function Home() {
         } else {
             var checkH = '0'
         }
-        const form = new FormData();
-        form.append("lstSubject", data.lstSubject);
-        form.append("lstNum", data.lstNum);
-        form.append("chkRandom", checkRandom);
-        form.append("chkHide", checkH);
-        form.append("radMode", data.radMode);
-        form.append("type", "filter");
-        form.append("userId", auth.user_id);
-        var responce = await userService.Postquestion(form);
+
+        if (data.lstSubject === "free_trial") {
+
+            const form = new FormData();
+            form.append("lstNum", data.lstNum);
+            form.append("chkRandom", checkRandom);
+            form.append("chkHide", checkH);
+            form.append("radMode", data.radMode);
+            form.append("type", "filter");
+
+            var responce = await userService.FreeQuestion(form);
+
+            if (responce.data.error) {
+                toast.error(responce.data.error)
+            } else {
+                console.log(responce.data, 'jghjgjg')
+                console.log(responce.data.question_ids, 'jghjgjg')
+
+                let new_ans = await removeDuplicates(responce.data.ques.ans)
+
+                responce.data.ques.ans = new_ans;
+
+                // sessionStorage.clear();
+
+                // dispatch({ type: "questionlist", value: responce.data.ques });
+
+                // const arrayOfObjects = Object.keys(responce.data.question_ids).map((key) => ({ key, value: responce.data.question_ids[key] }));
+
+                // dispatch({ type: "questionid", value: responce.data.question_ids });
+                // dispatch({ type: "totalQuestion", value: data.lstNum });
+                // dispatch({ type: "subject_name", value: responce.data.subject_name });
+                // dispatch({ type: "radMode", value: data.radMode });
+
+
+                dispatch(questionActions.questionReset());
+
+                dispatch(questionActions.questionlist(responce.data.ques));
+                dispatch(questionActions.questionid(responce.data.question_ids));
+                dispatch(questionActions.totalQuestion(responce.data.question_count));
+                dispatch(questionActions.subject_name(responce.data.subject_name));
+                dispatch(questionActions.radMode(data.radMode));
+                dispatch(questionActions.speedRefFileLink(responce.data.speed_reference_file_path))
+
+                dispatch(questionActions.subject_id(data.lstSubject))
+                dispatch(questionActions.flag_type(responce.data.flag_type))
+
+                Navigate('/free-exam')
 
 
 
-        console.log(responce.data);
-        if (responce.data.error) {
-            toast.error(responce.data.error)
+
+
+
+            }
+           
+
         } else {
-            console.log(responce.data, 'jghjgjg')
-            console.log(responce.data.question_ids, 'jghjgjg')
 
-            let new_ans = await removeDuplicates(responce.data.ques.ans)
-
-            responce.data.ques.ans = new_ans;
-
-            // sessionStorage.clear();
-
-            // dispatch({ type: "questionlist", value: responce.data.ques });
-
-            // const arrayOfObjects = Object.keys(responce.data.question_ids).map((key) => ({ key, value: responce.data.question_ids[key] }));
-
-            // dispatch({ type: "questionid", value: responce.data.question_ids });
-            // dispatch({ type: "totalQuestion", value: data.lstNum });
-            // dispatch({ type: "subject_name", value: responce.data.subject_name });
-            // dispatch({ type: "radMode", value: data.radMode });
-
-
-            dispatch(questionActions.questionReset());
-
-            dispatch(questionActions.questionlist(responce.data.ques));
-            dispatch(questionActions.questionid(responce.data.question_ids));
-            dispatch(questionActions.totalQuestion(responce.data.question_count));
-            dispatch(questionActions.subject_name(responce.data.subject_name));
-            dispatch(questionActions.radMode(data.radMode));
-            dispatch(questionActions.speedRefFileLink(responce.data.speed_reference_file_path))
-
-            dispatch(questionActions.subject_id(data.lstSubject))
-            dispatch(questionActions.flag_type(responce.data.flag_type))
-
-            Navigate('/exam')
+            const form = new FormData();
+            form.append("lstSubject", data.lstSubject);
+            form.append("lstNum", data.lstNum);
+            form.append("chkRandom", checkRandom);
+            form.append("chkHide", checkH);
+            form.append("radMode", data.radMode);
+            form.append("type", "filter");
+            form.append("userId", auth.user_id);
 
 
 
+            var responce = await userService.Postquestion(form);
 
 
 
+            console.log(responce.data);
+            if (responce.data.error) {
+                toast.error(responce.data.error)
+            } else {
+                console.log(responce.data, 'jghjgjg')
+                console.log(responce.data.question_ids, 'jghjgjg')
+
+                let new_ans = await removeDuplicates(responce.data.ques.ans)
+
+                responce.data.ques.ans = new_ans;
+
+                // sessionStorage.clear();
+
+                // dispatch({ type: "questionlist", value: responce.data.ques });
+
+                // const arrayOfObjects = Object.keys(responce.data.question_ids).map((key) => ({ key, value: responce.data.question_ids[key] }));
+
+                // dispatch({ type: "questionid", value: responce.data.question_ids });
+                // dispatch({ type: "totalQuestion", value: data.lstNum });
+                // dispatch({ type: "subject_name", value: responce.data.subject_name });
+                // dispatch({ type: "radMode", value: data.radMode });
+
+
+                dispatch(questionActions.questionReset());
+
+                dispatch(questionActions.questionlist(responce.data.ques));
+                dispatch(questionActions.questionid(responce.data.question_ids));
+                dispatch(questionActions.totalQuestion(responce.data.question_count));
+                dispatch(questionActions.subject_name(responce.data.subject_name));
+                dispatch(questionActions.radMode(data.radMode));
+                dispatch(questionActions.speedRefFileLink(responce.data.speed_reference_file_path))
+
+                dispatch(questionActions.subject_id(data.lstSubject))
+                dispatch(questionActions.flag_type(responce.data.flag_type))
+
+                Navigate('/exam')
+
+
+
+
+
+
+            }
         }
-
 
 
     }
@@ -217,7 +278,7 @@ function Home() {
                                     How Many Questions To Load?
                                 </label>
                                 {!auth.isAuthenticated && <select id="inputState" className="form-select" {...register('lstNum')}>
-                                    <option selected="" value={10}>5 Questions</option>
+                                    <option selected="" value={5}>5 Questions</option>
                                 </select>}
                                 {auth.isAuthenticated && <select id="inputState" className="form-select" {...register('lstNum')}>
                                     <option selected="" value={10}>10 Questions</option>
@@ -306,7 +367,7 @@ function Home() {
                                                 </a>
                                             </p>
                                         </li>
-                                        {auth.isAuthenticated &&<li>
+                                        {auth.isAuthenticated && <li>
                                             <p id="t_test2">
                                                 <input
                                                     type="radio"

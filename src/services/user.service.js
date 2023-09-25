@@ -29,6 +29,16 @@ class UserService {
 
   }
 
+  async FreeQuestion(data) {
+    return axios.post('https://www.cmfasacademy.com/api.php?params=free_question', data, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+    });
+
+
+  }
+
   async Nextquestion(datas) {
     return axios.post('https://www.cmfasacademy.com/api.php?params=next_question', datas, {
       headers: {
