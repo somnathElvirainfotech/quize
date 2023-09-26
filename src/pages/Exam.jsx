@@ -789,7 +789,7 @@ function Exam() {
               <div className="money-h-middle">
 
                 <span className="page-count">Attempted : {question.answerObj.length}/{question.totalQuestion}</span>
-                <ul className="pagination-wrap exam-pagination">
+                <ul className="pagination-wrap exam-pagination desktop_mode">
                   <li>
                     <a href="#" onClick={handlePrevious}>
                       <img src={prev} alt="prev" />

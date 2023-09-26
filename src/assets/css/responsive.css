@@ -267,6 +267,33 @@
 
   /*14-8-23*/
 
+  /* 26/09/2023 */
+
+  .model-login-popup .modal-content-wrap img{
+    display: none;
+  }
+
+  .Money-Received .money-header h6,
+   iframe#widget-Botsonic,
+   .Money-Received .content-right .ch-h{
+    display: none;
+  }
+
+  p.question{max-height: 100%;}
+
+  .mentor-Popup .modal-content ul li{align-items: flex-start;}
+  .mentor-Popup .check-wrap ul li input[type="checkbox"]{
+    top: 7px;
+  }
+
+  .mentor-Popup .modal-content .ad-check-wrap label {
+    margin-left: 7px;
+  }
+
+  .result-content{
+    width: 90%;
+    margin: auto;
+  }
 
 }
 

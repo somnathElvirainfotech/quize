@@ -31,8 +31,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../redux/auth";
 import { questionActions } from "../redux/question";
 
+import Loader from "./Loader";
+
 function LoginPage(props) {
   // const { user, dispatch } = useContext(userContext);
+
+  const [loader, setLoader] = useState(false);
 
   const modalCloseRef = useRef();
   const navigate=useNavigate();
@@ -54,6 +58,7 @@ function LoginPage(props) {
   var submit = async (data) => {
     console.log(data);
 
+    setLoader(true);
     
 
 
@@ -102,10 +107,13 @@ function LoginPage(props) {
     // }
     reset();
 
+    setLoader(false);
+
     navigate('/');
   };
   return (
     <>
+    {loader && <Loader />}
       <section className="model-login-popup">
         <div
           className="modal fade"
