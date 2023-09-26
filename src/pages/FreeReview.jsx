@@ -34,6 +34,7 @@ import report_error from '../assets/images/reporterror.png';
 import ReportError from "./Modal/ReportError";
 import parse from 'html-react-parser';
 import Swal from "sweetalert2";
+import Reporticon from "../assets/images/report.png";
 
 function FreeReview() {
   const dispatch = useDispatch();
@@ -650,7 +651,7 @@ function FreeReview() {
                         title="Report an Erroneous Question"
                       // onClick={aksMentorRefhandleShow}
                       >
-                        <img src={report_error} alt="report_error" />
+                        <img src={Reporticon} alt="report_error" />
                       </a>
                     </li>
 
