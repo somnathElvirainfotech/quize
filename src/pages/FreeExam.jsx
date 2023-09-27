@@ -48,10 +48,12 @@ function FreeExam() {
   const [fontSize, setFontSize] = useState(14);
   const [lineHeight, setLineHeight] = useState(22);
   const [explanationdisplay, setExplanationdisplay] = useState(false);
+  const [explanationfontSize, setExplanationfontSize] = useState(14);
 
   const FontInc = () => {
     if (fontSize < 20) {
       setFontSize((e) => e + 1);
+      setExplanationfontSize((e) => e + 1)
       setLineHeight((e) => e + 4);
     }
   };
@@ -59,6 +61,7 @@ function FreeExam() {
   const FontDnc = () => {
     if (fontSize > 12) {
       setFontSize((e) => e - 1);
+      setExplanationfontSize((e) => e - 1)
       if (fontSize > 14) {
         setLineHeight((e) => e - 4);
       }
@@ -1001,7 +1004,7 @@ function FreeExam() {
                   <>
                     <p
                       className="ex-custom-bor"
-                      style={{ fontSize: "12px", lineHeight: 2 }}
+                      style={{ fontSize: explanationfontSize, lineHeight: 1.5 }}
                     >
                       <span style={{ color: "green", fontWeight: "bold" }}>
                         Explanation :

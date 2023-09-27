@@ -1902,6 +1902,7 @@ table.calculator tr:nth-child(2) {
 .ex-custom-bor{
 border: 1px solid green;
 padding: 0 10px;
+margin-top: 20px;
 }
 .Money-Received .qiz p.user_not_select_right_ans:before{
   content: '';
