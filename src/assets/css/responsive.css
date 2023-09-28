@@ -297,6 +297,167 @@
 
 }
 
+@media only screen and (max-width:767px){
+  .mobile_header,.mfooter{display: block;}
+  .mheader {display: flex;flex-wrap: nowrap; align-items: center; position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    z-index: 999;
+    box-shadow: 0 0.225rem 0.5rem rgba(0,0,0,0.075) !important;
+    padding: 15px;}
+
+  .mheader .inc_dnc_btn{
+    padding: 3px;
+    margin-right: 5px;
+    font-size: 11px;
+  }
+  .mheader .question_subject {
+    min-width: 50px !important;
+    max-width: 50px !important;
+    font-size: 11px;
+    text-align: center;
+    border: 1px solid #cbcbcb;
+    margin-right: 5px;
+}
+.mheader .question_id {
+  max-width: 48px;
+  min-width: 48px;
+  font-size: 11px;
+  border: 1px solid #cbcbcb;
+  text-align: center;
+  margin-right: 5px;
+}
+
+.mheader .page-count {
+  font-size: 11px;
+  font-weight: 400;
+  margin-right: 5px;
+  height: 35px;
+  flex-wrap: wrap;
+  margin-right: 5px;
+  max-width: 48px;
+}
+
+.mheader span.q_title {
+  display: block;
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #cbcbcb;
+}
+
+.mheader .inc_dnc_btn:last-child {
+  margin-right: 0;
+}
+
+.mheader .page-count span {
+  line-height: 14px;
+  font-size: 11px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #cbcbcb;
+}
+
+.mheader .logo{
+  margin-right: 10px;
+  margin-left: 5px;
+}
+
+.mheader .logo, .mheader .logo img {
+  max-width: 80px;
+}
+
+.d-header .money-header {
+  display: none;
+}
+
+.d-header{
+  border-top: 0 !important;
+  padding-top: 0 !important;
+  margin-top: 35px;
+}
+
+.Money-Received .d-header .ch-h {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.d-header .content-left.question_left p.question {
+  margin-bottom: 0;
+}
+
+.d-header .multiple-options, .d-header button.checkAns {
+  display: none;
+}
+
+.check-answer-nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.mfooter button.check-ans-btn{
+  height: 30px;
+  line-height: 16px;
+  font-size: 15px;
+}
+
+.check-answer-nav a.prev_arrow, .check-answer-nav a.next_arrow {
+  width: 30px;
+  border: 1px solid #97a749;
+  display: flex;
+  justify-content: center;
+  margin-right: 20px;
+  border-radius: 0.375rem;
+  height: 30px;
+}
+
+.check-answer-nav a.next_arrow{
+  margin-right: 0px;
+  margin-left: 20px;
+}
+
+.mfooter .multiple-options ul {
+  margin-top: 0;
+  padding-left: 0;
+  justify-content: center;
+}
+
+.check-answer-nav a.prev_arrow img, .check-answer-nav a.next_arrow img {
+  width: 12px;
+}
+
+.mfooter {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  z-index: 999;
+  box-shadow: 0 0.225rem 0.5rem rgba(0,0,0,0.075) !important;
+  padding: 15px;
+}
+
+.mfooter .multiple-options ul li {
+  height: 30px;
+  width: 30px;
+}
+
+.mfooter .multiple-options ul li img {
+  width: 30px;
+}
+
+.d-header .money-re-content {
+  max-height: 450px;
+  overflow-y: scroll;
+  border: 1px solid #e2e2e2;
+}
+
+}
+
+
 @media only screen and (max-width:568px) {
   /*button.checkAns.btn.btn-primary{
     position: static;
@@ -304,7 +465,7 @@
 
   .Money-Received .money-re-content .content-left,
   .Money-Received .money-re-content .content-right {
-    padding-bottom: 68px;
+    padding-bottom: 30px;
   }
 
   button.checkAns.btn.btn-primary {
@@ -342,4 +503,10 @@
   .text-engine .mode-of-exam ul{
     flex-direction: column;
   }
+}
+
+@media only screen and (max-width:359px) {
+  .mheader .question_subject, .mheader .question_id, .mheader .inc_dnc_btn{font-size: 10px;}
+  .mheader .logo {margin-right: 0px;margin-left: 0px;}
+  .mheader .logo, .mheader .logo img {max-width: 65px;}
 }

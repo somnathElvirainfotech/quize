@@ -15,6 +15,7 @@ const initialState = {
     speedRefFileLink:"",
     flag_type:"",
     passing_percentage:0,
+    current_score:0
     
 };
 
@@ -24,6 +25,9 @@ const questionSlice = createSlice({
     reducers: {
         count(state, action) {
             state.count = action.payload;
+        },
+        current_score(state, action) {
+            state.current_score = action.payload;
         },
         questionlist(state, action) {
             state.questionlist = action.payload;
@@ -64,6 +68,7 @@ const questionSlice = createSlice({
             state.subject_id="";
             state.flag_type="";
             state.passing_percentage=0;
+            state.current_score=0;
             
         },
         ansSubmit(state,action){

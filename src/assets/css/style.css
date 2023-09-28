@@ -2033,5 +2033,10 @@ a:not([href]):not([class]), a:not([href]):not([class]):hover
     font-size: 15px;
     color: #000;
 }
+
+.mobile_header,.mfooter{
+  display: none;
+}
+
 /*** form-check ****/
 /* =-=-=-=-22-09-2023=-=-=-=-=- */
