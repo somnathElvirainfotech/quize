@@ -457,11 +457,18 @@
 
 }
 
-
+@media only screen and (min-width:568px) {
+  .cmf-mb-filter{
+    display: none;
+  }
+}
 @media only screen and (max-width:568px) {
   /*button.checkAns.btn.btn-primary{
     position: static;
   }*/
+  section.text-engine.d_mode{
+    display: none;
+  }
 
   .Money-Received .money-re-content .content-left,
   .Money-Received .money-re-content .content-right {

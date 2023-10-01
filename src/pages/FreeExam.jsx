@@ -36,6 +36,7 @@ import ScientificCalculator from "./Modal/ScientificCalculator";
 import Reporticon from "../assets/images/report.png";
 import Calculatoricon from "../assets/images/calculator.png";
 import Swal from "sweetalert2";
+import Loader from "./Loader";
 
 function FreeExam() {
   const dispatch = useDispatch();
@@ -49,11 +50,13 @@ function FreeExam() {
   const [lineHeight, setLineHeight] = useState(22);
   const [explanationdisplay, setExplanationdisplay] = useState(false);
   const [explanationfontSize, setExplanationfontSize] = useState(14);
+  const [loader, setLoader] = useState(false);
+  const submitBtnRef = useRef(null);
 
   const FontInc = () => {
     if (fontSize < 20) {
       setFontSize((e) => e + 1);
-      setExplanationfontSize((e) => e + 1)
+      setExplanationfontSize((e) => e + 1);
       setLineHeight((e) => e + 4);
     }
   };
@@ -61,7 +64,7 @@ function FreeExam() {
   const FontDnc = () => {
     if (fontSize > 12) {
       setFontSize((e) => e - 1);
-      setExplanationfontSize((e) => e - 1)
+      setExplanationfontSize((e) => e - 1);
       if (fontSize > 14) {
         setLineHeight((e) => e - 4);
       }
@@ -84,6 +87,7 @@ function FreeExam() {
   const handleNext = async () => {
     var index = question.count;
     if (question.count < question.totalQuestion - 1) {
+      setLoader(true);
       setExplanationdisplay(false);
       index = index + 1;
 
@@ -93,6 +97,7 @@ function FreeExam() {
       // console.log(currentIndex, 'currentIndex')
       await saveAnswerObj();
       await getquestiondata(`qid${index}`);
+      setLoader(false);
     }
   };
 
@@ -100,6 +105,7 @@ function FreeExam() {
     // console.log(currentIndex, 'currentIndex')
     var index = question.count;
     if (question.count > 0) {
+      setLoader(true);
       index = index - 1;
 
       dispatch(questionActions.count(index));
@@ -109,6 +115,7 @@ function FreeExam() {
       await saveAnswerObj();
 
       await getquestiondata(`qid${index}`);
+      setLoader(false);
     }
   };
 
@@ -686,11 +693,12 @@ function FreeExam() {
 
   return (
     <>
+      {loader && <Loader />}
       <section className="Money-Received">
         <div className="container">
           {/* ===== question and exam list ====== */}
 
-          <div className="Money-Received-box">
+          <div className="Money-Received-box d-header">
             <div className="money-header">
               <div className="money-h-left">
                 <h6>{question.subject_name}</h6>
@@ -747,7 +755,7 @@ function FreeExam() {
                 <div className="ch-h">
                   <h3>{question.subject_name}</h3>
                   <small>
-                    QID: {newQID('00000', question.questionlist.id)}{" "}
+                    QID: {newQID("00000", question.questionlist.id)}{" "}
                   </small>
                 </div>
                 <p
@@ -763,7 +771,7 @@ function FreeExam() {
 
                 <div id="monybgwater">
                   <p id="bg-text">
-                    {newQID('00000', question.questionlist.id)}
+                    {newQID("00000", question.questionlist.id)}
                   </p>
                 </div>
               </div>
@@ -994,7 +1002,11 @@ function FreeExam() {
 
                   {Number(question.radMode) === 1 && (
                     <>
-                      <Button type="submit" className="checkAns ">
+                      <Button
+                        type="submit"
+                        ref={submitBtnRef}
+                        className="checkAns "
+                      >
                         Check Answer
                       </Button>
                     </>
@@ -1043,7 +1055,7 @@ function FreeExam() {
                         onClick={() =>
                           Swal.fire({
                             title: "Notice",
-                            html: '<br/><br/>SpeedRef™ is an on-screen integration with the official study guide for quick referencing.<br/><br/><br/>Upgrade to Silver Plan or higher through the Dashboard page in order to use this feature.',
+                            html: "<br/><br/>SpeedRef™ is an on-screen integration with the official study guide for quick referencing.<br/><br/><br/>Upgrade to Silver Plan or higher through the Dashboard page in order to use this feature.",
                             icon: "notice",
                             confirmButtonText: "Ok",
                           })
@@ -1059,10 +1071,11 @@ function FreeExam() {
                         onClick={() =>
                           Swal.fire({
                             title: "Notice",
-                            html: '<br/><br/>Questions, choices and explanations can now be shown in your native language.<br/><br/><br/>Upgrade to Silver Plan or higher through the Dashboard page to use this feature.',
+                            html: "<br/><br/>Questions, choices and explanations can now be shown in your native language.<br/><br/><br/>Upgrade to Silver Plan or higher through the Dashboard page to use this feature.",
                             icon: "notice",
                             confirmButtonText: "Ok",
-                          })}
+                          })
+                        }
                       >
                         <img src={translate} alt="translate" />
                       </a>
@@ -1097,7 +1110,7 @@ function FreeExam() {
 
                 <div id="monybgwater">
                   <p id="bg-text">
-                    {newQID('00000', question.questionlist.id)}
+                    {newQID("00000", question.questionlist.id)}
                   </p>
                 </div>
               </div>
@@ -1137,6 +1150,154 @@ function FreeExam() {
           </div> */}
 
           {/* ======== review ===== */}
+
+          {/* ============= mobile view start ================== */}
+
+          <div className="mobile_header">
+            <div className="mheader">
+              <div className="inc_dnc_btn text-inc-dec" onClick={FontInc}>
+                A+
+              </div>
+              <div className="question_subject">{question.subject_name}</div>
+
+              <div className="question_id">
+                <span className="q_title">QID:</span> {question.questionlist.id}{" "}
+              </div>
+              <div className="logo">
+                <a class="" href="/">
+                  <img
+                    src="data:image/png;base64,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"
+                    alt="logo"
+                    class="footer-logo"
+                  />
+                </a>
+              </div>
+
+              <div className="page-count">
+                <span>Q </span>
+                {question.count+1}/{question.totalQuestion}
+              </div>
+
+              <div className="page-count">
+                <span>Marks </span> {question.current_score}
+              </div>
+
+              <span className="inc_dnc_btn text-inc-dec" onClick={FontDnc}>
+                A-
+              </span>
+            </div>
+          </div>
+
+          <div className="mfooter">
+            <div className="check-answer-nav">
+              <a href="#" className="prev_arrow" onClick={handlePrevious}>
+                <img src={prev} alt="prev" />
+              </a>
+
+              {Number(question.radMode) === 1 && (
+                <>
+                  <Button
+                    type="button"
+                    onClick={() => submitBtnRef.current.click()}
+                    className="check-ans-btn "
+                  >
+                    Check Answer
+                  </Button>
+                </>
+              )}
+
+              
+
+              {question.count === question.totalQuestion-1 ? (
+
+                <a href="#" className="next_arrow" onClick={answersubmit}>
+                  End
+                </a>
+
+              ) : (
+                <a href="#" className="next_arrow" onClick={handleNext}>
+                  <img src={next} alt="next" /> 
+                </a>
+              )}
+
+
+            </div>
+
+            <div className="multiple-options">
+              <ul>
+                <li>
+                  <a
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#scientificCalculatorPopup"
+                    title="Scientific Calculator"
+                  >
+                    <img src={Calculatoricon} alt="query" />
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    href="#"
+                    title="Speed Reference"
+                    onClick={() =>
+                      Swal.fire({
+                        title: "Notice",
+                        html: "<br/><br/>SpeedRef™ is an on-screen integration with the official study guide for quick referencing.<br/><br/><br/>Upgrade to Silver Plan or higher through the Dashboard page in order to use this feature.",
+                        icon: "notice",
+                        confirmButtonText: "Ok",
+                      })
+                    }
+                  >
+                    <img src={search} alt="search" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    title="Translation"
+                    onClick={() =>
+                      Swal.fire({
+                        title: "Notice",
+                        html: "<br/><br/>Questions, choices and explanations can now be shown in your native language.<br/><br/><br/>Upgrade to Silver Plan or higher through the Dashboard page to use this feature.",
+                        icon: "notice",
+                        confirmButtonText: "Ok",
+                      })
+                    }
+                  >
+                    <img src={translate} alt="translate" />
+                  </a>
+                </li>
+                {question.flag_type === "ask_mentor" ? (
+                  <li>
+                    <a
+                      href="#"
+                      data-bs-toggle="modal"
+                      data-bs-target="#mentorpopup"
+                      title="Ask a Mentor"
+                      // onClick={aksMentorRefhandleShow}
+                    >
+                      <img src={query} alt="query" />
+                    </a>
+                  </li>
+                ) : (
+                  <li>
+                    <a
+                      href="#"
+                      data-bs-toggle="modal"
+                      data-bs-target="#Rerrorpopup"
+                      title="Report an Erroneous Question"
+                      // onClick={aksMentorRefhandleShow}
+                    >
+                      <img src={Reporticon} alt="report_error" />
+                    </a>
+                  </li>
+                )}
+              </ul>
+            </div>
+          </div>
+
+          {/* ============= end mobile view start ================ */}
         </div>
       </section>
 
