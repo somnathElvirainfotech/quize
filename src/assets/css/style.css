@@ -1857,6 +1857,7 @@ table.calculator tr:first-child td {
 
 section.model-Search-Popup.calculator-popup .modal-dialog {
   max-width: 345px;
+  margin: 0 auto;
 }
 
 section.model-Search-Popup.calculator-popup button.btn-close {
