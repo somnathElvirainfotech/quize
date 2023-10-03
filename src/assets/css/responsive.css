@@ -454,6 +454,13 @@
   overflow-y: scroll;
   border: 1px solid #e2e2e2;
 }
+/* -==-03-10-2023=-=- */
+.check-answer-nav a.next_arrow{
+  font-size: 13px;
+  text-decoration: none;
+  color: #97a749;
+  margin-right: 0;
+}
 
 }
 

@@ -2324,3 +2324,26 @@ a:not([href]):not([class]), a:not([href]):not([class]):hover
   border: none;
   box-shadow: 2px 3px 10px #58595bcc;
 }
+/* ==-=-03-10-2023=-=-=-Mobile-filter */
+.ms-mobile-select .ms-content{
+  top: 284px;
+}
+.ms-mobile-select .ms-btn-bar{
+  padding: 10px 0;
+}
+.ms-mobile-select .ms-cancel{
+  font-size: 15px;
+}
+.ms-mobile-select .ms-ensure{
+  font-size: 15px
+}
+
+.ms-mobile-select .ms-content{
+  bottom: 0 !important;
+  top: 460px;
+  height: 50vh;
+  left: 0;
+}
+.cmf-mb-filter{
+  margin-bottom: 120px;
+}
