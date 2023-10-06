@@ -19,6 +19,9 @@ class UserService {
       },
     });
   }
+  async getmobiledatalist(){
+    return axios.get('https://www.cmfasacademy.com/api.php?params=mobile_dropdown_data');
+  }
   async Postquestion(data) {
     return axios.post('https://www.cmfasacademy.com/api.php?params=question', data, {
       headers: {

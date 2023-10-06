@@ -49,6 +49,7 @@ function Home() {
   const [mmaxstep, setMmaxstep] = useState(5);
   const [selectedVal, setSelectedVal] = useState("");
   const [selectedId, setSelectedId] = useState("");
+  const [selectedCourseVal, setSelectedCourseVal] = useState("");
   const [lstNum, setLstNum] = useState([5]);
   const [switchrandom, setSwitchrandom] = useState(0);
   const [switchclear, setSwitchclear] = useState(0);
@@ -401,10 +402,10 @@ function Home() {
           for (let i = 0; i < itemdata.length; i++) {
             let dataitem = itemdata[i];
             arr.push(dataitem);
-            mobile_arr.push({
-              id: dataitem.option_value,
-              value: dataitem.option,
-            });
+            // mobile_arr.push({
+            //   id: dataitem.option_value,
+            //   value: dataitem.option,
+            // });
             console.log(dataitem, "dataitem");
           }
           console.log(itemdata, "aarayadata");
@@ -413,11 +414,11 @@ function Home() {
         // console.log(response.data, 'responsedata123')
         setDropdowndata(arr);
 
-        if (auth.isAuthenticated) {
-          setMobileDropdowndata(mobile_arr);
-        } else {
-          setMobileDropdowndata([{ id: "free_trial", value: "Free Trial" }]);
-        }
+        // if (auth.isAuthenticated) {
+        //   setMobileDropdowndata(mobile_arr);
+        // } else {
+        //   setMobileDropdowndata([{ id: "free_trial", value: "Free Trial" }]);
+        // }
 
         // if(!msInstance){
         // //  alert("ok");
@@ -448,6 +449,26 @@ function Home() {
 
     reset();
   };
+  var getmobiledropdowndata = async () => {
+    let mem_id = auth.user_id;
+    console.log(auth.user_id);
+    if (mem_id !== "") {
+      var response = await userService.getmobiledatalist();
+      console.log("mobile data response ", response.data.dropdown_data);
+      if (response.data.status) {
+        if (auth.isAuthenticated) {
+          setMobileDropdowndata(response.data.dropdown_data);
+        } else {
+          setMobileDropdowndata([{ id: "free_trial", value: "Free Trial" }]);
+        }
+      } 
+    } else {
+      console.log("not get token");
+    }
+
+    reset();
+  };
+  
 
   console.log(auth, "!auth.isAuthenticated");
 
@@ -490,6 +511,7 @@ function Home() {
 
   useEffect(() => {
     getdropdowndata();
+    getmobiledropdowndata();
     // setDropdowndatavalue(itemdata)
     document.body.classList.remove("bg-salmon");
 
@@ -739,6 +761,9 @@ function Home() {
             setValue={setValue}
             setSelectedVal={setSelectedVal}
             selectedVal={selectedVal}
+          
+            setSelectedCourseVal={setSelectedCourseVal}
+            selectedCourseVal={selectedCourseVal}
             setSelectedId={setSelectedId}
           />
         </div>

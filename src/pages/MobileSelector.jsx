@@ -43,8 +43,18 @@ function MobileSelector(props) {
         triggerDisplayValue: false, // If you don't want to overwrite the HTML inside the trigger, you need to set this to false
         onChange: (data) => {
           // alert("fg");
-          props.setSelectedVal(data[0].value); 
+          console.log(data,"tttttttttt")
+          if(data.length > 1){
+            props.setSelectedCourseVal(data[0].value); 
+            props.setSelectedVal(data[1].value); 
+          props.setSelectedId(data[1].id); 
+
+          }else{
+            props.setSelectedVal(data[0].value); 
           props.setSelectedId(data[0].id); 
+
+          }
+          
           //console.log(data[0].id,"asdfasd");
           // props.setValue("lstSubject", data[0].id);
         },
@@ -60,8 +70,12 @@ function MobileSelector(props) {
       <div className="mb-f-v1" ref={tirggerRef}>
         {props.selectedVal ? (
           <>
+            
+            <span className="mb-f-v2">{props.selectedCourseVal}</span>
+            <span className="mb-f-v3">
+              <i className="fa-solid fa-play"></i>
+            </span>
             <span className="mb-f-v2">{props.selectedVal}</span>
-
             <span className="mb-f-v5">
               <img src={Updownarrow} alt="Logo" />
             </span>
