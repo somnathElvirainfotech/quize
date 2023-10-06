@@ -94,8 +94,9 @@ function Home() {
       var checkH = "0";
     }
 
-    if (data.lstSubject === "free_trial") {
+    if (!auth.isAuthenticated) {
       const form = new FormData();
+      form.append("lstSubject", data.lstSubject);
       form.append("lstNum", data.lstNum);
       form.append("chkRandom", checkRandom);
       form.append("chkHide", checkH);
@@ -261,8 +262,10 @@ function Home() {
       var checkH = "0";
     }
 
-    if (data.lstSubject === "free_trial") {
+    if (!auth.isAuthenticated) {
       const form = new FormData();
+      
+      form.append("lstSubject", data.lstSubject);
       form.append("lstNum", data.lstNum);
       form.append("chkRandom", checkRandom);
       form.append("chkHide", checkH);
@@ -412,36 +415,10 @@ function Home() {
         }
         // setDropdowndata(response.data)
         // console.log(response.data, 'responsedata123')
+        
         setDropdowndata(arr);
 
-        // if (auth.isAuthenticated) {
-        //   setMobileDropdowndata(mobile_arr);
-        // } else {
-        //   setMobileDropdowndata([{ id: "free_trial", value: "Free Trial" }]);
-        // }
-
-        // if(!msInstance){
-        // //  alert("ok");
-
-        //   msInstance = new MobileSelect({
-        //     title:"Selector",
-        //     cancelBtnText:"Cancel",
-        //     ensureBtnText:"Select",
-        //       wheels: [
-        //         {
-        //           data: mobile_arr,
-        //         }
-        //       ],
-        //       trigger: tirggerRef.current,
-        //       triggerDisplayValue: false, // If you don't want to overwrite the HTML inside the trigger, you need to set this to false
-        //       onChange: (data) => {
-        //         setSelectedVal(JSON.stringify(data));
-        //       },
-        //     });
-        // }
-        // return () => {
-        //   msInstance?.destroy();  // Destroying instance
-        // };
+       
       }
     } else {
       console.log("not get token");
@@ -449,22 +426,53 @@ function Home() {
 
     reset();
   };
+  var getFreeTrialDropdownData = async () => {
+  
+      var response = await userService.get_free_trial_dropdown_data();
+    //  console.log("free trial data ", response.data);
+
+     
+      if (response.data.error) {
+        setDropdowndata([]);
+      } else {
+        var arr = [];
+        var mobile_arr = [];
+        console.log("free trial data",response.data.dropdown_data);
+        // for (let i = 0; i < response.data.dropdown_data.length; i++) {
+        //   var itemdata = response.data.dropdown_data[i];
+        //   for (let i = 0; i < itemdata.length; i++) {
+        //     let dataitem = itemdata[i];
+        //     arr.push(dataitem);
+        //     // mobile_arr.push({
+        //     //   id: dataitem.option_value,
+        //     //   value: dataitem.option,
+        //     // });
+        //     console.log(dataitem, "dataitem");
+        //   }
+        //   console.log(itemdata, "aarayadata");
+        // }
+       
+        
+        setDropdowndata(response.data.dropdown_data);
+
+       
+      }
+    
+    reset();
+  };
   var getmobiledropdowndata = async () => {
-    let mem_id = auth.user_id;
-    console.log(auth.user_id);
-    if (mem_id !== "") {
+   
       var response = await userService.getmobiledatalist();
       console.log("mobile data response ", response.data.dropdown_data);
       if (response.data.status) {
         if (auth.isAuthenticated) {
           setMobileDropdowndata(response.data.dropdown_data);
         } else {
-          setMobileDropdowndata([{ id: "free_trial", value: "Free Trial" }]);
+          setMobileDropdowndata(response.data.dropdown_data);
+          
         }
       } 
-    } else {
-      console.log("not get token");
-    }
+   
 
     reset();
   };
@@ -510,7 +518,11 @@ function Home() {
 
 
   useEffect(() => {
+    if(auth.isAuthenticated){
     getdropdowndata();
+    }else{
+      getFreeTrialDropdownData();
+    }
     getmobiledropdowndata();
     // setDropdowndatavalue(itemdata)
     document.body.classList.remove("bg-salmon");
@@ -561,8 +573,16 @@ function Home() {
                     className="form-select"
                     {...register("lstSubject")}
                   >
-                    {/* <option Value={""}>Choose a Filter below</option> */}
-                    <option Value={"free_trial"}>Free Trial</option>
+                   <option Value={""}>Choose a Filter below</option>
+
+                    {Dropdowndata &&
+                      Dropdowndata.map((item) => {
+                        return (
+                          <option value={item.option_value}>
+                            {item.option}
+                          </option>
+                        );
+                      })}
                   </select>
                 )}
                 {auth.isAuthenticated && (

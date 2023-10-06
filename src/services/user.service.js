@@ -19,6 +19,9 @@ class UserService {
       },
     });
   }
+  async get_free_trial_dropdown_data(){
+    return axios.get('https://www.cmfasacademy.com/api.php?params=free_trial_dropdown_data');
+  }
   async getmobiledatalist(){
     return axios.get('https://www.cmfasacademy.com/api.php?params=mobile_dropdown_data');
   }
