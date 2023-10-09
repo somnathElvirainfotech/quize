@@ -115,16 +115,7 @@ function Home() {
 
         responce.data.ques.ans = new_ans;
 
-        // sessionStorage.clear();
-
-        // dispatch({ type: "questionlist", value: responce.data.ques });
-
-        // const arrayOfObjects = Object.keys(responce.data.question_ids).map((key) => ({ key, value: responce.data.question_ids[key] }));
-
-        // dispatch({ type: "questionid", value: responce.data.question_ids });
-        // dispatch({ type: "totalQuestion", value: data.lstNum });
-        // dispatch({ type: "subject_name", value: responce.data.subject_name });
-        // dispatch({ type: "radMode", value: data.radMode });
+        
 
         dispatch(questionActions.questionReset());
 
