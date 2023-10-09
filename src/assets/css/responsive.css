@@ -435,7 +435,7 @@
   bottom: 0;
   width: 100%;
   background-color: #fff;
-  z-index: 999;
+  z-index: 21474800021411;
   box-shadow: 0 0.225rem 0.5rem rgba(0,0,0,0.075) !important;
   padding: 15px;
 }
@@ -450,7 +450,7 @@
 }
 
 .d-header .money-re-content {
-  max-height: 537px;
+  max-height: 480px;
   overflow-y: scroll;
   border: 1px solid #e2e2e2;
 }

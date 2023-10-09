@@ -843,29 +843,8 @@ function Home() {
           </p>
 
           <div className="mobile-range-btm-wrap">
-            <div className="f-wrap">
-              <span className="text">Random Sequence</span>
-
-              <div className="switch-toggle">
-                <i
-                  data-tooltip-id="m-my-tooltip"
-                  data-tooltip-content="Questions will be sorted randomly"
-                  class="fa-regular fa-circle-question"
-                ></i>
-
-                <Tooltip id="m-my-tooltip" />
-                <label class="switch">
-                  <input
-                    type="checkbox"
-                    onClick={toggleDisplayRandom}
-                    checked={switchrandom == 1 ? true : false}
-                  />
-                  <span class="slider"></span>
-                </label>
-              </div>
-            </div>
-            <div className="f-wrap">
-              <span className="text">Skip Cleared Questions</span>
+          <div className="f-wrap">
+              <span className="text">Redo Cleared Questions</span>
 
               <div className="switch-toggle">
                 <i
@@ -885,7 +864,29 @@ function Home() {
               </div>
             </div>
             <div className="f-wrap">
-              <span className="text">Exam mode</span>
+              <span className="text">Sequential</span>
+
+              <div className="switch-toggle">
+                <i
+                  data-tooltip-id="m-my-tooltip"
+                  data-tooltip-content="Questions will be sorted randomly"
+                  class="fa-regular fa-circle-question"
+                ></i>
+
+                <Tooltip id="m-my-tooltip" />
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    onClick={toggleDisplayRandom}
+                    checked={switchrandom == 1 ? true : false}
+                  />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+            
+            <div className="f-wrap">
+              <span className="text">Exam Mode</span>
 
               <div className="switch-toggle">
                 <i class="fa-regular fa-circle-question"></i>
