@@ -30,15 +30,18 @@ function MobileSelector(props) {
   const tirggerRef = useRef(null);
   let msInstance = null;
 
+  
+
   useEffect(() => {
     if (!msInstance) {
       //alert("ok")
       //   msInstance?.destroy();
+//var drp_data=props.MobileDropdowndata;
       msInstance = new MobileSelect({
         title: "Selector",
         cancelBtnText: "Cancel",
         ensureBtnText: "Select",
-        wheels: [{ data: props.MobileDropdowndata }],
+        wheels: [{ data: props.MobileDropdowndata}],
         trigger: tirggerRef.current,
         triggerDisplayValue: false, // If you don't want to overwrite the HTML inside the trigger, you need to set this to false
         onChange: (data) => {

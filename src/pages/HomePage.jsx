@@ -457,6 +457,8 @@ function Home() {
       console.log("mobile data response ", response.data.dropdown_data);
       if (response.data.status) {
         if (auth.isAuthenticated) {
+          var drp_data=response.data.dropdown_data;
+          drp_data.unshift({id:"[FAQ]",value:"Orientation"},{id:"[BQ]",value:"Bookmarked"});
           setMobileDropdowndata(response.data.dropdown_data);
         } else {
           setMobileDropdowndata(response.data.dropdown_data);
