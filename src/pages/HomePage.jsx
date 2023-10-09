@@ -242,15 +242,15 @@ function Home() {
 
     let chkRandom = data.chkRandom;
     let chkHide = data.chkHide;
-    if (chkRandom == "true") {
-      var checkRandom = "1";
-    } else {
+    if (chkRandom) {
       var checkRandom = "0";
-    }
-    if (chkHide == "true") {
-      var checkH = "1";
     } else {
+      var checkRandom = "1";
+    }
+    if (chkHide) {
       var checkH = "0";
+    } else {
+      var checkH = "1";
     }
 
     if (!auth.isAuthenticated) {
