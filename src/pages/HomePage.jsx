@@ -443,8 +443,13 @@ function Home() {
         //   console.log(itemdata, "aarayadata");
         // }
        
-        
-        setDropdowndata(response.data.dropdown_data);
+        var drp_data=response.data.dropdown_data;
+        if (auth.isAuthenticated) {
+          drp_data.unshift({option_value:"[FAQ]",option:"Orientation"},{option_value:"[BQ]",option:"Bookmarked"});
+        }else{
+          drp_data.unshift({option_value:"[FAQ]",option:"Orientation"});
+        }
+        setDropdowndata(drp_data);
 
        
       }
@@ -459,9 +464,10 @@ function Home() {
         if (auth.isAuthenticated) {
           var drp_data=response.data.dropdown_data;
           drp_data.unshift({id:"[FAQ]",value:"Orientation"},{id:"[BQ]",value:"Bookmarked"});
-          setMobileDropdowndata(response.data.dropdown_data);
+          setMobileDropdowndata(drp_data);
         } else {
-          setMobileDropdowndata(response.data.dropdown_data);
+          drp_data.unshift({option_value:"[FAQ]",option:"Orientation"});
+          setMobileDropdowndata(drp_data);
           
         }
       } 
