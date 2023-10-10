@@ -429,19 +429,7 @@ function Home() {
         var arr = [];
         var mobile_arr = [];
         console.log("free trial data",response.data.dropdown_data);
-        // for (let i = 0; i < response.data.dropdown_data.length; i++) {
-        //   var itemdata = response.data.dropdown_data[i];
-        //   for (let i = 0; i < itemdata.length; i++) {
-        //     let dataitem = itemdata[i];
-        //     arr.push(dataitem);
-        //     // mobile_arr.push({
-        //     //   id: dataitem.option_value,
-        //     //   value: dataitem.option,
-        //     // });
-        //     console.log(dataitem, "dataitem");
-        //   }
-        //   console.log(itemdata, "aarayadata");
-        // }
+       
        
         var drp_data=response.data.dropdown_data;
         if (auth.isAuthenticated) {
