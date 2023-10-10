@@ -461,8 +461,9 @@ function Home() {
       var response = await userService.getmobiledatalist();
       console.log("mobile data response ", response.data.dropdown_data);
       if (response.data.status) {
+        var drp_data=response.data.dropdown_data;
         if (auth.isAuthenticated) {
-          var drp_data=response.data.dropdown_data;
+          
           drp_data.unshift({id:"[FAQ]",value:"Orientation"},{id:"[BQ]",value:"Bookmarked"});
           setMobileDropdowndata(drp_data);
         } else {
