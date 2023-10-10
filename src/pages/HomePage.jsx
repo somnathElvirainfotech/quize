@@ -34,6 +34,7 @@ import { Range } from "react-range";
 import Updownarrow from "../assets/images/up-down-arrow.png";
 import MobileSelect, { CustomConfig } from "mobile-select";
 import MobileSelector from "./MobileSelector";
+import Modal from 'react-bootstrap/Modal';
 function Home() {
   // const { user, dispatch } = useContext(userContext);
   const tirggerRef = useRef(null);
@@ -56,6 +57,7 @@ function Home() {
   const [Switchexammode, setSwitchexammode] = useState(1);
   const [lstSubjectError, setlstSubjectError] = useState(false);
   const [lstlstNumError, setlstlstNumError] = useState(false);
+  const [show, setShow] = useState(false);
   //  =========== end mobile view state =================
 
   // const [Dropdowndatavalue, setDropdowndatavalue] = useState([]);
@@ -70,7 +72,8 @@ function Home() {
   });
 
   var Navigate = useNavigate();
-
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   // ============ desktop view submit form =================
   var submit = async (data) => {
     //alert("ok");
@@ -95,6 +98,9 @@ function Home() {
     }
 
     if (!auth.isAuthenticated) {
+     // handleShow();
+      
+      
       const form = new FormData();
       form.append("lstSubject", data.lstSubject);
       form.append("lstNum", data.lstNum);
@@ -142,6 +148,8 @@ function Home() {
         Navigate("/free-exam");
       }
     } else {
+
+    
       const form = new FormData();
       form.append("lstSubject", data.lstSubject);
       form.append("lstNum", data.lstNum);
@@ -434,9 +442,10 @@ function Home() {
         var drp_data=response.data.dropdown_data;
         if (auth.isAuthenticated) {
           drp_data.unshift({option_value:"[FAQ]",option:"Orientation"},{option_value:"[BQ]",option:"Bookmarked"});
-        }else{
-          drp_data.unshift({option_value:"[FAQ]",option:"Orientation"});
         }
+        // }else{
+        //   drp_data.unshift({option_value:"[FAQ]",option:"Orientation"});
+        // }
         setDropdowndata(drp_data);
 
        
@@ -455,7 +464,7 @@ function Home() {
           drp_data.unshift({id:"[FAQ]",value:"Orientation"},{id:"[BQ]",value:"Bookmarked"});
           setMobileDropdowndata(drp_data);
         } else {
-          drp_data.unshift({option_value:"[FAQ]",option:"Orientation"});
+          //drp_data.unshift({option_value:"[FAQ]",option:"Orientation"});
           setMobileDropdowndata(drp_data);
           
         }
@@ -949,6 +958,20 @@ function Home() {
                     </div>
                 </div>
             </section> */}
+            <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
