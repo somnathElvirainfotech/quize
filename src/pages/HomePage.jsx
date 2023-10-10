@@ -84,14 +84,14 @@ function Home() {
     let chkRandom = data.chkRandom;
     let chkHide = data.chkHide;
     if (chkRandom == "true") {
-      var checkRandom = "1";
-    } else {
       var checkRandom = "0";
+    } else {
+      var checkRandom = "1";
     }
     if (chkHide == "true") {
-      var checkH = "1";
-    } else {
       var checkH = "0";
+    } else {
+      var checkH = "1";
     }
 
     if (!auth.isAuthenticated) {
@@ -646,10 +646,10 @@ function Home() {
                   <li>
                     <input
                       type="checkbox"
-                      defaultChecked
+                      
                       {...register("chkRandom")}
                     />
-                    <label htmlFor="">Random Sequence</label>
+                    <label htmlFor="">Sequential</label>
                     <a
                       data-tooltip-id="my-tooltip"
                       data-tooltip-content="Questions will be sorted randomly"
@@ -665,10 +665,9 @@ function Home() {
                   <li>
                     <input
                       type="checkbox"
-                      defaultChecked
                       {...register("chkHide")}
                     />
-                    <label htmlFor="">Skip Cleared Questions</label>
+                    <label htmlFor="">Redo Cleared Questions</label>
                     <a
                       data-tooltip-id="my-skip"
                       data-tooltip-content="Fetch only questions that had not ever been answered correctly before"
