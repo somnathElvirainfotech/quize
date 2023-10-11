@@ -37,6 +37,7 @@ import Reporticon from "../assets/images/report.png";
 import Calculatoricon from "../assets/images/calculator.png";
 import Swal from "sweetalert2";
 import Loader from "./Loader";
+import logo from "../assets/images/logo.png";
 
 function FreeExam() {
   const dispatch = useDispatch();
@@ -700,13 +701,18 @@ function FreeExam() {
 
           <div className="Money-Received-box d-header">
             <div className="money-header">
-              <div className="money-h-left">
+            <div className="logo">
+              <NavLink to="/">
+                <img src={logo} alt="logo" className="footer-logo" />
+              </NavLink>
+            </div>
+              {/* <div className="money-h-left">
                 <h6>{question.subject_name}</h6>
-                {/* <select id="inputState" className="form-select">
+                <select id="inputState" className="form-select">
                   <option selected="">Section #1</option>
                   <option>Section #2</option>
-                </select> */}
-              </div>
+                </select>
+              </div> */}
               <div className="money-h-middle">
                 <span className="page-count">
                   Attempted : {question.answerObj.length}/
@@ -740,6 +746,9 @@ function FreeExam() {
                   )}
                 </ul>
               </div>
+
+              <a class="Money-Re-login" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginpopup">login</a>
+
               <div className="money-h-right">
                 <span className="inc_dnc_btn text-inc-dec" onClick={FontInc}>
                   A+

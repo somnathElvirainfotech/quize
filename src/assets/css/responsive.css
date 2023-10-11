@@ -136,8 +136,28 @@
 
   /*end-14-9-23*/
 }
-
+/* =-=-=-11-10-2023=-S=-=- */
+@media only screen and (min-width:767px) {
+  .Money-Received .money-re-content .content-left, .Money-Received .money-re-content .content-right{
+    padding-top: 70px;
+  }
+  .Money-Received .container{
+    max-width: 1280px;
+  }
+  .ms-mobile-select .ms-content{
+    top: 360px;
+  }
+  .ms-mobile-select .ms-content{
+    height: 100vh;
+  }
+}
+/* =-=-=-11-10-2023=-E=-=- */
 @media only screen and (max-width:767px) {
+    /* =-=-=-11-10-2023=-S=- */
+  .ms-mobile-select .ms-content{
+    top: 340px;
+  }
+  /* =-=-=-11-10-2023=-E=- */
   .services__item {
     width: 100%;
   }
@@ -517,6 +537,12 @@
   .text-engine .mode-of-exam ul{
     flex-direction: column;
   }
+  /* =-=-11-10-2023=-=- */
+  .license-agree-modal  .modal-title.h4,
+  .sub-mdl .modal-title.h4{
+    font-size: 16px;
+  }
+    /* =-=-11-10-2023=-=- */
 }
 
 @media only screen and (max-width:359px) {

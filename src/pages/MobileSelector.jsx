@@ -52,10 +52,12 @@ function MobileSelector(props) {
             props.setSelectedVal(data[1].value); 
           props.setSelectedId(data[1].id); 
 
+          props.setValue("lstSubject",data[1].id)
+
           }else{
             props.setSelectedVal(data[0].value); 
           props.setSelectedId(data[0].id); 
-
+          props.setValue("lstSubject",data[0].id)
           }
           
           //console.log(data[0].id,"asdfasd");

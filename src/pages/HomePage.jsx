@@ -58,6 +58,9 @@ function Home() {
   const [lstSubjectError, setlstSubjectError] = useState(false);
   const [lstlstNumError, setlstlstNumError] = useState(false);
   const [show, setShow] = useState(false);
+  const [showtermcondition, setShowtermcondition] = useState(false);
+  const [alldataform, setAlldataform] = useState({});
+  const [modalmsg, setModalmsg] = useState("");
   //  =========== end mobile view state =================
 
   // const [Dropdowndatavalue, setDropdowndatavalue] = useState([]);
@@ -74,36 +77,25 @@ function Home() {
   var Navigate = useNavigate();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  // ============ desktop view submit form =================
-  var submit = async (data) => {
-    //alert("ok");
-    // if (!auth.isAuthenticated) {
-    //     toast.warning("Login Is Required!")
-    //     return;
-    // }
+  
+  const handleFreeTrial = () => {
+    setShow(false);
+    setShowtermcondition(true)
+  } 
+  const termconditionhandleClose = () => setShowtermcondition(false);
+  const termconditionhandleShow = () => setShowtermcondition(true);
+  
+  const handleExam = async () => {
+    setShowtermcondition(false);
+    var data=alldataform;
 
-    // alert(1)
-    console.log(data);
-    let chkRandom = data.chkRandom;
-    let chkHide = data.chkHide;
-    if (chkRandom == "true") {
-      var checkRandom = "0";
-    } else {
-      var checkRandom = "1";
-    }
-    if (chkHide == "true") {
+      var checkRandom = "0"; 
       var checkH = "0";
-    } else {
-      var checkH = "1";
-    }
-
-    if (!auth.isAuthenticated) {
-     // handleShow();
-      
-      
-      const form = new FormData();
+      var no_of_question = 5;
+    
+    const form = new FormData();
       form.append("lstSubject", data.lstSubject);
-      form.append("lstNum", data.lstNum);
+      form.append("lstNum", no_of_question);
       form.append("chkRandom", checkRandom);
       form.append("chkHide", checkH);
       form.append("radMode", data.radMode);
@@ -147,6 +139,83 @@ function Home() {
 
         Navigate("/free-exam");
       }
+
+   
+  } 
+  // ============ desktop view submit form =================
+  var submit = async (data) => {
+    //alert("ok");
+    // if (!auth.isAuthenticated) {
+    //     toast.warning("Login Is Required!")
+    //     return;
+    // }
+
+    // alert(1)
+    console.log(data);
+    let chkRandom = data.chkRandom;
+    let chkHide = data.chkHide;
+    if (chkRandom == "true") {
+      var checkRandom = "0";
+    } else {
+      var checkRandom = "1";
+    }
+    if (chkHide == "true") {
+      var checkH = "0";
+    } else {
+      var checkH = "1";
+    }
+    setAlldataform(data)
+    if (!auth.isAuthenticated) {
+      setModalmsg("You're NOT logged in to any account.");
+     handleShow();
+      
+      
+      // const form = new FormData();
+      // form.append("lstSubject", data.lstSubject);
+      // form.append("lstNum", data.lstNum);
+      // form.append("chkRandom", checkRandom);
+      // form.append("chkHide", checkH);
+      // form.append("radMode", data.radMode);
+      // form.append("type", "filter");
+
+      // var responce = await userService.FreeQuestion(form);
+
+      // if (responce.data.error) {
+      //   toast.error(responce.data.error);
+      // } else {
+      //   console.log(responce.data, "jghjgjg");
+      //   console.log(responce.data.question_ids, "jghjgjg");
+
+      //   let new_ans = await removeDuplicates(responce.data.ques.ans);
+
+      //   responce.data.ques.ans = new_ans;
+
+        
+
+      //   dispatch(questionActions.questionReset());
+
+      //   dispatch(questionActions.questionlist(responce.data.ques));
+      //   dispatch(questionActions.questionid(responce.data.question_ids));
+      //   dispatch(questionActions.totalQuestion(responce.data.question_count));
+      //   dispatch(questionActions.subject_name(responce.data.subject_name));
+      //   dispatch(questionActions.radMode(data.radMode));
+      //   dispatch(
+      //     questionActions.speedRefFileLink(
+      //       responce.data.speed_reference_file_path
+      //     )
+      //   );
+
+      //   dispatch(questionActions.subject_id(data.lstSubject));
+      //   dispatch(questionActions.flag_type(responce.data.flag_type));
+
+      //   dispatch(
+      //     questionActions.passing_percentage(
+      //       Number(responce.data.passing_percentage)
+      //     )
+      //   );
+
+      //   Navigate("/free-exam");
+      // }
     } else {
 
     
@@ -164,27 +233,18 @@ function Home() {
       console.log(responce.data);
       if (responce.data.error) {
         toast.error(responce.data.error);
+        setModalmsg("You're NOT subscribed to select Module.");
+        handleShow();
+
       } else {
         console.log(responce.data, "jghjgjg");
         console.log(responce.data.question_ids, "jghjgjg");
 
         let new_ans = await removeDuplicates(responce.data.ques.ans);
 
-        responce.data.ques.ans = new_ans;
-
-        // sessionStorage.clear();
-
-        // dispatch({ type: "questionlist", value: responce.data.ques });
-
-        // const arrayOfObjects = Object.keys(responce.data.question_ids).map((key) => ({ key, value: responce.data.question_ids[key] }));
-
-        // dispatch({ type: "questionid", value: responce.data.question_ids });
-        // dispatch({ type: "totalQuestion", value: data.lstNum });
-        // dispatch({ type: "subject_name", value: responce.data.subject_name });
-        // dispatch({ type: "radMode", value: data.radMode });
+        responce.data.ques.ans = new_ans;      
 
         dispatch(questionActions.questionReset());
-
         dispatch(questionActions.questionlist(responce.data.ques));
         dispatch(questionActions.questionid(responce.data.question_ids));
         dispatch(questionActions.totalQuestion(responce.data.question_count));
@@ -260,64 +320,56 @@ function Home() {
     } else {
       var checkH = "1";
     }
-
+    setAlldataform(data)
     if (!auth.isAuthenticated) {
-      const form = new FormData();
+      setModalmsg("You're NOT logged in to any account.");
+      handleShow();
+      // const form = new FormData();
       
-      form.append("lstSubject", data.lstSubject);
-      form.append("lstNum", data.lstNum);
-      form.append("chkRandom", checkRandom);
-      form.append("chkHide", checkH);
-      form.append("radMode", data.radMode);
-      form.append("type", "filter");
+      // form.append("lstSubject", data.lstSubject);
+      // form.append("lstNum", data.lstNum);
+      // form.append("chkRandom", checkRandom);
+      // form.append("chkHide", checkH);
+      // form.append("radMode", data.radMode);
+      // form.append("type", "filter");
 
-      var responce = await userService.FreeQuestion(form);
+      // var responce = await userService.FreeQuestion(form);
 
-      if (responce.data.error) {
-        toast.error(responce.data.error);
-      } else {
-        console.log(responce.data, "jghjgjg");
-        console.log(responce.data.question_ids, "jghjgjg");
+      // if (responce.data.error) {
+      //   toast.error(responce.data.error);
+      // } else {
+      //   console.log(responce.data, "jghjgjg");
+      //   console.log(responce.data.question_ids, "jghjgjg");
 
-        let new_ans = await removeDuplicates(responce.data.ques.ans);
+      //   let new_ans = await removeDuplicates(responce.data.ques.ans);
 
-        responce.data.ques.ans = new_ans;
+      //   responce.data.ques.ans = new_ans;
 
-        // sessionStorage.clear();
+   
+      //   dispatch(questionActions.questionReset());
 
-        // dispatch({ type: "questionlist", value: responce.data.ques });
+      //   dispatch(questionActions.questionlist(responce.data.ques));
+      //   dispatch(questionActions.questionid(responce.data.question_ids));
+      //   dispatch(questionActions.totalQuestion(responce.data.question_count));
+      //   dispatch(questionActions.subject_name(responce.data.subject_name));
+      //   dispatch(questionActions.radMode(data.radMode));
+      //   dispatch(
+      //     questionActions.speedRefFileLink(
+      //       responce.data.speed_reference_file_path
+      //     )
+      //   );
 
-        // const arrayOfObjects = Object.keys(responce.data.question_ids).map((key) => ({ key, value: responce.data.question_ids[key] }));
+      //   dispatch(questionActions.subject_id(data.lstSubject));
+      //   dispatch(questionActions.flag_type(responce.data.flag_type));
 
-        // dispatch({ type: "questionid", value: responce.data.question_ids });
-        // dispatch({ type: "totalQuestion", value: data.lstNum });
-        // dispatch({ type: "subject_name", value: responce.data.subject_name });
-        // dispatch({ type: "radMode", value: data.radMode });
+      //   dispatch(
+      //     questionActions.passing_percentage(
+      //       Number(responce.data.passing_percentage)
+      //     )
+      //   );
 
-        dispatch(questionActions.questionReset());
-
-        dispatch(questionActions.questionlist(responce.data.ques));
-        dispatch(questionActions.questionid(responce.data.question_ids));
-        dispatch(questionActions.totalQuestion(responce.data.question_count));
-        dispatch(questionActions.subject_name(responce.data.subject_name));
-        dispatch(questionActions.radMode(data.radMode));
-        dispatch(
-          questionActions.speedRefFileLink(
-            responce.data.speed_reference_file_path
-          )
-        );
-
-        dispatch(questionActions.subject_id(data.lstSubject));
-        dispatch(questionActions.flag_type(responce.data.flag_type));
-
-        dispatch(
-          questionActions.passing_percentage(
-            Number(responce.data.passing_percentage)
-          )
-        );
-
-        Navigate("/free-exam");
-      }
+      //   Navigate("/free-exam");
+      // }
     } else {
       const form = new FormData();
       form.append("lstSubject", data.lstSubject);
@@ -332,7 +384,9 @@ function Home() {
 
       console.log(responce.data);
       if (responce.data.error) {
+        setModalmsg("You're NOT subscribed to select Module.");
         toast.error(responce.data.error);
+        handleShow();
       } else {
         console.log(responce.data, "jghjgjg");
         console.log(responce.data.question_ids, "jghjgjg");
@@ -564,7 +618,7 @@ function Home() {
                 <label htmlFor="inputState" className="form-label">
                   Pick A Question Set:
                 </label>
-                {!auth.isAuthenticated && (
+                {/* {!auth.isAuthenticated && (
                   <select
                     id="inputState"
                     className="form-select"
@@ -599,7 +653,17 @@ function Home() {
                         );
                       })}
                   </select>
-                )}
+                )} */}
+                 <MobileSelector
+            MobileDropdowndata={MobileDropdowndata}
+            setValue={setValue}
+            setSelectedVal={setSelectedVal}
+            selectedVal={selectedVal}
+          
+            setSelectedCourseVal={setSelectedCourseVal}
+            selectedCourseVal={selectedCourseVal}
+            setSelectedId={setSelectedId}
+          />
                 <p style={{ color: "red" }} className="form-field-error">
                   {errors.lstSubject?.message}
                 </p>
@@ -609,18 +673,7 @@ function Home() {
                 <label htmlFor="inputState" className="form-label">
                   How Many Questions To Load?
                 </label>
-                {!auth.isAuthenticated && (
-                  <select
-                    id="inputState"
-                    className="form-select"
-                    {...register("lstNum")}
-                  >
-                    <option selected="" value={5}>
-                      5 Questions
-                    </option>
-                  </select>
-                )}
-                {auth.isAuthenticated && (
+               
                   <select
                     id="inputState"
                     className="form-select"
@@ -638,7 +691,7 @@ function Home() {
                     <option value={100}>100 Questions</option>
                     <option value={200}>200 Questions</option>
                   </select>
-                )}
+             
                 <p style={{ color: "red" }} className="form-field-error">
                   {errors.lstNum?.message}
                 </p>
@@ -958,17 +1011,132 @@ function Home() {
                     </div>
                 </div>
             </section> */}
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose}  className="sub-mdl">
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>No Valid Subscription</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+          <div>
+             {modalmsg}
+          </div>
+          <div>
+            <span>
+            Module/Set selected:
+            </span>
+            <span>
+            {selectedCourseVal}
+            </span>
+            <span>( {selectedVal} )
+            </span>
+          
+          </div>
+          <div>
+          Would you like to do a free trial?
+          </div>
+          <div>
+
+          </div>
+         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
           <Button variant="primary" onClick={handleClose}>
-            Save Changes
+            Reconfigure
+          </Button>
+          <Button variant="primary" onClick={handleFreeTrial}>
+            Free Trial
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showtermcondition} onHide={termconditionhandleClose} className="license-agree-modal">
+        <Modal.Header closeButton>
+          <Modal.Title>END USER LICENSE AGREEEMENT</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <div
+  align="left"
+  style={{
+    padding: 15,
+    overflow: "auto",
+    fontSize: "11pt",
+    textAlign: "justify",
+    fontFamily: "Open Sans"
+  }}
+>
+  <b>Instruction:</b> Read through this and scroll down to the bottom to Agree
+  or Disagree.
+  <br />
+  <br />
+  Upon purchase or registration of any Product from CMFAS Academy (a brand
+  managed by KLOGE LLP), the account owner is granted the right to use ONE copy
+  of the software, subscription or study guide product, for a SINGLE user, for
+  private and non-commercial use. Access to any content provided on a
+  subscription basis is permitted solely to the registered User. It is the
+  responsibility of the User to protect the confidentiality of access
+  credentials such as login User identification and password. The registered
+  User identification (email) and password may NOT be shared with other users.
+  <br />
+  <br />
+  You acknowledge the copyright of all Products are authorised to KLOGE LLP, is
+  protected by Singapore copyright laws and international treaty provisions, and
+  will not challenge KLOGE LLP's Copyright authority for said Product(s).
+  Content within the Product(s) (examples include but are not limited to:
+  Practice Test Software, Study Guide, Web-Based Training, or other provided
+  resource materials) may be managed by or authorised to KLOGE LLP and/or an
+  Independent Contractor Author or Publisher, and is protected by Singapore
+  copyright laws and international treaty provisions.
+  <br />
+  <br />
+  <strong>You may NOT copy</strong> any registered Product, software, test
+  question, study guide, or related document, to any other computer.{" "}
+  <strong>
+    You may NOT share course subscription access credentials such as user name
+    and password with any other user.
+  </strong>{" "}
+  You may NOT permit the public viewing or use of any Product (i.e. software,
+  E-Learning or study guide).
+  <br />
+  <br />
+  <strong>
+    You agree to pay for one additional subscription license for each unique
+    device fingerprint recorded by our system should it be found that your
+    account had been accessed by a third party other than you.
+  </strong>
+  <br />
+  <br />
+  All access to our material without a valid license, or using someone else's
+  license, regardless with or without permission from the account owner, is
+  prohibited. You agree to pay damages for all use of the software without
+  license, including but not limited to the cost of overused licenses, late
+  payment fees, legal fees, court fees and investigation fees.
+  <br />
+  <br />
+  Any type of copying of any Product, software, or product content is prohibited
+  by Copyright Law and/or International Treaties. All Products (eg. software,
+  practice tests, and web-based training) are licensed to the individual or
+  entity (user as defined in this EULA) on a per-user basis. The user agrees
+  with the terms of all sections of this agreement.
+  <br />
+  <br />
+  No warranty is expressed or implied. All information provided by contractors
+  or staff of KLOGE LLP, or within Content (such as test questions, practice
+  tests, databases, web-based training, etcetera), software, Products, and all
+  related information is provided on an 'as-is' basis with no warranty or
+  fitness implied. The user agrees that the various Independent Contractor
+  Authors, Publishers, KLOGE LLP Staff, and KLOGE LLP shall have neither
+  liability nor responsibility to any person or entity with respect to any loss
+  or damages arising from the Product, or any information contained on the KLOGE
+  LLP Web Site or from the use of any KLOGE LLP related information, software,
+  or training programs.
+  <br />
+  <br />
+</div>
+
+         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={termconditionhandleClose}>
+            I DISAGREE
+          </Button>
+          <Button variant="primary" onClick={handleExam}>
+            I AGREEE
           </Button>
         </Modal.Footer>
       </Modal>

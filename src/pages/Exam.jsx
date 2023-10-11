@@ -37,6 +37,7 @@ import Reporticon from "../assets/images/report.png";
 import Calculatoricon from "../assets/images/calculator.png";
 import Loader from "./Loader";
 
+
 function Exam() {
   const dispatch = useDispatch();
   const question = useSelector((state) => state.question);
