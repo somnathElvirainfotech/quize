@@ -37,7 +37,7 @@ import Reporticon from "../assets/images/report.png";
 import Calculatoricon from "../assets/images/calculator.png";
 import Loader from "./Loader";
 import logo from "../assets/images/logo.png";
-
+import Modal from 'react-bootstrap/Modal';
 function Exam() {
   const dispatch = useDispatch();
   const question = useSelector((state) => state.question);
@@ -52,7 +52,29 @@ function Exam() {
   const [lineHeight, setLineHeight] = useState(22);
   const [explanationdisplay, setExplanationdisplay] = useState(false);
   const [explanationfontSize, setExplanationfontSize] = useState(14);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handlerRemoveBookmarked = async() => {
+    setShow(false);
+   // setShowtermcondition(true)
+   const form = new FormData();
+   form.append("user_id", auth.user_id);
+   form.append("question_id", question.questionlist.id);
 
+   console.log("remove question_id ", question.questionlist.id);
+
+   var responce = await userService.RemoveBookmark(form);
+
+   console.log("AddBookmark ", responce.data)
+
+   if (responce.data.status) {
+     toast.success(responce.data.msg);
+   } else {
+     toast.error(responce.data.error);
+   }
+
+  }
   const FontInc = () => {
     if (fontSize < 20) {
       setFontSize((e) => e + 1);
@@ -676,7 +698,9 @@ function Exam() {
     if (responce.data.status) {
       toast.success(responce.data.msg);
     } else {
+
       toast.warning(responce.data.error);
+      handleShow();
     }
 
     dispatch(bookmarkActions.questionReset());
@@ -1309,6 +1333,31 @@ function Exam() {
       <ReportError />
 
       <ScientificCalculator />
+      <Modal show={show} onHide={handleClose}  className="sub-mdl">
+        <Modal.Header closeButton>
+          <Modal.Title>Alert</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+           Question Already Bookmarked
+          </div>
+         
+          <div>
+         Do you want to remove the Question from Bookmarked ?
+          </div>
+          <div>
+
+          </div>
+         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleClose}>
+           No
+          </Button>
+          <Button variant="primary" onClick={handlerRemoveBookmarked}>
+            Yes,delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
