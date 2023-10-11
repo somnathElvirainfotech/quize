@@ -36,7 +36,7 @@ import ScientificCalculator from "./Modal/ScientificCalculator";
 import Reporticon from "../assets/images/report.png";
 import Calculatoricon from "../assets/images/calculator.png";
 import Loader from "./Loader";
-
+import logo from "../assets/images/logo.png";
 
 function Exam() {
   const dispatch = useDispatch();
@@ -712,13 +712,15 @@ function Exam() {
 
           <div className="Money-Received-box d-header">
             <div className="money-header">
-              <div className="money-h-left">
+            <div className="logo">
+              <a href="/">
+                <img src={logo} alt="logo" className="footer-logo" />
+                </a>
+            </div>
+              {/* <div className="money-h-left">
                 <h6>{question.subject_name}</h6>
-                {/* <select id="inputState" className="form-select">
-                  <option selected="">Section #1</option>
-                  <option>Section #2</option>
-                </select> */}
-              </div>
+               
+              </div> */}
               <div className="money-h-middle">
                 <span className="page-count">
                   Attempted : {question.answerObj.length}/

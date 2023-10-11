@@ -702,9 +702,9 @@ function FreeExam() {
           <div className="Money-Received-box d-header">
             <div className="money-header">
             <div className="logo">
-              <NavLink to="/">
+              <a href="/">
                 <img src={logo} alt="logo" className="footer-logo" />
-              </NavLink>
+                </a>
             </div>
               {/* <div className="money-h-left">
                 <h6>{question.subject_name}</h6>
@@ -746,8 +746,13 @@ function FreeExam() {
                   )}
                 </ul>
               </div>
+              {auth.isAuthenticated ? null:(
 
-              <a class="Money-Re-login" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginpopup">login</a>
+<a class="Money-Re-login" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginpopup">login</a>
+              )
+
+              }
+              
 
               <div className="money-h-right">
                 <span className="inc_dnc_btn text-inc-dec" onClick={FontInc}>
