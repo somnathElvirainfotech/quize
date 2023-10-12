@@ -61,7 +61,7 @@ function App() {
             </Route>
 
             <Route path='/translate' element={<RequireAuth><Translate /></RequireAuth>} />
-            <Route path='/enlogin/:logincode' element={<EncryptLogin />} />
+            <Route path='/enlogin' element={<EncryptLogin />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </BrowserRouter>
