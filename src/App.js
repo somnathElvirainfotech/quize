@@ -53,6 +53,7 @@ function App() {
               <Route index element={<Home />} />
               
               <Route path='exam' element={<RequireAuth><Exam /></RequireAuth>} />
+              
               <Route path='review' element={<RequireAuth><Review /></RequireAuth>} />
               <Route path='result' element={<Result />} />
               <Route path='bookmark' element={<RequireAuth><Bookmark /></RequireAuth>} />
@@ -61,8 +62,8 @@ function App() {
             </Route>
 
             <Route path='/translate' element={<RequireAuth><Translate /></RequireAuth>} />
-            <Route path='/enlogin'  element={<EncryptLogin />} >
-            <Route path='/enlogin/:encrypcode'  element={<EncryptLogin />} />
+            <Route path='/enlogin'   >
+            <Route path=':encrypcode'  element={<EncryptLogin />} />
               </Route>
             <Route path='*' element={<NotFound />} />
           </Routes>
