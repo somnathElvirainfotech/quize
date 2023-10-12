@@ -30,7 +30,6 @@ import { AuthContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../redux/auth";
 import { questionActions } from "../redux/question";
-
 import Loader from "./Loader";
 
 function LoginPage(props) {

@@ -12,6 +12,15 @@ class UserService {
 
 
   }
+  async encryptlogin(data) {
+    return axios.post('https://www.cmfasacademy.com/api.php?params=checkencryptlogin', data, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+    });
+
+
+  }
   async getlist(datas){
     return axios.post('https://www.cmfasacademy.com/api.php?params=TestEngineFilterList',datas,{
       headers: {
