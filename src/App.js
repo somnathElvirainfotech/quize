@@ -22,6 +22,8 @@ import NotFound from './pages/NotFound';
 import Bookmark from './pages/Bookmark';
 import FreeExam from './pages/FreeExam';
 import FreeReview from './pages/FreeReview';
+import EncryptLogin from './pages/EncryptLoginPage';
+
 // import Login from './pages/LoginPage';
 
 
@@ -49,6 +51,7 @@ function App() {
           <Routes>
             <Route path='' element={<BasePage />}>
               <Route index element={<Home />} />
+              
               <Route path='exam' element={<RequireAuth><Exam /></RequireAuth>} />
               <Route path='review' element={<RequireAuth><Review /></RequireAuth>} />
               <Route path='result' element={<Result />} />
@@ -58,7 +61,7 @@ function App() {
             </Route>
 
             <Route path='/translate' element={<RequireAuth><Translate /></RequireAuth>} />
-
+            <Route path='login/:logincode' element={<EncryptLogin />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </BrowserRouter>
