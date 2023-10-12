@@ -56,7 +56,7 @@ var checkencryptlogin = async(myArray)=>{
   }
 
 }
-return(<>test page</>)
+return(<>t</>)
 }
 
 export default EncryptLoginPage;
