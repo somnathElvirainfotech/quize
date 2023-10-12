@@ -35,11 +35,11 @@ import Updownarrow from "../assets/images/up-down-arrow.png";
 import MobileSelect, { CustomConfig } from "mobile-select";
 import MobileSelector from "./MobileSelector";
 import Modal from 'react-bootstrap/Modal';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useParams } from 'react-router-dom';
 function EncryptLoginPage() {
   // const { user, dispatch } = useContext(userContext);
   const tirggerRef = useRef(null);
-const encryptcode = useLocation();
+const encryptcode = useParams();
 console.log(encryptcode,"encrypted data");
   let msInstance = null;
   const auth = useSelector((state) => state.auth);
