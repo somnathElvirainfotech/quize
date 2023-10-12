@@ -10,7 +10,7 @@ function EncryptLoginPage() {
 useEffect(()=>{
 console.log(param,"gfggggg")
   if(param.encrypcode == undefined){
-console.log("not found")
+       console.log("not found")
   }else{
     //console.log(param.encrypcode,"encrypted data")
     const decodedString = Base64.decode(param.encrypcode); // Decoded string  
