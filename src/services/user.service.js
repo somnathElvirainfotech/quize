@@ -31,6 +31,19 @@ class UserService {
   async get_free_trial_dropdown_data(){
     return axios.get('https://www.cmfasacademy.com/api.php?params=free_trial_dropdown_data');
   }
+  async get_new_dropdown_data(){
+    return axios.get('https://www.cmfasacademy.com/api.php?params=module_dropdown_data');
+  }
+  // async getchapterbymodule(){
+  //   return axios.get('https://www.cmfasacademy.com/api.php?params=chapter_dropdown_data_module');
+  // }
+  async getchapterbymodule(datas){
+    return axios.post('https://www.cmfasacademy.com/api.php?params=chapter_dropdown_data_module',datas,{
+      headers: {
+        "Content-Type": "application/json"
+      },
+    });
+  }
   async getmobiledatalist(){
     return axios.get('https://www.cmfasacademy.com/api.php?params=mobile_dropdown_data');
   }

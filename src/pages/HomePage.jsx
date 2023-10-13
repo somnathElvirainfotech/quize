@@ -43,6 +43,8 @@ function Home() {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [Dropdowndata, setDropdowndata] = useState([]);
+  const [ChapterDropdowndata, setChapterDropdowndata] = useState([]);
+
   // ========== mobile view state =================
   const [MobileDropdowndata, setMobileDropdowndata] = useState([""]);
   const [mstep, setMstep] = useState(1);
@@ -61,6 +63,9 @@ function Home() {
   const [showtermcondition, setShowtermcondition] = useState(false);
   const [alldataform, setAlldataform] = useState({});
   const [modalmsg, setModalmsg] = useState("");
+  const [selectedModule, setSelectedModule] = useState("");
+  const [selectedChapter, setSelectedChapter] = useState("");
+  const [showchapter, setShowchapter] = useState(true);
   //  =========== end mobile view state =================
 
   // const [Dropdowndatavalue, setDropdowndatavalue] = useState([]);
@@ -69,6 +74,7 @@ function Home() {
     handleSubmit,
     reset,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(QuestionSchama),
@@ -507,6 +513,34 @@ function Home() {
     
     reset();
   };
+  var getnewdropdowndata = async () => {
+  
+    var response = await userService.get_new_dropdown_data();
+  //  console.log("free trial data ", response.data);
+
+   
+    if (response.data.error) {
+      setDropdowndata([]);
+    } else {
+      var arr = [];
+      var mobile_arr = [];
+      console.log("new drop down data",response.data.dropdown_data);
+     
+     
+      var drp_data=response.data.dropdown_data;
+      if (auth.isAuthenticated) {
+        drp_data.unshift({option_value:"[FAQ]",option:"Orientation"},{option_value:"[BQ]",option:"Bookmarked"});
+      }
+      // }else{
+      //   drp_data.unshift({option_value:"[FAQ]",option:"Orientation"});
+      // }
+      setDropdowndata(drp_data);
+
+     
+    }
+  
+  reset();
+};
   var getmobiledropdowndata = async () => {
    
       var response = await userService.getmobiledatalist();
@@ -566,14 +600,50 @@ function Home() {
       console.log(switchclear);
     }
   };
+const getchapterbymodule = async(e) => {
+//alert("ok");
+console.log(e.target.value,"aglkdfj dflgldf")
+var module_id=e.target.value;
 
+if(module_id == "[BQ]" || module_id == "[FAQ]"){
+  setValue("lstSubject",module_id);
+  setShowchapter(false)
+
+}else{
+  setShowchapter(true)
+  setSelectedModule(e.target.value)
+  let datas = {
+    module_id: e.target.value,
+    
+  };
+  
+  var response = await userService.getchapterbymodule(datas);
+  console.log("module chapter data response ", response.data.dropdown_data);
+  if (response.data.status) {
+    var drp_data=response.data.dropdown_data;
+    setChapterDropdowndata(drp_data)
+  } 
+  
+}
+
+
+  
+}
+const setchaptername = (e) => {
+  setSelectedChapter(e.target.options[e.target.selectedIndex].text);
+  //var index = e.target.selectedIndex;
+
+  console.log(e.target.options[e.target.selectedIndex].text,"cghv");
+
+}
 
   useEffect(() => {
     if(auth.isAuthenticated){
-    getdropdowndata();
+    //getdropdowndata();
     }else{
-      getFreeTrialDropdownData();
+      //getFreeTrialDropdownData();
     }
+    getnewdropdowndata();
     getmobiledropdowndata();
     // setDropdowndatavalue(itemdata)
     document.body.classList.remove("bg-salmon");
@@ -614,47 +684,60 @@ function Home() {
               className="row g-3 text-engine-frm"
               onSubmit={handleSubmit(submit)}
             >
-              <div className="col-md-6">
+              <div className="col-md-8">
                 <label htmlFor="inputState" className="form-label">
                   Pick A Question Set:
                 </label>
-                {/* {!auth.isAuthenticated && (
+               
+              
                   <select
                     id="inputState"
                     className="form-select"
-                    {...register("lstSubject")}
+                    {...register("lstModule")}
+                    onChange={getchapterbymodule}
                   >
-                   <option Value={""}>Choose a Filter below</option>
+                    <option Value={""}>Choose a Module First</option>
 
                     {Dropdowndata &&
                       Dropdowndata.map((item) => {
                         return (
-                          <option value={item.option_value}>
+                          <option value={item.option_value}  >
                             {item.option}
                           </option>
                         );
                       })}
                   </select>
-                )}
-                {auth.isAuthenticated && (
-                  <select
-                    id="inputState"
-                    className="form-select"
-                    {...register("lstSubject")}
-                  >
-                    <option Value={""}>Choose a Filter below</option>
+                
+                  <label htmlFor="inputState" className="form-label">
+                
+                </label>
+               
+           {showchapter ? (
 
-                    {Dropdowndata &&
-                      Dropdowndata.map((item) => {
-                        return (
-                          <option value={item.option_value}>
-                            {item.option}
-                          </option>
-                        );
-                      })}
-                  </select>
-                )} */}
-                 <MobileSelector
+<select
+id="inputState"
+className="form-select"
+{...register("lstSubject")}
+onChange={setchaptername}
+>
+<option Value={""}>Choose a Filter below</option>
+
+{ChapterDropdowndata &&
+  ChapterDropdowndata.map((item) => {
+    return (
+      <option value={item.option_value}>
+        {item.option}
+      </option>
+    );
+  })}
+</select>
+
+           ):null}
+                
+
+                  
+                
+                 {/* <MobileSelector
             MobileDropdowndata={MobileDropdowndata}
             setValue={setValue}
             setSelectedVal={setSelectedVal}
@@ -663,7 +746,7 @@ function Home() {
             setSelectedCourseVal={setSelectedCourseVal}
             selectedCourseVal={selectedCourseVal}
             setSelectedId={setSelectedId}
-          />
+          /> */}
                 <p style={{ color: "red" }} className="form-field-error">
                   {errors.lstSubject?.message}
                 </p>
@@ -1021,12 +1104,12 @@ function Home() {
           </div>
           <div>
             <span>
-            Module/Set selected:
+            Module/Set selected: 
             </span>
             <span>
-            {selectedCourseVal}
+             {selectedModule}
             </span>
-            <span>( {selectedVal} )
+            <span>( {selectedChapter} )
             </span>
           
           </div>

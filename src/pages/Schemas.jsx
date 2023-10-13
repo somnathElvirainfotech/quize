@@ -6,6 +6,8 @@ export const LoginSchama = yup.object({
   password: yup.string().min(10).required()
 });
 export const QuestionSchama = yup.object({
+  
+  lstModule: yup.string().required("Required"),
   lstSubject: yup.string().required("Required"),
   lstNum: yup.string().required("Required"),
   chkRandom: yup.string().required("check random Required"),
