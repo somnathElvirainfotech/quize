@@ -16,8 +16,10 @@
 #bg-text {
   color: #efefef;
   font-size: 35;
-  transform: rotate(350deg);
-  -webkit-transform: rotate(350deg);
+  /* transform: rotate(350deg);
+  -webkit-transform: rotate(350deg); */
+   transform: rotate(17deg);
+  -webkit-transform: rotate(17deg);
 }
 
 div {

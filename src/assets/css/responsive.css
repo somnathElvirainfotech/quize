@@ -7,6 +7,18 @@
   }
 
   /*14-9-23*/
+  /* =-=-16-10-2023=-=- */
+  .Money-Received .money-re-content .content-right{
+    padding-bottom: 140px;
+  }
+  .Money-Received .multiple-options ul{
+    bottom: 84px;
+  }
+  button.checkAns.btn.btn-primary{
+    right: 63px;
+    left: auto;
+  }
+  /* =-=-16-10-2023=-=- */
 
 }
 
@@ -314,6 +326,11 @@
     width: 90%;
     margin: auto;
   }
+  /* =-=-16-10-2023=-=- */
+  .mfooter .multiple-options ul{
+    position: static;
+  }
+  /* =-=-16-10-2023=-=- */
 
 }
 
@@ -326,7 +343,7 @@
     background-color: #fff;
     z-index: 999;
     box-shadow: 0 0.225rem 0.5rem rgba(0,0,0,0.075) !important;
-    padding: 15px;}
+    padding: 15px; justify-content: center;}
 
   .mheader .inc_dnc_btn{
     padding: 3px;
@@ -458,6 +475,7 @@
   z-index: 21474800021411;
   box-shadow: 0 0.225rem 0.5rem rgba(0,0,0,0.075) !important;
   padding: 15px;
+  left: 0;
 }
 
 .mfooter .multiple-options ul li {
@@ -493,10 +511,22 @@
   /*button.checkAns.btn.btn-primary{
     position: static;
   }*/
-  section.text-engine.d_mode{
+  /* =-=-16-10-2023=-=- */
+  /* section.text-engine.d_mode{
     display: none;
+  } */
+  section.text-engine.d_mode .text-engine-frm{
+   display: none;
   }
-
+  .top-login-wrap  .logo  img{
+  width: 110px;
+  }
+  .text-engine .text-engine-content{
+    padding: 0;
+    background: transparent;
+    border: none;
+  }
+  /* =-=-16-10-2023=-=- */
   .Money-Received .money-re-content .content-left,
   .Money-Received .money-re-content .content-right {
     padding-bottom: 30px;
@@ -543,6 +573,17 @@
     font-size: 16px;
   }
     /* =-=-11-10-2023=-=- */
+    /* =-=-=-16-10-2023=-=-=- */
+    .Money-Received .d-header .ch-h{
+      display: none;
+    }
+    .top-login a.login{
+      padding: 5px 20px;
+    }
+    .ms-mobile-select{
+      display: block;
+    }
+    /* =-=-=-16-10-2023=-=-=- */
 }
 
 @media only screen and (max-width:359px) {

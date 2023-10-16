@@ -35,6 +35,7 @@ import Updownarrow from "../assets/images/up-down-arrow.png";
 import MobileSelect, { CustomConfig } from "mobile-select";
 import MobileSelector from "./MobileSelector";
 import Modal from 'react-bootstrap/Modal';
+import logo from "../assets/images/logo.png";
 function Home() {
   // const { user, dispatch } = useContext(userContext);
   const tirggerRef = useRef(null);
@@ -679,7 +680,28 @@ const setchaptername = (e) => {
       <section className="text-engine d_mode">
         <div className="container">
           <div className="text-engine-content ">
-            <h2>Filter-Based Test Engine</h2>
+            <div className="top-login-wrap">
+          <div className="logo mb-2">
+              <NavLink to="/">
+                <img src={logo} alt="logo" className="footer-logo" />
+              </NavLink>
+            </div>
+            {auth.isAuthenticated ? null: (
+            <div className="top-login">
+            <a
+                      className="login"
+                      href="javascript:void(0)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#loginpopup"
+                      // onClick={loginPageModalShow}
+                    >
+                      login
+                    </a>
+                    </div>
+                    
+                    )}
+                    </div>
+
             <form
               className="row g-3 text-engine-frm"
               onSubmit={handleSubmit(submit)}

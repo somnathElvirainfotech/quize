@@ -56,7 +56,7 @@ function Exam() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handlerRemoveBookmarked = async() => {
-    setShow(false);
+   // setShow(false);
    // setShowtermcondition(true)
    const form = new FormData();
    form.append("user_id", auth.user_id);
@@ -69,7 +69,7 @@ function Exam() {
    console.log("AddBookmark ", responce.data)
 
    if (responce.data.status) {
-     toast.success(responce.data.msg);
+     //toast.success(responce.data.msg);
    } else {
      toast.error(responce.data.error);
    }
@@ -700,7 +700,8 @@ function Exam() {
     } else {
 
       toast.warning(responce.data.error);
-      handleShow();
+     // handleShow();
+     handlerRemoveBookmarked();
     }
 
     dispatch(bookmarkActions.questionReset());
@@ -818,9 +819,15 @@ function Exam() {
                 </div>
               </div>
               <div className="content-right">
+              {question.questionlist.ans.length > 1 ? (
                 <div className="ch-h">
-                  <h3>Select An Answer</h3>
+                  <h3>Select all options that apply</h3>
                 </div>
+              ):(
+                <div className="ch-h">
+                <h3>Select the best option</h3>
+              </div>
+              )}
 
                 {/* ======== FORM 2 ANS length check =========  */}
 

@@ -790,9 +790,15 @@ function FreeExam() {
                 </div>
               </div>
               <div className="content-right">
+              {question.questionlist.ans.length > 1 ? (
                 <div className="ch-h">
-                  <h3>Select An Answer</h3>
+                  <h3>Select all options that apply</h3>
                 </div>
+              ):(
+                <div className="ch-h">
+                <h3>Select the best option</h3>
+              </div>
+              )}
 
                 {/* ======== FORM 2 ANS length check =========  */}
 

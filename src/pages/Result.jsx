@@ -20,6 +20,7 @@ import { questionActions } from "../redux/question";
 import { useForm } from "react-hook-form";
 import { removeDuplicates } from "../common";
 import Reporticon from "../assets/images/report.png";
+import logo from "../assets/images/logo.png";
 
 function Result() {
   const dispatch = useDispatch();
@@ -119,11 +120,17 @@ function Result() {
           
             <div className="Money-Received-box">
             <div className="money-header result-header">
-              <h1>Result</h1>
+             
+              <div className="logo mb-2">
+              <NavLink to="/">
+                <img src={logo} alt="logo" className="footer-logo" />
+              </NavLink>
+            </div>
             </div>
 
             <div className="result-content">
               <div className="content-middle">
+                  <h1>Result</h1>
                   <h4>You've answered</h4>
                   <h4>{question.totalCurrectAns} out of {question.totalQuestion} Qs correctly.</h4>
                   <h4>Passing Score : {question.passing_percentage} %</h4>
