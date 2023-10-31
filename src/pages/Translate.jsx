@@ -19,17 +19,15 @@ function Translate() {
     );
   };
 
+  
   useEffect(() => {
     document.body.classList.remove("bg-salmon");
-  }, []);
-
-  useEffect(() => {
-    var addScript = document.createElement("script");
-    addScript.setAttribute(
-      "src",
-      "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-    );
-    document.body.appendChild(addScript);
+    // var addScript = document.createElement("script");
+    // addScript.setAttribute(
+    //   "src",
+    //   "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    // );
+    // document.body.appendChild(addScript);
     window.googleTranslateElementInit = googleTranslateElementInit;
   }, []);
 
