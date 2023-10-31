@@ -1275,14 +1275,14 @@ function Exam() {
                     </li>
                     <li>
                       <a
-                        href="/translate"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        // href="/translate"
+                        // target="_blank"
+                        // rel="noopener noreferrer"
+                        // title="Translation"
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#mtranslate"
                         title="Translation"
-                    //     href="#"
-                    // data-bs-toggle="modal"
-                    // data-bs-target="#mtranslate"
-                    // title="Translation"
                       >
                         <img src={translate} alt="translate" />
                       </a>
@@ -1467,7 +1467,7 @@ function Exam() {
                     data-bs-target="#mtranslate"
                     title="Translation"
                   >
-                    <img src={translate} alt="translate" />
+                    <img src={translate} alt="translate" /> 
                   </a>
                 </li>
                 {question.flag_type === "ask_mentor" ? (

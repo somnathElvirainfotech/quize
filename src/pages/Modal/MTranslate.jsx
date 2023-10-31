@@ -11,8 +11,28 @@ function MTranslate() {
   const auth = useSelector((state) => state.auth);
   const modalCloseRef = useRef(null);
 
+  const googleTranslateElementInit = () => {
+    new window.google.translate.TranslateElement(
+      {
+        pageLanguage: "en",
+        autoDisplay: false,
+      },
+      "google_translate_element"
+    );
+  };
+
   useEffect(() => {
     document.body.classList.remove("bg-salmon");
+  }, []);
+
+  useEffect(() => {
+    var addScript = document.createElement("script");
+    addScript.setAttribute(
+      "src",
+      "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    );
+    document.body.appendChild(addScript);
+    window.googleTranslateElementInit = googleTranslateElementInit;
   }, []);
 
   return (
