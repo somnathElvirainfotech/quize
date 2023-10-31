@@ -38,6 +38,7 @@ import Calculatoricon from "../assets/images/calculator.png";
 import Loader from "./Loader";
 import logo from "../assets/images/logo.png";
 import Modal from 'react-bootstrap/Modal';
+import MTranslate from "./Modal/MTranslate";
 
 function Exam() {
   const dispatch = useDispatch();
@@ -1457,14 +1458,14 @@ function Exam() {
                 </li>
                 <li>
                   <a
-                    href="/translate"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Translation"
-                    // href="#"
-                    // data-bs-toggle="modal"
-                    // data-bs-target="#mtranslate"
+                    // href="/translate"
+                    // target="_blank"
+                    // rel="noopener noreferrer"
                     // title="Translation"
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#mtranslate"
+                    title="Translation"
                   >
                     <img src={translate} alt="translate" />
                   </a>
@@ -1509,6 +1510,7 @@ function Exam() {
 
       <AskMentor />
       
+      <MTranslate />
       
       <ReportError />
 
