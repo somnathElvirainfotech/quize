@@ -37,6 +37,7 @@ function MTranslate() {
 
   return (
     <>
+
       <section className="model-translate-Popup">
         <div
           className="modal fade"
@@ -66,6 +67,7 @@ function MTranslate() {
                     width="160"
                   />
                 </div>
+                <div id="google_translate_element"></div>
                 <div className="mtranslate-popup-top-right">
                   <select
                     class="goog-te-combo form-select"
