@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
+    "google-translate-api-x": "^10.6.7",
     "html-react-parser": "^4.2.2",
     "jquery": "^3.7.0",
     "jquery-ui-dist": "^1.13.2",

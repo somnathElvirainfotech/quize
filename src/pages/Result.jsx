@@ -104,40 +104,37 @@ function Result() {
     document.body.classList.remove('bg-salmon');
   },[])
 
-
-  
-
-
   return (
     <>
-      <section className="Money-Received">
+      <section className="Money-Received result-box">
         <div className="container">
-        
-        
-
-
+   
          {/* ======== result ========== */}
           
             <div className="Money-Received-box">
-            <div className="money-header result-header">
-             
-              <div className="logo mb-2">
-              <NavLink to="/">
-                <img src={logo} alt="logo" className="footer-logo" />
-              </NavLink>
-            </div>
-            </div>
+            
 
             <div className="result-content">
+
+            <div className="money-header result-header">
+              <div className="logo mb-2">
+              <a href="/">
+                  <img src={logo} alt="logo" className="footer-logo" />
+                </a>
+              </div>
+              <div className="result-title">
+                <h1>Result</h1>
+              </div>
+           </div>
+
               <div className="content-middle">
-                  <h1>Result</h1>
-                  <h4>You've answered</h4>
-                  <h4>{question.totalCurrectAns} out of {question.totalQuestion} Qs correctly.</h4>
+                  
+                  {/* <h4>You've answered</h4> */}
+
+                  {/* <h4>{question.totalCurrectAns} out of {question.totalQuestion} Qs correctly.</h4> */}
+                  <h4>{((question.totalCurrectAns/question.totalQuestion)*100) >= question.passing_percentage ? <span className="pass">PASS</span>:<span className="fail">FAIL</span>}</h4>
                   <h4>Passing Score : {question.passing_percentage} %</h4>
                   <h4>Your Score : {((question.totalCurrectAns/question.totalQuestion)*100)} %</h4>
-                  
-                  <h4>{((question.totalCurrectAns/question.totalQuestion)*100) >= question.passing_percentage ? "PASSED":"FAILED"}</h4>
-                  
                   <div class="btn-wrap">
                     <button className="animate-btn" onClick={()=>{
                       if(auth.isAuthenticated){
@@ -153,10 +150,7 @@ function Result() {
               
             </div>
           </div>
-        
 
-
-      
 
         </div>
       </section>

@@ -66,6 +66,7 @@ function App() {
             <Route path=':encrypcode'  element={<EncryptLogin />} />
               </Route>
             <Route path='*' element={<NotFound />} />
+           
           </Routes>
         </BrowserRouter>
 

@@ -1,4 +1,16 @@
-@media only screen and (max-width: 1200px) {}
+
+/*19-10-23*/
+
+@media only screen and (max-width: 1100px) {
+  ul.pagination-wrap{margin-right: 0;}
+  .score-count {width: 105px;}
+  .pagination-wrap li{padding: 1px 5px;}
+}
+
+@media only screen and (max-width: 1023px){
+  .mobile-link{display: block;}
+  .desktop-link {display: none;}
+}
 
 /*14-9-23*/
 @media only screen and (max-width:1024px) {
@@ -19,6 +31,13 @@
     left: auto;
   }
   /* =-=-16-10-2023=-=- */
+
+  /* =-=-19-10-2023=-=- */
+
+  .sub-mdl .modal-dialog {
+    max-width: 40vw;
+    width: 40vw;
+  }
 
 }
 
@@ -121,7 +140,9 @@
   /*14-9-23*/
   .Money-Received .money-header {
     row-gap: 10px;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    /* justify-content: center; */
     gap: 15px;
   }
 
@@ -147,6 +168,16 @@
   }
 
   /*end-14-9-23*/
+
+  /*start-19-10-23*/
+
+  #trans-bg-text{
+    font-size: 125px !important;
+  }
+
+  /*end-19-10-23*/
+
+
 }
 /* =-=-=-11-10-2023=-S=-=- */
 @media only screen and (min-width:767px) {
@@ -278,7 +309,10 @@
 
   .Money-Received .money-header {
     padding: 0 30px;
+  }
 
+  .result-box .result-header{
+    padding: 0;
   }
 
   ul.pagination-wrap {
@@ -331,6 +365,103 @@
     position: static;
   }
   /* =-=-16-10-2023=-=- */
+
+ /* =-=-19-10-2023=-=- */
+
+ .sub-mdl .modal-dialog {
+  max-width: 90vw;
+  width: 90vw;
+}
+.sub-mdl .modal-dialog .modal-body div {
+  font-size: 18px;
+}
+
+.sub-mdl .modal-dialog .modal-body div:first-child{padding-top: 0;}
+
+.styles-module_tooltip__mnnfp {
+  font-size: 12px !important;
+  word-break: break-word;
+  max-width: 90% !important;
+  left: 15px !important;
+  padding: 8px 10px;
+}
+
+#trans-bg-text {
+  font-size: 60px !important;
+}
+
+/* 20-10-2023 */
+
+.Money-Received .money-Received-review-box .money-header.review {
+  padding: 0 10px;
+  justify-content: flex-start;
+}
+
+.Money-Received .money-Received-review-box .money-header .logo img{
+  width: 100px;
+}
+
+.Money-Received .money-Received-review-box .page-count {
+  font-size: 13px;
+  height: 25px;
+  line-height: 25px;
+}
+
+.Money-Received .money-Received-review-box ul.pagination-wrap li a img{
+  margin-right: 0 !important;
+}
+
+.Money-Received .money-Received-review-box ul.pagination-wrap li a img{
+  margin-left: 0 !important;
+}
+
+.Money-Received .money-Received-review-box .money-header.review ul.exam-pagination {
+  gap: 5px;
+  position: absolute;
+  right: 20px;
+}
+
+.Money-Received .money-Received-review-box .money-header.review ul.exam-pagination li {
+  padding: 3px 5px;
+  height: 25px !important;
+  overflow: hidden;
+}
+
+.Money-Received .money-Received-review-box .money-header.review ul.exam-pagination li a{
+  padding: 1px !important;
+}
+
+.Money-Received .money-Received-review-box .money-header.review ul.exam-pagination li:nth-child(2) span {
+  font-size: 15px;
+  line-height: 23px;
+}
+
+.Money-Received .money-Received-review-box .money-header.review ul.exam-pagination li a img{
+  margin-top: -14px;
+}
+
+.Money-Received .money-Received-review-box .money-header.review ul.exam-pagination li.countnum{
+  position: relative;
+  top: -3px;
+}
+
+.mtranslate-popup-top .form-select{
+  width: 180px;
+}
+
+.mtranslate-popup-top-left img {
+  width: 100px;
+  height: auto;
+  display: block;
+}
+
+.model-translate-Popup .modal-content{
+  padding: 30px 15px;
+}
+
+.model-translate-Popup #content{
+  font-size: 14px;
+}
 
 }
 
@@ -500,6 +631,31 @@
   margin-right: 0;
 }
 
+.money_cust_review .multiple-options {
+  display: none;
+}
+
+.money_cust_review .content-left {
+  overflow: visible !important;
+}
+/* =-=-26-10-2023=-=-S=- */
+.money_cust_review .content-left #monybgwater {
+  /* z-index: 999; */
+  z-index: -1;
+}
+/* =-=-26-10-2023=-=-E=- */
+.model-translate-Popup .modal-content{
+  height: 400px;
+}
+
+.dwatermark{
+  display: none;
+}
+
+.Money-Received .money-re-content .content-left, .Money-Received .money-re-content .content-right{
+  overflow: visible;
+}
+
 }
 
 @media only screen and (min-width:568px) {
@@ -584,9 +740,23 @@
       display: block;
     }
     /* =-=-=-16-10-2023=-=-=- */
+
+    .Money-Received .money-Received-review-box .page-count {width: auto; padding: 0 10px;}
+
+
 }
 
-@media only screen and (max-width:359px) {
+@media only screen and (max-width:394px){
+  .Money-Received .money-Received-review-box .money-header.review ul.exam-pagination li{
+    padding: 3px;
+  }
+}
+
+@media only screen and (max-width:375px){
+  .Money-Received .money-Received-review-box .money-header .logo img{width: 90px;}
+}
+
+@media only screen and (max-width:360px) {
   .mheader .question_subject, .mheader .question_id, .mheader .inc_dnc_btn{font-size: 10px;}
   .mheader .logo {margin-right: 0px;margin-left: 0px;}
   .mheader .logo, .mheader .logo img {max-width: 65px;}

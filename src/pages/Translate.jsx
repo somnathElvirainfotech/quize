@@ -10,16 +10,19 @@ function Translate() {
   const auth = useSelector((state) => state.auth);
 useEffect(()=>{
   document.body.classList.remove('bg-salmon');
+  
 },[])
   return (
     <>
-      <div id="google_translate_element"></div>
-      <img src={logo} alt="CMFAS Academy Logo" height="40" width="160" />
-      <p>
-        <br />
-        <br />
-        <div id="background">
-          <p id="bg-text">{newQID(auth.user_id,question.questionlist.id)}</p>
+    <div className="container">
+       <div id="google_translate_element"  ></div>
+      <img src={logo} alt="CMFAS Academy Logo" className="top-logo" height="40" width="160" />
+    </div>
+     
+    <div className="container">
+      <p className="translate-content">
+        <div id="trans-background">
+          <p id="trans-bg-text">{newQID(auth.user_id,question.questionlist.id)}</p>
         </div>
         <div id="content">
           ({question.subject_name}) | QID: {newQID(auth.user_id,question.questionlist.id)} |{" "}
@@ -90,6 +93,7 @@ useEffect(()=>{
           </p>
         </div>
       </p>
+      </div>
     </>
   );
 }

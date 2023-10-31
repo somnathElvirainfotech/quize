@@ -38,7 +38,7 @@ import Calculatoricon from "../assets/images/calculator.png";
 import Loader from "./Loader";
 import logo from "../assets/images/logo.png";
 import Modal from 'react-bootstrap/Modal';
-
+import MTranslate from "./Modal/MTranslate";
 function Exam() {
   const dispatch = useDispatch();
   const question = useSelector((state) => state.question);
@@ -55,7 +55,6 @@ function Exam() {
   const [explanationfontSize, setExplanationfontSize] = useState(14);
   const [show, setShow] = useState(false);
   const [ansread,setAnsread] = useState(false);
-  const [answerstatus, setAnswerstatus] = useState(0);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handlerRemoveBookmarked = async() => {
@@ -145,6 +144,7 @@ function Exam() {
       await saveAnswerObj();
 
       await getquestiondata(`qid${index}`);
+      
 
       setLoader(false);
     }
@@ -244,17 +244,10 @@ function Exam() {
         console.log("fffffff " + i.ans.length);
         if(Number(question.radMode) === 1){
           dispatch(questionActions.questionReseltChecked(true));
-         
         }
-        var form = formref.current;
         if (question.questionlist.ans.length > 1) {
-        //  setExplanationdisplay(true);
-          form.querySelector("#t_test1").className = "";
-          form.querySelector("#t_test2").className = "";
-          form.querySelector("#t_test3").className = "";
-          form.querySelector("#t_test4").className = "";
+
           const myArray = i.ans.split("");
-          var answer = i.ans;
           console.log(`ans id == ${i.qid} === ${myArray}`);
           for (var j of myArray) {
             if (j === "A") {
@@ -267,138 +260,11 @@ function Exam() {
               setValue("test4", j);
             }
           }
-          if(Number(question.radMode) === 1){
-            setExplanationdisplay(true);
-            if (question.questionlist.ans === answer) {
-            
-              // toast.success("your answer right");
-              setAnswerstatus(1);
-              if (answer.includes("A")) {
-                form.querySelector("#t_test1").className = "right_ans";
-                
-  
-              }
-  
-              if (answer.includes("B")) {
-                form.querySelector("#t_test2").className = "right_ans";
-              }
-  
-              if (answer.includes("C")) {
-                form.querySelector("#t_test3").className = "right_ans";
-              }
-  
-              if (answer.includes("D")) {
-                form.querySelector("#t_test4").className = "right_ans";
-              }
-            } else {
-              setAnswerstatus(2);
-             // toast.success("your answer is wrong");
-              if (question.questionlist.ans.includes("A")) {
-                if (answer.includes("A")) {
-                  form.querySelector("#t_test1").className = "right_ans";
-                } else {
-                  form.querySelector("#t_test1").className = "user_not_select_right_ans";
-                }
-              } else if (answer.includes("A")) {
-                form.querySelector("#t_test1").className = "wrong_ans";
-              }
-  
-              if (question.questionlist.ans.includes("B")) {
-                if (answer.includes("B")) {
-                  form.querySelector("#t_test2").className = "right_ans";
-                } else {
-                  form.querySelector("#t_test2").className = "user_not_select_right_ans";
-                }
-              } else if (answer.includes("B")) {
-                form.querySelector("#t_test2").className = "wrong_ans";
-              }
-  
-              if (question.questionlist.ans.includes("C")) {
-                if (answer.includes("C")) {
-                  form.querySelector("#t_test3").className = "right_ans";
-                } else {
-                  form.querySelector("#t_test3").className = "user_not_select_right_ans";
-                }
-              } else if (answer.includes("C")) {
-                form.querySelector("#t_test3").className = "wrong_ans";
-              }
-  
-              if (question.questionlist.ans.includes("D")) {
-                if (answer.includes("D")) {
-                  form.querySelector("#t_test4").className = "right_ans";
-                } else {
-                  form.querySelector("#t_test4").className = "user_not_select_right_ans";
-                }
-              } else if (answer.includes("D")) {
-                form.querySelector("#t_test4").className = "wrong_ans";
-              }
-  
-              
-            }
-           
-          }
         } else {
-          //setExplanationdisplay(true);
-          form.querySelector("#t_test1").className = "";
-          form.querySelector("#t_test2").className = "";
-          form.querySelector("#t_test3").className = "";
-          form.querySelector("#t_test4").className = "";
           setValue("answer", i.ans);
-          var answer = i.ans;
-
-          // var newForm = formref.current;
-
-          // alert(answer)
-
-          // console.log("newForm ",newForm)
-          if(Number(question.radMode) === 1){
-            setExplanationdisplay(true);
-            if (question.questionlist.ans === answer) {
-              // toast.success("your answer right");
-              setAnswerstatus(1);
-              if (answer.includes("A")) {
-                form.querySelector("#t_test1").className = "right_ans";
-              } else if (answer.includes("B")) {
-                form.querySelector("#t_test2").className = "right_ans";
-              } else if (answer.includes("C")) {
-                form.querySelector("#t_test3").className = "right_ans";
-              } else if (answer.includes("D")) {
-                form.querySelector("#t_test4").className = "right_ans";
-              }
-            } else {
-              setAnswerstatus(2);
-              // toast.error("Your answer wrong");
-  
-              // var form = formref.current;
-  
-              // alert(11)
-  
-              if (answer.includes("A")) {
-                form.querySelector("#t_test1").className = "wrong_ans";
-              } else if (answer.includes("B")) {
-                form.querySelector("#t_test2").className = "wrong_ans";
-              } else if (answer.includes("C")) {
-                form.querySelector("#t_test3").className = "wrong_ans";
-              } else if (answer.includes("D")) {
-                form.querySelector("#t_test4").className = "wrong_ans";
-              }
-  
-              if (question.questionlist.ans.includes("A")) {
-                form.querySelector("#t_test1").className = "right_ans";
-              } else if (question.questionlist.ans.includes("B")) {
-                form.querySelector("#t_test2").className = "right_ans";
-              } else if (question.questionlist.ans.includes("C")) {
-                form.querySelector("#t_test3").className = "right_ans";
-              } else if (question.questionlist.ans.includes("D")) {
-                form.querySelector("#t_test4").className = "right_ans";
-              }
-            }
-          }
         }
         break;
       }else{
-        setAnswerstatus(0);
-        setExplanationdisplay(false);
         dispatch(questionActions.questionReseltChecked(false));
       }
     }
@@ -877,7 +743,6 @@ function Exam() {
 
   useEffect(() => {
     document.body.classList.add("bg-salmon");
-    
   }, []);
 
   return (
@@ -1508,7 +1373,7 @@ function Exam() {
       <SpeedRef />
 
       <AskMentor />
-      
+      <MTranslate />
       
       <ReportError />
 

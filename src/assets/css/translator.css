@@ -6,6 +6,21 @@
   min-height: 50%;
   min-width: 50%;
   color: yellow;
+ 
+
+}
+#trans-background {
+  position: absolute;
+  z-index: 0;
+  background: white;
+  display: block;
+  min-height: 50%;
+  min-width: 50%;
+  color: yellow;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,0%);
+
 }
 
 #content {
@@ -14,8 +29,18 @@
 }
 
 #bg-text {
-  color: #efefef;
-  font-size: 35;
+
+  color: #efefef; 
+  font-size: 35px;
+  /* transform: rotate(350deg);
+  -webkit-transform: rotate(350deg); */
+   transform: rotate(17deg);
+  -webkit-transform: rotate(17deg);
+}
+#trans-bg-text {
+
+  color: #efefef; 
+  font-size: 155px;
   /* transform: rotate(350deg);
   -webkit-transform: rotate(350deg); */
    transform: rotate(17deg);

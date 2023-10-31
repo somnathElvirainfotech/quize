@@ -5,7 +5,7 @@ import { Base64 } from 'js-base64';
 import userService from "../services/user.service";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../redux/auth";
-
+import moment from 'moment';
 function EncryptLoginPage() {
 
  const param = useParams();
@@ -38,22 +38,42 @@ console.log(param,"gfggggg")
 
 },[])
 var checkencryptlogin = async(myArray)=>{
+  var encrypt_time = myArray[0] ;
+console.log(encrypt_time,"agldifjo")
+var jtime = new Date(encrypt_time * 1000);
+var startTime = moment(jtime, 'hh:mm:ss');
+
+var endTime = moment(new Date(), 'hh:mm:ss');
+
+var hoursDiff = endTime.diff(startTime, 'seconds');
+
+console.log('seconds:' + hoursDiff);
+
+
+if(hoursDiff < 43200){
   const form = new FormData();
-  form.append("user_id", myArray[0]);
-  form.append("session_id", myArray[1]);
+  form.append("user_id", myArray[1]);
+  form.append("session_id", myArray[2]);
 
   var responce = await userService.encryptlogin(form);
 
- console.log(responce.data);
+ //console.log(responce.data);
   if (!responce.data.status) {
     //toast.error(responce.data.error);
     console.log(responce.data.error,"error log")
+    dispatch(authActions.Logout());
     navigate('/');
   } else {
     console.log("login successfull");
     dispatch(authActions.Login(responce.data.data[0]));
     navigate('/');
   }
+
+}else{
+  dispatch(authActions.Logout());
+  navigate('/');
+}
+  
 
 }
 return(<>t</>)

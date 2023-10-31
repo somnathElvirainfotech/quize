@@ -52,6 +52,7 @@ function FreeExam() {
   const [explanationdisplay, setExplanationdisplay] = useState(false);
   const [explanationfontSize, setExplanationfontSize] = useState(14);
   const [loader, setLoader] = useState(false);
+  const [answerstatus, setAnswerstatus] = useState(0);
   const submitBtnRef = useRef(null);
 
   const FontInc = () => {
@@ -212,8 +213,19 @@ function FreeExam() {
     for (const [index, i] of oldQA_obj.entries()) {
       if (question.questionlist.id === i.qid) {
         console.log("fffffff " + i.ans.length);
+        if(Number(question.radMode) === 1){
+          dispatch(questionActions.questionReseltChecked(true));
+         
+        }
+        var form = formref.current;
         if (question.questionlist.ans.length > 1) {
+          
+          form.querySelector("#t_test1").className = "";
+          form.querySelector("#t_test2").className = "";
+          form.querySelector("#t_test3").className = "";
+          form.querySelector("#t_test4").className = "";
           const myArray = i.ans.split("");
+          var answer = i.ans;
           console.log(`ans id == ${i.qid} === ${myArray}`);
           for (var j of myArray) {
             if (j === "A") {
@@ -226,10 +238,146 @@ function FreeExam() {
               setValue("test4", j);
             }
           }
+
+          // remove checked answer on click previous button in case of exam mode
+          if(Number(question.radMode) === 1){
+            setExplanationdisplay(true);
+            if (question.questionlist.ans === answer) {
+            
+              // toast.success("your answer right");
+              setAnswerstatus(1);
+              if (answer.includes("A")) {
+                form.querySelector("#t_test1").className = "right_ans";
+                
+  
+              }
+  
+              if (answer.includes("B")) {
+                form.querySelector("#t_test2").className = "right_ans";
+              }
+  
+              if (answer.includes("C")) {
+                form.querySelector("#t_test3").className = "right_ans";
+              }
+  
+              if (answer.includes("D")) {
+                form.querySelector("#t_test4").className = "right_ans";
+              }
+            } else {
+              setAnswerstatus(2);
+             // toast.success("your answer is wrong");
+              if (question.questionlist.ans.includes("A")) {
+                if (answer.includes("A")) {
+                  form.querySelector("#t_test1").className = "right_ans";
+                } else {
+                  form.querySelector("#t_test1").className = "user_not_select_right_ans";
+                }
+              } else if (answer.includes("A")) {
+                form.querySelector("#t_test1").className = "wrong_ans";
+              }
+  
+              if (question.questionlist.ans.includes("B")) {
+                if (answer.includes("B")) {
+                  form.querySelector("#t_test2").className = "right_ans";
+                } else {
+                  form.querySelector("#t_test2").className = "user_not_select_right_ans";
+                }
+              } else if (answer.includes("B")) {
+                form.querySelector("#t_test2").className = "wrong_ans";
+              }
+  
+              if (question.questionlist.ans.includes("C")) {
+                if (answer.includes("C")) {
+                  form.querySelector("#t_test3").className = "right_ans";
+                } else {
+                  form.querySelector("#t_test3").className = "user_not_select_right_ans";
+                }
+              } else if (answer.includes("C")) {
+                form.querySelector("#t_test3").className = "wrong_ans";
+              }
+  
+              if (question.questionlist.ans.includes("D")) {
+                if (answer.includes("D")) {
+                  form.querySelector("#t_test4").className = "right_ans";
+                } else {
+                  form.querySelector("#t_test4").className = "user_not_select_right_ans";
+                }
+              } else if (answer.includes("D")) {
+                form.querySelector("#t_test4").className = "wrong_ans";
+              }
+  
+              
+            }
+           
+          }
+
+          // show checked answer on click previous button in case of learning mode
+          
         } else {
+         
+          form.querySelector("#t_test1").className = "";
+          form.querySelector("#t_test2").className = "";
+          form.querySelector("#t_test3").className = "";
+          form.querySelector("#t_test4").className = "";
           setValue("answer", i.ans);
+          var answer = i.ans;
+
+          // var newForm = formref.current;
+
+          // alert(answer)
+
+          // console.log("newForm ",newForm)
+          if(Number(question.radMode) === 1){
+            setExplanationdisplay(true);
+            if (question.questionlist.ans === answer) {
+              // toast.success("your answer right");
+              setAnswerstatus(1);
+              if (answer.includes("A")) {
+                form.querySelector("#t_test1").className = "right_ans";
+              } else if (answer.includes("B")) {
+                form.querySelector("#t_test2").className = "right_ans";
+              } else if (answer.includes("C")) {
+                form.querySelector("#t_test3").className = "right_ans";
+              } else if (answer.includes("D")) {
+                form.querySelector("#t_test4").className = "right_ans";
+              }
+            } else {
+              setAnswerstatus(2);
+              // toast.error("Your answer wrong");
+  
+              // var form = formref.current;
+  
+              // alert(11)
+  
+              if (answer.includes("A")) {
+                form.querySelector("#t_test1").className = "wrong_ans";
+              } else if (answer.includes("B")) {
+                form.querySelector("#t_test2").className = "wrong_ans";
+              } else if (answer.includes("C")) {
+                form.querySelector("#t_test3").className = "wrong_ans";
+              } else if (answer.includes("D")) {
+                form.querySelector("#t_test4").className = "wrong_ans";
+              }
+  
+              if (question.questionlist.ans.includes("A")) {
+                form.querySelector("#t_test1").className = "right_ans";
+              } else if (question.questionlist.ans.includes("B")) {
+                form.querySelector("#t_test2").className = "right_ans";
+              } else if (question.questionlist.ans.includes("C")) {
+                form.querySelector("#t_test3").className = "right_ans";
+              } else if (question.questionlist.ans.includes("D")) {
+                form.querySelector("#t_test4").className = "right_ans";
+              }
+            }
+          }
+          
+          
         }
         break;
+      }else{
+        setAnswerstatus(0);
+        setExplanationdisplay(false);
+        dispatch(questionActions.questionReseltChecked(false));
       }
     }
   };
@@ -407,6 +555,7 @@ function FreeExam() {
   };
 
   const saveAnswerObj = async () => {
+    
     // console.log("form ",form)
 
     // alert(`${form['test1'].checked} ${form['test2'].value}`)
@@ -720,9 +869,12 @@ function FreeExam() {
                 </span>
                 <ul className="pagination-wrap exam-pagination">
                   <li>
-                    <a href="#" onClick={handlePrevious}>
+                  <a href="#" className="desktop-link" onClick={handlePrevious}>
                       <img src={prev} alt="prev" />
                       Previous Question
+                    </a>
+                    <a href="#" className="mobile-link" onClick={handlePrevious}>
+                      <img src={prev} alt="prev" />
                     </a>
                   </li>
                   <li className="countnum">
@@ -738,8 +890,12 @@ function FreeExam() {
                     </li>
                   ) : (
                     <li>
-                      <a href="#" onClick={handleNext}>
+                      <a href="#" className="desktop-link" onClick={handleNext}>
                         Next Question
+                        <img src={next} alt="next" />
+                      </a>
+
+                       <a href="#" className="mobile-link" onClick={handleNext}>
                         <img src={next} alt="next" />
                       </a>
                     </li>
@@ -748,7 +904,7 @@ function FreeExam() {
               </div>
               {auth.isAuthenticated ? null:(
 
-<a class="Money-Re-login" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginpopup">login</a>
+<a class="Money-Re-login" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginpopup">Login</a>
               )
 
               }

@@ -133,9 +133,7 @@ function LoginPage(props) {
                 ref={modalCloseRef}
               />
               <div className="modal-content-wrap">
-                <div className="model-left">
-                  <img src={leftbanner} alt="mdl-img" />
-                </div>
+               
                 <div className="model-right">
                   <h4>Sign In</h4>
                   <form className="row g-4" onSubmit={handleSubmit(submit)}>
@@ -146,14 +144,14 @@ function LoginPage(props) {
                         {errors.email?.message}
                       </p>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-12 mt-1">
                       <label htmlFor="">Password</label>
                       <input type="password" {...register("password")} />
                       <p style={{ color: "red" }} className="form-field-error">
                         {errors.password?.message}
                       </p>
                     </div>
-                    <div className="col-md-12 my-5">
+                    <div className="col-md-12 my-3">
                       <button className="sign-in " type="submit">
                         Sign in
                       </button>

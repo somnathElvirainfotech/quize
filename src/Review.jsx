@@ -35,8 +35,6 @@ import ReportError from "./Modal/ReportError";
 import parse from 'html-react-parser';
 import Reporticon from "../assets/images/report.png";
 import logo from "../assets/images/logo.png";
-import Calculatoricon from "../assets/images/calculator.png";
-import ScientificCalculator from "./Modal/ScientificCalculator";
 
 function Review() {
   const dispatch = useDispatch();
@@ -272,7 +270,9 @@ function Review() {
               form.querySelector("#t_test4").className = "wrong_ans";
             }
 
-            
+            // form['c_test1'].className = 'sdf';
+            // form['c_test2'].className = 'wer'
+            // console.log("chekcans  ", data)
           }
         } else {
           //  ============== radio ============= ///
@@ -602,16 +602,6 @@ function Review() {
 
                 <div className="multiple-options">
                   <ul>
-                  <li>
-                      <a
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#scientificCalculatorPopup"
-                        title="Scientific Calculator"
-                      >
-                        <img src={Calculatoricon} alt="query" />
-                      </a>
-                    </li>
                     <li>
                       <a href="#" title="Add Bookmark" onClick={addBookmark} >
                         <img src={add} alt="add" />
@@ -672,16 +662,6 @@ function Review() {
           <div class="mfooter">
             <div className="multiple-options">
               <ul>
-              <li>
-                      <a
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#scientificCalculatorPopup"
-                        title="Scientific Calculator"
-                      >
-                        <img src={Calculatoricon} alt="query" />
-                      </a>
-                    </li>
                 <li>
                   <a href="#" title="Add Bookmark" onClick={addBookmark}>
                     <img src={add} alt="add" />
@@ -787,11 +767,9 @@ function Review() {
       <AskMentor />
 
       <ReportError />
-      
-      <ScientificCalculator />
+
 
     </>
-    
   );
 }
 

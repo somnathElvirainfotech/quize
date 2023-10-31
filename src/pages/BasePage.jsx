@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { Outlet } from 'react-router-dom'
 import Footer from './Footer'
 import Header from './Header'
@@ -25,6 +25,10 @@ function BasePage() {
   //   }
 
   // }, [])
+  useEffect(() => {
+    if(document.querySelector("#google_translate_element") != null)
+    document.body.classList.remove("skiptranslate");
+  }, [])
 
   return (
     <>

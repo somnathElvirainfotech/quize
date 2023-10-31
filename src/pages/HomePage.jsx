@@ -36,6 +36,7 @@ import MobileSelect, { CustomConfig } from "mobile-select";
 import MobileSelector from "./MobileSelector";
 import Modal from 'react-bootstrap/Modal';
 import logo from "../assets/images/logo.png";
+import { authActions } from "../redux/auth";
 function Home() {
   // const { user, dispatch } = useContext(userContext);
   const tirggerRef = useRef(null);
@@ -173,7 +174,7 @@ function Home() {
     }
     setAlldataform(data)
     if (!auth.isAuthenticated) {
-      setModalmsg("You're NOT logged in to any account.");
+      setModalmsg("You are not logged in.");
      handleShow();
       
       
@@ -240,7 +241,7 @@ function Home() {
       console.log(responce.data);
       if (responce.data.error) {
         toast.error(responce.data.error);
-        setModalmsg("You're NOT subscribed to select Module.");
+        setModalmsg("You do not have a valid plan to load");
         handleShow();
 
       } else {
@@ -637,6 +638,13 @@ const setchaptername = (e) => {
   console.log(e.target.options[e.target.selectedIndex].text,"cghv");
 
 }
+const NLogout = () => {
+
+ 
+  dispatch(authActions.Logout());
+  window.location.replace('https://www.cmfasacademy.com/cmfas_logout.php')
+ 
+};
 
   useEffect(() => {
     if(auth.isAuthenticated){
@@ -686,7 +694,19 @@ const setchaptername = (e) => {
                 <img src={logo} alt="logo" className="footer-logo" />
               </NavLink>
             </div>
-            {auth.isAuthenticated ? null: (
+            {auth.isAuthenticated ? (
+              <div className="top-login">
+                <a
+                          className="login"
+                          href="javascript:void(0)"
+                          onClick={NLogout}
+                          // onClick={loginPageModalShow}
+                        >
+                          Logout
+                        </a>
+              </div>
+
+            ):(
             <div className="top-login">
             <a
                       className="login"
@@ -695,12 +715,12 @@ const setchaptername = (e) => {
                       data-bs-target="#loginpopup"
                       // onClick={loginPageModalShow}
                     >
-                      login
+                      Login
                     </a>
                     </div>
                     
                     )}
-                    </div>
+              </div>
 
             <form
               className="row g-3 text-engine-frm"
@@ -774,11 +794,17 @@ onChange={setchaptername}
                 </p>
               </div>
               {/* ============= no  of question ========= */}
-              <div className="col-md-6 ">
+              <div className="col-md-8 ">
                 <label htmlFor="inputState" className="form-label">
-                  How Many Questions To Load?
+                Max Questions to Load:
                 </label>
-               
+                <a style={{marginLeft:5}}
+                      data-tooltip-id="my-question"
+                      data-tooltip-content="We discourage doing massive questions in one session."
+                    >
+                      ⓘ
+                    </a>
+                    <Tooltip id="my-question" />
                   <select
                     id="inputState"
                     className="form-select"
@@ -814,7 +840,7 @@ onChange={setchaptername}
                     <label htmlFor="">Sequential</label>
                     <a
                       data-tooltip-id="my-tooltip"
-                      data-tooltip-content="Questions will be sorted randomly"
+                      data-tooltip-content="Keep this unticked for questions to be fetched randomly."
                     >
                       ⓘ
                     </a>
@@ -832,7 +858,7 @@ onChange={setchaptername}
                     <label htmlFor="">Redo Cleared Questions</label>
                     <a
                       data-tooltip-id="my-skip"
-                      data-tooltip-content="Fetch only questions that had not ever been answered correctly before"
+                      data-tooltip-content="Tick this to fetch questions that have been answered correctly before."
                     >
                       ⓘ
                     </a>
@@ -893,7 +919,7 @@ onChange={setchaptername}
                         </a>
                       </p>
                     </li>
-                    {auth.isAuthenticated && (
+                  
                       <li>
                         <p id="t_test2">
                           <input
@@ -914,7 +940,7 @@ onChange={setchaptername}
                           </a>
                         </p>
                       </li>
-                    )}
+                  
                   </ul>
                 </div>
                 <button type="submit" className="enter animate-btn">
@@ -952,7 +978,14 @@ onChange={setchaptername}
         {/* =-=-Range-start=-=-=- */}
 
         <div className="cmf-mb-filter-range">
-          <label htmlFor="">Max. Questions to Load:</label>
+          <label htmlFor="">Max. Questions to Load: <i 
+                  data-tooltip-id="m-my-question"
+                  data-tooltip-content="We discourage doing massive questions in one session."
+                  class="fa-regular fa-circle-question nquestion"
+                ></i>
+                <Tooltip id="m-my-question" /></label>
+         
+                    
           <Range
             step={mstep}
             min={mminstep}
@@ -1010,7 +1043,7 @@ onChange={setchaptername}
               <div className="switch-toggle">
                 <i
                   data-tooltip-id="m-my-skip"
-                  data-tooltip-content="Fetch only questions that had not ever been answered correctly before"
+                  data-tooltip-content="Tick this to fetch questions that have been answered correctly before."
                   class="fa-regular fa-circle-question"
                 ></i>
                 <Tooltip id="m-my-skip" />
@@ -1030,7 +1063,7 @@ onChange={setchaptername}
               <div className="switch-toggle">
                 <i
                   data-tooltip-id="m-my-tooltip"
-                  data-tooltip-content="Questions will be sorted randomly"
+                  data-tooltip-content="Keep this unticked for questions to be fetched randomly."
                   class="fa-regular fa-circle-question"
                 ></i>
 
@@ -1050,7 +1083,9 @@ onChange={setchaptername}
               <span className="text">Exam Mode</span>
 
               <div className="switch-toggle">
-                <i class="fa-regular fa-circle-question"></i>
+                <i  data-tooltip-id="m-exam-tooltip"
+                  data-tooltip-content="Simulated exam mode. No instant marking, no showing of explanation. Score will be shown at the end" class="fa-regular fa-circle-question"></i>
+                   <Tooltip id="m-exam-tooltip" />
                 <label class="switch">
                   <input
                     type="checkbox"
@@ -1118,36 +1153,46 @@ onChange={setchaptername}
             </section> */}
             <Modal show={show} onHide={handleClose}  className="sub-mdl">
         <Modal.Header closeButton>
-          <Modal.Title>No Valid Subscription</Modal.Title>
+          <Modal.Title>
+          <div className="logo mb-2">
+            <NavLink to="/">
+              <img src={logo} alt="logo" className="footer-logo" />
+            </NavLink>
+          </div>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+         
           <div>
-             {modalmsg}
-          </div>
-          <div>
+
             <span>
-            Module/Set selected: 
+            {modalmsg}
             </span>
-            <span>
-             {selectedModule}
-            </span>
-            <span>( {selectedChapter} )
-            </span>
+            {auth.isAuthenticated && 
+            <>
+            <span style={{marginLeft:5}}>
+            {selectedModule}
+           </span>
+           <span>( {selectedChapter} )
+           </span>
+           </>
+            }
+            
           
           </div>
           <div>
-          Would you like to do a free trial?
+         We will load 5 free trial Qs
           </div>
           <div>
 
           </div>
          </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
-            Reconfigure
+          <Button variant="primary" onClick={handleClose} className="cancel-btn">
+            Cancel
           </Button>
-          <Button variant="primary" onClick={handleFreeTrial}>
-            Free Trial
+          <Button variant="primary" onClick={handleFreeTrial} className="ok-btn">
+            Ok
           </Button>
         </Modal.Footer>
       </Modal>
