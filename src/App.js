@@ -47,7 +47,7 @@ function App() {
       />
       <div className="App">
 
-        <BrowserRouter>
+        <BrowserRouter basename="/quiz">
           <Routes>
             <Route path='' element={<BasePage />}>
               <Route index element={<Home />} />
