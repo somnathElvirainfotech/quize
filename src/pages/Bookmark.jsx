@@ -40,6 +40,8 @@ function Bookmark() {
 
   const { register, handleSubmit, reset, setValue, getValues, formState: { errors } } = useForm();
 
+  const [speedRefhandleShow,setSpeedRefhandleShow]=useState(false);
+
 
 
 
@@ -1037,7 +1039,7 @@ function Bookmark() {
 
 
       {/* ======== custom modal ======== */}
-      <SpeedRef />
+      <SpeedRef speedRefhandleShow={speedRefhandleShow} setSpeedRefhandleShow={setSpeedRefhandleShow} />
 
       <AskMentor />
 

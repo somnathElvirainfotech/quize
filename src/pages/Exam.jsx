@@ -45,6 +45,7 @@ function Exam() {
   const auth = useSelector((state) => state.auth);
 
   const [loader, setLoader] = useState(false);
+  const [speedRefhandleShow,setSpeedRefhandleShow]=useState(false);
 
   // console.log("questionid  ", question.questionid);
   // console.log("questionlist  ", question.questionlist);
@@ -1265,7 +1266,7 @@ function Exam() {
                         data-bs-toggle="modal"
                         data-bs-target="#searchpopup"
                         title="Speed Reference"
-                        // onClick={speedRefhandleShow}
+                        onClick={()=>setSpeedRefhandleShow(true)}
                       >
                         <img src={search} alt="search" />
                       </a>
@@ -1448,7 +1449,7 @@ function Exam() {
                     data-bs-toggle="modal"
                     data-bs-target="#searchpopup"
                     title="Speed Reference"
-                    // onClick={speedRefhandleShow}
+                    onClick={()=>setSpeedRefhandleShow(true)}
                   >
                     <img src={search} alt="search" />
                   </a>
@@ -1503,7 +1504,7 @@ function Exam() {
       {/* =========== custom script add ================ */}
 
       {/* ======== custom modal ======== */}
-      <SpeedRef />
+      <SpeedRef speedRefhandleShow={speedRefhandleShow} setSpeedRefhandleShow={setSpeedRefhandleShow} />
 
       <AskMentor />
       

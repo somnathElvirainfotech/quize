@@ -10,6 +10,8 @@ function SpeedRef(props) {
     const question = useSelector(state => state.question);
     const modalCloseRef=useRef(null);
 
+ 
+
     return (
         <>
 
@@ -30,16 +32,17 @@ function SpeedRef(props) {
                                 className="btn-close"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
+                                onClick={()=>props.setSpeedRefhandleShow(false)}
                             />
-                           <Iframe
-                            url={question.speedRefFileLink}
+                        <Iframe
+                            url={props.speedRefhandleShow ?question.speedRefFileLink:""}
                             width="100%"
                             height="400px"
                             id=""
                             className="my-ovrflow"
                             display="block"
                             position="relative"
-                             />
+                             /> 
                               <h5 className='speed-ref'>Speed Reference</h5>
                         </div>
                     </div>

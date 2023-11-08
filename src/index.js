@@ -7,6 +7,16 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import { store, persistor } from './redux/store';
 
+// ==== disable react devtools ==//
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
+
+// == NODE_ENV is react default env variable
+if (process.env.NODE_ENV === 'production') {
+  disableReactDevTools();
+}
+
+// ====  end disable react devtools ==//
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

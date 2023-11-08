@@ -2728,3 +2728,8 @@ display: none;
   display: none;
 }
 /*=-=-26-10-2023=-=- */
+
+
+.console {
+  display: none !important;
+}

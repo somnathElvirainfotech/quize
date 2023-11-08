@@ -806,7 +806,7 @@ onChange={setchaptername}
                     </a>
                     <Tooltip id="my-question" />
                   <select
-                    id="inputState"
+                    id="inputState2"
                     className="form-select"
                     {...register("lstNum")}
                   >

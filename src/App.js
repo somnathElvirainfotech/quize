@@ -23,6 +23,9 @@ import Bookmark from './pages/Bookmark';
 import FreeExam from './pages/FreeExam';
 import FreeReview from './pages/FreeReview';
 import EncryptLogin from './pages/EncryptLoginPage';
+import { useEffect } from 'react';
+
+
 
 // import Login from './pages/LoginPage';
 
@@ -30,7 +33,13 @@ import EncryptLogin from './pages/EncryptLoginPage';
 
 
 
+
 function App() {
+
+  useEffect(()=>{
+    console.clear();
+    // console.warn=()=>{};
+  },[])
 
   return (
     <>
@@ -47,7 +56,7 @@ function App() {
       />
       <div className="App">
 
-        <BrowserRouter>
+        <BrowserRouter basename='/quiz'>
           <Routes>
             <Route path='' element={<BasePage />}>
               <Route index element={<Home />} />
