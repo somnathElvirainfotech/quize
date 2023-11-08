@@ -59,7 +59,7 @@ function ReportError() {
 
 
     data.qid = question.questionlist.id;
-    console.log(data);
+    // console.log(data);
 
     var responce = await userService.ReportQuestion(data);
 

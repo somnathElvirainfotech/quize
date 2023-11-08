@@ -34,7 +34,7 @@ function Header() {
 
   // const {user}=useContext(AuthContext);
   // const {user,dispatch} = useContext(userContext);
-  //  console.log(user)
+  //  // console.log(user)
   const Logout = () => {
     // localStorage.clear();
     // sessionStorage.clear();
@@ -47,7 +47,7 @@ function Header() {
     // toast.success("Logout Successfully");
   };
 
-  // console.log(user,'user')
+  // // console.log(user,'user')
   return (
     <>
       <header>

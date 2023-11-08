@@ -46,7 +46,7 @@ function MobileSelector(props) {
         triggerDisplayValue: false, // If you don't want to overwrite the HTML inside the trigger, you need to set this to false
         onChange: (data) => {
           // alert("fg");
-          console.log(data,"tttttttttt")
+          // console.log(data,"tttttttttt")
           if(data.length > 1){
             props.setSelectedCourseVal(data[0].value); 
             props.setSelectedVal(data[1].value); 
@@ -60,7 +60,7 @@ function MobileSelector(props) {
           props.setValue("lstSubject",data[0].id)
           }
           
-          //console.log(data[0].id,"asdfasd");
+          //// console.log(data[0].id,"asdfasd");
           // props.setValue("lstSubject", data[0].id);
         },
       });

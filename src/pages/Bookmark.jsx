@@ -30,8 +30,8 @@ function Bookmark() {
 
   const [loader, setLoader] = useState(false);
 
-  console.log("questionid  ", bookmark.questionid);
-  console.log("questionlist  ", bookmark.questionlist);
+  // console.log("questionid  ", bookmark.questionid);
+  // console.log("questionlist  ", bookmark.questionlist);
 
   const formref = useRef(null);
 
@@ -104,7 +104,7 @@ function Bookmark() {
 
     var response = await userService.BookmarkList(form);
 
-    console.log("BookmarkList  ", response.data)
+    // console.log("BookmarkList  ", response.data)
 
     if (response.data.status) {
 
@@ -127,8 +127,8 @@ function Bookmark() {
   var getquestiondata = async (q_id) => {
     // alert(q_id)
     // let q_id = currentId.value
-    console.log(q_id, "  q_id");
-    console.log(bookmark.questionid[q_id], "  q_value");
+    // console.log(q_id, "  q_id");
+    // console.log(bookmark.questionid[q_id], "  q_value");
 
     // ==== answer form reset ========
 
@@ -140,7 +140,7 @@ function Bookmark() {
         "next_qid": bookmark.questionid[q_id]
       }
 
-      console.log(datas)
+      // console.log(datas)
 
       var response = await userService.Nextquestion(datas);
 
@@ -161,7 +161,7 @@ function Bookmark() {
         let new_ans = await removeDuplicates(response.data.ques.ans)
         response.data.ques.ans = new_ans;
 
-        console.log("faqdata ", response.data)
+        // console.log("faqdata ", response.data)
 
 
         dispatch(bookmarkActions.questionlist(response.data.ques));
@@ -209,7 +209,7 @@ function Bookmark() {
 
     }
     else {
-      console.log("not get q_id")
+      // console.log("not get q_id")
     }
   }
 
@@ -222,10 +222,10 @@ function Bookmark() {
 
     for (const [index, i] of oldQA_obj.entries()) {
       if (bookmark.questionlist.id === i.qid) {
-        console.log("fffffff " + i.ans.length)
+        // console.log("fffffff " + i.ans.length)
         if (bookmark.questionlist.ans.length > 1) {
           const myArray = i.ans.split("");
-          console.log(`ans id == ${i.qid} === ${myArray}`)
+          // console.log(`ans id == ${i.qid} === ${myArray}`)
           for (var j of myArray) {
             if (j === 'A') {
               setValue("test1", j);
@@ -448,7 +448,7 @@ function Bookmark() {
 
       }
 
-      console.log(`user ans=${data.answer} | ans=${bookmark.questionlist.ans}`)
+      // console.log(`user ans=${data.answer} | ans=${bookmark.questionlist.ans}`)
 
 
     }
@@ -476,7 +476,7 @@ function Bookmark() {
     // return;
     var ans_type = getValues("ans_type");
 
-    console.log("ans_type ", ans_type)
+    // console.log("ans_type ", ans_type)
 
     if (ans_type === "checkbox") {
 
@@ -513,7 +513,7 @@ function Bookmark() {
 
         var oldQA_obj = bookmark.answerObj;
 
-        console.log("oldQA_obj  ", Object.keys(oldQA_obj));
+        // console.log("oldQA_obj  ", Object.keys(oldQA_obj));
 
         if (oldQA_obj.length > 0) {
           var run_status = true;
@@ -555,7 +555,7 @@ function Bookmark() {
 
       }
 
-      console.log(`save === test1=${test1} | test2=${test2} | test3=${test3} | test4=${test4} `)
+      // console.log(`save === test1=${test1} | test2=${test2} | test3=${test3} | test4=${test4} `)
 
     } else {
 
@@ -569,7 +569,7 @@ function Bookmark() {
 
         var oldQA_obj = bookmark.answerObj;
 
-        console.log("oldQA_obj  ", oldQA_obj);
+        // console.log("oldQA_obj  ", oldQA_obj);
 
         if (oldQA_obj.length > 0) {
           var run_status = true;
@@ -610,7 +610,7 @@ function Bookmark() {
 
       }
 
-      console.log(`save === answer=${answer} `);
+      // console.log(`save === answer=${answer} `);
     }
 
 
@@ -710,7 +710,7 @@ function Bookmark() {
         }
       }
 
-      console.log("new_answerObj  ", new_answerObj)
+      // console.log("new_answerObj  ", new_answerObj)
 
       var data = {
         "subid": bookmark.subject_id,
@@ -720,7 +720,7 @@ function Bookmark() {
 
       var responce = await userService.AnswerSubmit(data);
 
-      console.log("responce ans submit", responce.data)
+      // console.log("responce ans submit", responce.data)
 
       dispatch(bookmarkActions.ansSubmit(false));
       dispatch(bookmarkActions.totalCurrectAns(currectQns))
@@ -742,11 +742,11 @@ function Bookmark() {
     form.append("user_id", auth.user_id);
     form.append("question_id", bookmark.questionlist.id);
 
-    console.log("remove question_id ", bookmark.questionlist.id);
+    // console.log("remove question_id ", bookmark.questionlist.id);
 
     var responce = await userService.RemoveBookmark(form);
 
-    console.log("AddBookmark ", responce.data)
+    // console.log("AddBookmark ", responce.data)
 
     if (responce.data.status) {
       toast.success(responce.data.msg);

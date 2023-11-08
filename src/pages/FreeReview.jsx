@@ -41,8 +41,8 @@ function FreeReview() {
   const question = useSelector((state) => state.question);
   const auth = useSelector((state) => state.auth);
   const [answerstatus, setAnswerstatus] = useState(0);
-  console.log("questionid  ", question.questionid);
-  console.log("questionlist  ", question.questionlist);
+  // console.log("questionid  ", question.questionid);
+  // console.log("questionlist  ", question.questionlist);
 
   const formref = useRef(null);
 
@@ -65,14 +65,14 @@ function FreeReview() {
       dispatch(questionActions.count(index));
 
       // setCurrentIndex();
-      // console.log(currentIndex, 'currentIndex')
+      // // console.log(currentIndex, 'currentIndex')
       //   await saveAnswerObj();
       await getquestiondata(`qid${index}`);
     }
   };
 
   const handlePrevious = async () => {
-    // console.log(currentIndex, 'currentIndex')
+    // // console.log(currentIndex, 'currentIndex')
     var index = question.count;
     if (question.count > 0) {
       index = index - 1;
@@ -103,8 +103,8 @@ function FreeReview() {
 
   var getquestiondata = async (q_id) => {
     // let q_id = currentId.value
-    console.log(q_id, "  q_id");
-    console.log(question.questionid[q_id], "  q_value");
+    // console.log(q_id, "  q_id");
+    // console.log(question.questionid[q_id], "  q_value");
 
     // ==== answer form reset ========
 
@@ -118,16 +118,16 @@ function FreeReview() {
       if (response.data.error) {
         toast.error(response.data.error);
       } else {
-        // console.log(response.data)
+        // // console.log(response.data)
 
         // setDropdowndata(response.data)
-        // console.log(response.data, 'responsedata123')
+        // // console.log(response.data, 'responsedata123')
         // setQuestiondata(response.data)
 
         let new_ans = await removeDuplicates(response.data.ques.ans);
         response.data.ques.ans = new_ans;
 
-        // console.log("faqdata ", response.data)
+        // // console.log("faqdata ", response.data)
 
         dispatch(questionActions.questionlist(response.data.ques));
         dispatch(
@@ -166,7 +166,7 @@ function FreeReview() {
         }
       }
     } else {
-      console.log("not get q_id");
+      // console.log("not get q_id");
     }
   };
 
@@ -177,7 +177,7 @@ function FreeReview() {
 
     for (const [index, i] of oldQA_obj.entries()) {
       if (question.questionlist.id === i.qid) {
-        console.log("fffffff " + i.ans.length);
+        // console.log("fffffff " + i.ans.length);
         //alert(i.ans);
 
         var form = formref.current;
@@ -193,7 +193,7 @@ function FreeReview() {
           var answer = i.ans;
 
 
-          console.log(`ans id == ${i.qid} === ${myArray}`);
+          // console.log(`ans id == ${i.qid} === ${myArray}`);
 
           for (var j of myArray) {
             if (j === "A") {
@@ -273,7 +273,7 @@ function FreeReview() {
 
             // form['c_test1'].className = 'sdf';
             // form['c_test2'].className = 'wer'
-            // console.log("chekcans  ", data)
+            // // console.log("chekcans  ", data)
           }
         } else {
           //  ============== radio ============= ///
@@ -293,7 +293,7 @@ function FreeReview() {
 
           // alert(answer)
 
-          // console.log("newForm ",newForm)
+          // // console.log("newForm ",newForm)
           if (question.questionlist.ans === answer) {
             // toast.success("your answer right");
             setAnswerstatus(1);
@@ -363,7 +363,7 @@ function FreeReview() {
 
     var responce = await userService.AddBookmark(form);
 
-    console.log("AddBookmark ", responce.data)
+    // console.log("AddBookmark ", responce.data)
 
     if (responce.data.status) {
       toast.success(responce.data.msg);
@@ -376,7 +376,7 @@ function FreeReview() {
 
 
   useEffect(() => {
-    // console.log(user.questionlist.ans.length, '  user.questionlist.ans.length ')
+    // // console.log(user.questionlist.ans.length, '  user.questionlist.ans.length ')
 
     // if (question.count === 0) {
     //   getquestiondata(`qid0`);

@@ -114,8 +114,8 @@ function Home() {
       if (responce.data.error) {
         toast.error(responce.data.error);
       } else {
-        console.log(responce.data, "jghjgjg");
-        console.log(responce.data.question_ids, "jghjgjg");
+        // console.log(responce.data, "jghjgjg");
+        // console.log(responce.data.question_ids, "jghjgjg");
 
         let new_ans = await removeDuplicates(responce.data.ques.ans);
 
@@ -159,7 +159,7 @@ function Home() {
     // }
 
     // alert(1)
-    console.log(data);
+    // console.log(data);
     let chkRandom = data.chkRandom;
     let chkHide = data.chkHide;
     if (chkRandom == "true") {
@@ -191,8 +191,8 @@ function Home() {
       // if (responce.data.error) {
       //   toast.error(responce.data.error);
       // } else {
-      //   console.log(responce.data, "jghjgjg");
-      //   console.log(responce.data.question_ids, "jghjgjg");
+      //   // console.log(responce.data, "jghjgjg");
+      //   // console.log(responce.data.question_ids, "jghjgjg");
 
       //   let new_ans = await removeDuplicates(responce.data.ques.ans);
 
@@ -238,15 +238,15 @@ function Home() {
 
       var responce = await userService.Postquestion(form);
 
-      console.log(responce.data);
+      // console.log(responce.data);
       if (responce.data.error) {
         toast.error(responce.data.error);
         setModalmsg("You do not have a valid plan to load");
         handleShow();
 
       } else {
-        console.log(responce.data, "jghjgjg");
-        console.log(responce.data.question_ids, "jghjgjg");
+        // console.log(responce.data, "jghjgjg");
+        // console.log(responce.data.question_ids, "jghjgjg");
 
         let new_ans = await removeDuplicates(responce.data.ques.ans);
 
@@ -312,7 +312,7 @@ function Home() {
       radMode: Switchexammode,
     };
 
-    console.log("mobile view data ", data);
+    // console.log("mobile view data ", data);
 
     // return;
 
@@ -346,8 +346,8 @@ function Home() {
       // if (responce.data.error) {
       //   toast.error(responce.data.error);
       // } else {
-      //   console.log(responce.data, "jghjgjg");
-      //   console.log(responce.data.question_ids, "jghjgjg");
+      //   // console.log(responce.data, "jghjgjg");
+      //   // console.log(responce.data.question_ids, "jghjgjg");
 
       //   let new_ans = await removeDuplicates(responce.data.ques.ans);
 
@@ -390,14 +390,14 @@ function Home() {
 
       var responce = await userService.Postquestion(form);
 
-      console.log(responce.data);
+      // console.log(responce.data);
       if (responce.data.error) {
         setModalmsg("You're NOT subscribed to select Module.");
         toast.error(responce.data.error);
         handleShow();
       } else {
-        console.log(responce.data, "jghjgjg");
-        console.log(responce.data.question_ids, "jghjgjg");
+        // console.log(responce.data, "jghjgjg");
+        // console.log(responce.data.question_ids, "jghjgjg");
 
         let new_ans = await removeDuplicates(responce.data.ques.ans);
 
@@ -441,26 +441,26 @@ function Home() {
     }
   };
 
-  //   console.log(user_info,'user_info')
+  //   // console.log(user_info,'user_info')
 
   var getdropdowndata = async () => {
     let mem_id = auth.user_id;
-    console.log(auth.user_id);
+    // console.log(auth.user_id);
     if (mem_id !== "") {
       let datas = {
         mem_id: mem_id,
         engine_type: "filter",
       };
       var response = await userService.getlist(datas);
-      console.log("faqdata ", response.data);
+      // console.log("faqdata ", response.data);
 
-      console.log(mem_id);
+      // console.log(mem_id);
       if (response.data.error) {
         setDropdowndata([]);
       } else {
         var arr = [];
         var mobile_arr = [];
-        console.log(response.data.length);
+        // console.log(response.data.length);
         for (let i = 0; i < response.data.length; i++) {
           var itemdata = response.data[i];
           for (let i = 0; i < itemdata.length; i++) {
@@ -470,19 +470,19 @@ function Home() {
             //   id: dataitem.option_value,
             //   value: dataitem.option,
             // });
-            console.log(dataitem, "dataitem");
+            // console.log(dataitem, "dataitem");
           }
-          console.log(itemdata, "aarayadata");
+          // console.log(itemdata, "aarayadata");
         }
         // setDropdowndata(response.data)
-        // console.log(response.data, 'responsedata123')
+        // // console.log(response.data, 'responsedata123')
         
         setDropdowndata(arr);
 
        
       }
     } else {
-      console.log("not get token");
+      // console.log("not get token");
     }
 
     reset();
@@ -490,7 +490,7 @@ function Home() {
   var getFreeTrialDropdownData = async () => {
   
       var response = await userService.get_free_trial_dropdown_data();
-    //  console.log("free trial data ", response.data);
+    //  // console.log("free trial data ", response.data);
 
      
       if (response.data.error) {
@@ -498,7 +498,7 @@ function Home() {
       } else {
         var arr = [];
         var mobile_arr = [];
-        console.log("free trial data",response.data.dropdown_data);
+        // console.log("free trial data",response.data.dropdown_data);
        
        
         var drp_data=response.data.dropdown_data;
@@ -518,7 +518,7 @@ function Home() {
   var getnewdropdowndata = async () => {
   
     var response = await userService.get_new_dropdown_data();
-  //  console.log("free trial data ", response.data);
+  //  // console.log("free trial data ", response.data);
 
    
     if (response.data.error) {
@@ -526,7 +526,7 @@ function Home() {
     } else {
       var arr = [];
       var mobile_arr = [];
-      console.log("new drop down data",response.data.dropdown_data);
+      // console.log("new drop down data",response.data.dropdown_data);
      
      
       var drp_data=response.data.dropdown_data;
@@ -546,7 +546,7 @@ function Home() {
   var getmobiledropdowndata = async () => {
    
       var response = await userService.getmobiledatalist();
-      console.log("mobile data response ", response.data.dropdown_data);
+      // console.log("mobile data response ", response.data.dropdown_data);
       if (response.data.status) {
         var drp_data=response.data.dropdown_data;
         if (auth.isAuthenticated) {
@@ -565,7 +565,7 @@ function Home() {
   };
   
 
-  console.log(auth, "!auth.isAuthenticated");
+  // console.log(auth, "!auth.isAuthenticated");
 
 
   const toggleDisplayExam = () => {
@@ -575,7 +575,7 @@ function Home() {
         setSwitchexammode(2);
       } else {
         setSwitchexammode(1);
-        console.log(Switchexammode);
+        // console.log(Switchexammode);
       }
     } else {
       toast.warning("With out login exam mode not active!");
@@ -586,11 +586,11 @@ function Home() {
     if (switchrandom == 0) {
       // alert(1)
       setSwitchrandom(1);
-      console.log(switchrandom);
+      // console.log(switchrandom);
     } else {
       // alert(2);
       setSwitchrandom(0);
-      console.log(switchrandom);
+      // console.log(switchrandom);
     }
   };
 
@@ -599,12 +599,12 @@ function Home() {
       setSwitchclear(1);
     } else {
       setSwitchclear(0);
-      console.log(switchclear);
+      // console.log(switchclear);
     }
   };
 const getchapterbymodule = async(e) => {
 //alert("ok");
-console.log(e.target.value,"aglkdfj dflgldf")
+// console.log(e.target.value,"aglkdfj dflgldf")
 var module_id=e.target.value;
 
 if(module_id == "[BQ]" || module_id == "[FAQ]"){
@@ -620,7 +620,7 @@ if(module_id == "[BQ]" || module_id == "[FAQ]"){
   };
   
   var response = await userService.getchapterbymodule(datas);
-  console.log("module chapter data response ", response.data.dropdown_data);
+  // console.log("module chapter data response ", response.data.dropdown_data);
   if (response.data.status) {
     var drp_data=response.data.dropdown_data;
     setChapterDropdowndata(drp_data)
@@ -635,7 +635,7 @@ const setchaptername = (e) => {
   setSelectedChapter(e.target.options[e.target.selectedIndex].text);
   //var index = e.target.selectedIndex;
 
-  console.log(e.target.options[e.target.selectedIndex].text,"cghv");
+  // console.log(e.target.options[e.target.selectedIndex].text,"cghv");
 
 }
 const NLogout = () => {

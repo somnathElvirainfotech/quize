@@ -46,8 +46,8 @@ function Exam() {
 
   const [loader, setLoader] = useState(false);
 
-  console.log("questionid  ", question.questionid);
-  console.log("questionlist  ", question.questionlist);
+  // console.log("questionid  ", question.questionid);
+  // console.log("questionlist  ", question.questionlist);
 
   const [fontSize, setFontSize] = useState(14);
   const [lineHeight, setLineHeight] = useState(22);
@@ -65,11 +65,11 @@ function Exam() {
    form.append("user_id", auth.user_id);
    form.append("question_id", question.questionlist.id);
 
-   console.log("remove question_id ", question.questionlist.id);
+  //  console.log("remove question_id ", question.questionlist.id);
 
    var responce = await userService.RemoveBookmark(form);
 
-   console.log("AddBookmark ", responce.data)
+  //  console.log("AddBookmark ", responce.data)
 
    if (responce.data.status) {
      //toast.success(responce.data.msg);
@@ -112,7 +112,7 @@ function Exam() {
 
   const handleNext = async () => {
     var index = question.count;
-    console.log(question.answerObj, "redux question");
+    // console.log(question.answerObj, "redux question");
    
     if (question.count < question.totalQuestion - 1) {
       setLoader(true);
@@ -166,8 +166,8 @@ function Exam() {
 
   var getquestiondata = async (q_id) => {
     // let q_id = currentId.value
-    console.log(q_id, "  q_id");
-    console.log(question.questionid[q_id], "  q_value");
+    // console.log(q_id, "  q_id");
+    // console.log(question.questionid[q_id], "  q_value");
 
     // ==== answer form reset ========
 
@@ -230,7 +230,7 @@ function Exam() {
         }
       }
     } else {
-      console.log("not get q_id");
+      // console.log("not get q_id");
     }
   };
 
@@ -241,7 +241,7 @@ function Exam() {
 
     for (const [index, i] of oldQA_obj.entries()) {
       if (question.questionlist.id === i.qid) {
-        console.log("fffffff " + i.ans.length);
+        // console.log("fffffff " + i.ans.length);
         if(Number(question.radMode) === 1){
           dispatch(questionActions.questionReseltChecked(true));
          
@@ -255,7 +255,7 @@ function Exam() {
           form.querySelector("#t_test4").className = "";
           const myArray = i.ans.split("");
           var answer = i.ans;
-          console.log(`ans id == ${i.qid} === ${myArray}`);
+          // console.log(`ans id == ${i.qid} === ${myArray}`);
           for (var j of myArray) {
             if (j === "A") {
               setValue("test1", j);
@@ -562,7 +562,7 @@ function Exam() {
         }
       }
 
-      console.log(`user ans=${data.answer} | ans=${question.questionlist.ans}`);
+      // console.log(`user ans=${data.answer} | ans=${question.questionlist.ans}`);
     }
 
     // if (data.test1) {
@@ -583,7 +583,7 @@ function Exam() {
     // return;
     var ans_type = getValues("ans_type");
 
-    console.log("ans_type ", ans_type);
+    // console.log("ans_type ", ans_type);
 
     if (ans_type === "checkbox") {
       var test1 = getValues("test1");
@@ -619,7 +619,7 @@ function Exam() {
 
         var oldQA_obj = question.answerObj;
 
-        console.log("oldQA_obj  ", Object.keys(oldQA_obj));
+        // console.log("oldQA_obj  ", Object.keys(oldQA_obj));
 
         if (oldQA_obj.length > 0) {
           var run_status = true;
@@ -657,9 +657,7 @@ function Exam() {
         }
       }
 
-      console.log(
-        `save === test1=${test1} | test2=${test2} | test3=${test3} | test4=${test4} `
-      );
+      // console.log( `save === test1=${test1} | test2=${test2} | test3=${test3} | test4=${test4} `);
     } else {
       var answer = getValues("answer");
 
@@ -674,7 +672,7 @@ function Exam() {
 
         var oldQA_obj = question.answerObj;
 
-        console.log("oldQA_obj  ", oldQA_obj);
+        // console.log("oldQA_obj  ", oldQA_obj);
 
         if (oldQA_obj.length > 0) {
           var run_status = true;
@@ -712,7 +710,7 @@ function Exam() {
         }
       }
 
-      console.log(`save === answer=${answer} `);
+      // console.log(`save === answer=${answer} `);
     }
   };
 
@@ -796,7 +794,7 @@ function Exam() {
       }
     }
 
-    console.log("new_answerObj  ", new_answerObj);
+    // console.log("new_answerObj  ", new_answerObj);
 
     var data = {
       subid: question.subject_id,
@@ -806,7 +804,7 @@ function Exam() {
 
     var responce = await userService.AnswerSubmit(data);
 
-    console.log("responce ans submit", responce.data);
+    // console.log("responce ans submit", responce.data);
 
     dispatch(questionActions.ansSubmit(false));
     dispatch(questionActions.totalCurrectAns(currectQns));
@@ -830,7 +828,7 @@ function Exam() {
 
     var responce = await userService.AddBookmark(form);
 
-    console.log("AddBookmark ", responce.data);
+    // console.log("AddBookmark ", responce.data);
 
     if (responce.data.status) {
       toast.success(responce.data.msg);
@@ -849,7 +847,7 @@ function Exam() {
     if (question.answerObj.length > 0) {
       setPreviousAnsValue();
     }
-    console.log(question.answerObj, "fdlkjglk sdfg");
+    // console.log(question.answerObj, "fdlkjglk sdfg");
   }, [question.questionlist]);
 
   useEffect(() => {

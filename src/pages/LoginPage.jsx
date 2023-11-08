@@ -55,7 +55,7 @@ function LoginPage(props) {
     resolver: yupResolver(LoginSchama),
   });
   var submit = async (data) => {
-    console.log(data);
+    // console.log(data);
 
     setLoader(true);
     
@@ -67,19 +67,19 @@ function LoginPage(props) {
 
     var responce = await userService.login(form);
 
-    console.log(responce.data);
+    // console.log(responce.data);
     if (responce.data.error) {
       toast.error(responce.data.error);
     } else {
-      console.log("login successfull");
+      // console.log("login successfull");
     //   toast.success("login successfull");
 
      
 
       // localStorage.setItem("userdata", JSON.stringify(responce.data.data[0]));
       // localStorage.setItem("userid", responce.data.data[0].id);
-      // console.log(responce.data.data[0].id, 'id')
-      // console.log(responce.data.data[0], 'user')
+      // // console.log(responce.data.data[0].id, 'id')
+      // // console.log(responce.data.data[0], 'user')
 
       // dispatch({ type: "id", value: responce.data.data[0].id });
       // dispatch({ type: "name", value: responce.data.data[0].name });
@@ -96,7 +96,7 @@ function LoginPage(props) {
     // if(responce.data.msg)
     // {
     //   reset();
-    //   console.log("login successfull")
+    //   // console.log("login successfull")
     //     toast.success("login successfull")
     //     localStorage.setItem("userid",responce.data[0].id);
     //     // navigate("/admin")

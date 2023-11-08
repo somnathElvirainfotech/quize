@@ -13,9 +13,9 @@ function EncryptLoginPage() {
 const navigate=useNavigate();
 const dispatch = useDispatch();
 useEffect(()=>{
-console.log(param,"gfggggg")
+// console.log(param,"gfggggg")
   if(param.encrypcode == undefined){
-       console.log("not found");
+      //  console.log("not found");
        navigate('/');
   }else{
     //console.log(param.encrypcode,"encrypted data")
@@ -29,7 +29,7 @@ console.log(param,"gfggggg")
      checkencryptlogin(myArray);
   }
   catch(err) {
-  console.log("sdfs");
+  // console.log("sdfs");
     dispatch(authActions.Logout());
     navigate('/');
   }
@@ -39,7 +39,7 @@ console.log(param,"gfggggg")
 },[])
 var checkencryptlogin = async(myArray)=>{
   var encrypt_time = myArray[0] ;
-console.log(encrypt_time,"agldifjo")
+// console.log(encrypt_time,"agldifjo")
 var jtime = new Date(encrypt_time * 1000);
 var startTime = moment(jtime, 'hh:mm:ss');
 
@@ -47,7 +47,7 @@ var endTime = moment(new Date(), 'hh:mm:ss');
 
 var hoursDiff = endTime.diff(startTime, 'seconds');
 
-console.log('seconds:' + hoursDiff);
+// console.log('seconds:' + hoursDiff);
 
 
 if(hoursDiff < 43200){
@@ -60,11 +60,11 @@ if(hoursDiff < 43200){
  //console.log(responce.data);
   if (!responce.data.status) {
     //toast.error(responce.data.error);
-    console.log(responce.data.error,"error log")
+    // console.log(responce.data.error,"error log")
     dispatch(authActions.Logout());
     navigate('/');
   } else {
-    console.log("login successfull");
+    // console.log("login successfull");
     dispatch(authActions.Login(responce.data.data[0]));
     navigate('/');
   }

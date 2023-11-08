@@ -44,8 +44,8 @@ function FreeExam() {
   const question = useSelector((state) => state.question);
   const auth = useSelector((state) => state.auth);
 
-  console.log("questionid  ", question.questionid);
-  console.log("questionlist  ", question.questionlist);
+  // console.log("questionid  ", question.questionid);
+  // console.log("questionlist  ", question.questionlist);
 
   const [fontSize, setFontSize] = useState(14);
   const [lineHeight, setLineHeight] = useState(22);
@@ -137,8 +137,8 @@ function FreeExam() {
 
   var getquestiondata = async (q_id) => {
     // let q_id = currentId.value
-    console.log(q_id, "  q_id");
-    console.log(question.questionid[q_id], "  q_value");
+    // console.log(q_id, "  q_id");
+    // console.log(question.questionid[q_id], "  q_value");
 
     // ==== answer form reset ========
 
@@ -201,7 +201,7 @@ function FreeExam() {
         }
       }
     } else {
-      console.log("not get q_id");
+      // console.log("not get q_id");
     }
   };
 
@@ -212,7 +212,7 @@ function FreeExam() {
 
     for (const [index, i] of oldQA_obj.entries()) {
       if (question.questionlist.id === i.qid) {
-        console.log("fffffff " + i.ans.length);
+        // console.log("fffffff " + i.ans.length);
         if(Number(question.radMode) === 1){
           dispatch(questionActions.questionReseltChecked(true));
          
@@ -226,7 +226,7 @@ function FreeExam() {
           form.querySelector("#t_test4").className = "";
           const myArray = i.ans.split("");
           var answer = i.ans;
-          console.log(`ans id == ${i.qid} === ${myArray}`);
+          // console.log(`ans id == ${i.qid} === ${myArray}`);
           for (var j of myArray) {
             if (j === "A") {
               setValue("test1", j);
@@ -540,7 +540,7 @@ function FreeExam() {
         }
       }
 
-      console.log(`user ans=${data.answer} | ans=${question.questionlist.ans}`);
+      // console.log(`user ans=${data.answer} | ans=${question.questionlist.ans}`);
     }
 
     // if (data.test1) {
@@ -562,7 +562,7 @@ function FreeExam() {
     // return;
     var ans_type = getValues("ans_type");
 
-    console.log("ans_type ", ans_type);
+    // console.log("ans_type ", ans_type);
 
     if (ans_type === "checkbox") {
       var test1 = getValues("test1");
@@ -598,7 +598,7 @@ function FreeExam() {
 
         var oldQA_obj = question.answerObj;
 
-        console.log("oldQA_obj  ", Object.keys(oldQA_obj));
+        // console.log("oldQA_obj  ", Object.keys(oldQA_obj));
 
         if (oldQA_obj.length > 0) {
           var run_status = true;
@@ -636,9 +636,7 @@ function FreeExam() {
         }
       }
 
-      console.log(
-        `save === test1=${test1} | test2=${test2} | test3=${test3} | test4=${test4} `
-      );
+      // console.log( `save === test1=${test1} | test2=${test2} | test3=${test3} | test4=${test4} `);
     } else {
       var answer = getValues("answer");
 
@@ -653,7 +651,7 @@ function FreeExam() {
 
         var oldQA_obj = question.answerObj;
 
-        console.log("oldQA_obj  ", oldQA_obj);
+        // console.log("oldQA_obj  ", oldQA_obj);
 
         if (oldQA_obj.length > 0) {
           var run_status = true;
@@ -691,7 +689,7 @@ function FreeExam() {
         }
       }
 
-      console.log(`save === answer=${answer} `);
+      // console.log(`save === answer=${answer} `);
     }
   };
 
@@ -775,7 +773,7 @@ function FreeExam() {
       }
     }
 
-    console.log("new_answerObj  ", new_answerObj);
+    // console.log("new_answerObj  ", new_answerObj);
 
     // var data = {
     //   "subid": question.subject_id,
@@ -809,7 +807,7 @@ function FreeExam() {
 
     var responce = await userService.AddBookmark(form);
 
-    console.log("AddBookmark ", responce.data);
+    // console.log("AddBookmark ", responce.data);
 
     if (responce.data.status) {
       toast.success(responce.data.msg);
@@ -825,7 +823,7 @@ function FreeExam() {
     if (question.answerObj.length > 0) {
       setPreviousAnsValue();
     }
-    console.log(question.answerObj, "fdlkjglk sdfg");
+    // console.log(question.answerObj, "fdlkjglk sdfg");
   }, [question.questionlist]);
 
   useEffect(() => {

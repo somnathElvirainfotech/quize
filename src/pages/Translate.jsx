@@ -3,7 +3,8 @@ import "../assets/css/translator.css";
 import { useSelector } from "react-redux";
 import logo from "../assets/images/logo.png";
 import moment from "moment";
-import { newQID } from "../common";
+import { newQID,textcopy } from "../common";
+
 
 function Translate() {
   const question = useSelector((state) => state.question);
@@ -51,7 +52,8 @@ function Translate() {
               {newQID(auth.user_id, question.questionlist.id)}
             </p>
           </div>
-          <div id="content">
+          <div id="content" onCopy={(e) => textcopy(auth.user_id, auth.user_data.email)}>
+            
             ({question.subject_name}) | QID:{" "}
             {newQID(auth.user_id, question.questionlist.id)} |{" "}
             {moment().format("YYYY-MM-DD")}

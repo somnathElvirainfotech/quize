@@ -36,14 +36,14 @@ export const newQID=(member_id,qid, totalDigits=5)=>{
     
     const paddingZeros = '0'.repeat(paddingLength);
     const n_qid= paddingZeros + numberString;
-    console.log("n_qid",+member_id);
+    // console.log("n_qid",+member_id);
     return (String(member_id)+String(n_qid));
 }
 export const textcopy = async (user_id,email) => {
     const selectedText = window.getSelection().toString();
     
     // Do something with the selected text (e.g., display it in a console)
-    console.log('Selected Text:', selectedText);
+    // console.log('Selected Text:', selectedText);
     if(selectedText.length > 80){
         var data = {
             "user_id": user_id,
@@ -51,7 +51,7 @@ export const textcopy = async (user_id,email) => {
             "user_email": email
           };
         var responce = await userService.addcopytext(data);
-        console.log("copy text response", responce.data)
+        // console.log("copy text response", responce.data)
     }
 
   }

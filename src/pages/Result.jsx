@@ -28,7 +28,7 @@ function Result() {
   const auth=useSelector(state=>state.auth);
 
  
-  console.log("questionlist  ", question.questionlist);
+  // console.log("questionlist  ", question.questionlist);
 
  const navigate=useNavigate();
 
@@ -36,8 +36,8 @@ function Result() {
   
  var getquestiondata = async (q_id) => {
     // let q_id = currentId.value
-    console.log(q_id, "  q_id");
-    console.log(question.questionid[q_id], "  q_value");
+    // console.log(q_id, "  q_id");
+    // console.log(question.questionid[q_id], "  q_value");
 
     // ==== answer form reset ========
 
@@ -61,16 +61,16 @@ function Result() {
 
       } else {
 
-        // console.log(response.data)
+        // // console.log(response.data)
 
         // setDropdowndata(response.data)
-        // console.log(response.data, 'responsedata123')
+        // // console.log(response.data, 'responsedata123')
         // setQuestiondata(response.data)
 
         let new_ans = await removeDuplicates(response.data.ques.ans)
         response.data.ques.ans = new_ans;
 
-        // console.log("faqdata ", response.data)
+        // // console.log("faqdata ", response.data)
 
 
         dispatch(questionActions.questionlist(response.data.ques));
@@ -94,7 +94,7 @@ function Result() {
 
     }
     else {
-      console.log("not get q_id")
+      // console.log("not get q_id")
     }
   }
 
