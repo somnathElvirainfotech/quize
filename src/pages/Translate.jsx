@@ -32,6 +32,12 @@ function Translate() {
     window.googleTranslateElementInit = googleTranslateElementInit;
   }, []);
 
+  useEffect(()=>{
+    if (process.env.NODE_ENV === 'production') {
+      console.clear();
+    }
+  },[]);
+
   return (
     <>
       <div className="container">

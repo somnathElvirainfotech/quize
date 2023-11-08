@@ -70,6 +70,12 @@ function MobileSelector(props) {
     };
   }, [props.MobileDropdowndata]);
 
+  useEffect(()=>{
+    if (process.env.NODE_ENV === 'production') {
+      console.clear();
+    }
+  },[]);
+
   return (
     <>
       <div className="mb-f-v1" ref={tirggerRef}>

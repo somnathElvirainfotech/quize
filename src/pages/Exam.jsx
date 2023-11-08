@@ -879,6 +879,12 @@ function Exam() {
     
   }, []);
 
+  useEffect(()=>{
+    if (process.env.NODE_ENV === 'production') {
+      console.clear();
+    }
+  },[]);
+
   return (
     <>
       {loader && <Loader />}

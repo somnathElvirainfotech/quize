@@ -37,9 +37,10 @@ import { useEffect } from 'react';
 function App() {
 
   useEffect(()=>{
-    console.clear();
-    // console.warn=()=>{};
-  },[])
+    if (process.env.NODE_ENV === 'production') {
+      console.clear();
+    }
+  },[]);
 
   return (
     <>

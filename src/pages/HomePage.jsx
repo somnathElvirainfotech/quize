@@ -683,6 +683,12 @@ const NLogout = () => {
 
   }, [auth.isAuthenticated]);
 
+  useEffect(()=>{
+    if (process.env.NODE_ENV === 'production') {
+      console.clear();
+    }
+  },[]);
+
   return (
     <>
       <section className="text-engine d_mode">
@@ -727,13 +733,13 @@ const NLogout = () => {
               onSubmit={handleSubmit(submit)}
             >
               <div className="col-md-8">
-                <label htmlFor="inputState" className="form-label">
+                <label htmlFor="inputState1" className="form-label">
                   Pick A Question Set:
                 </label>
                
               
                   <select
-                    id="inputState"
+                    id="inputState1"
                     className="form-select"
                     {...register("lstModule")}
                     onChange={getchapterbymodule}
@@ -750,14 +756,14 @@ const NLogout = () => {
                       })}
                   </select>
                 
-                  <label htmlFor="inputState" className="form-label">
+                  <label htmlFor="inputState3" className="form-label">
                 
                 </label>
                
            {showchapter ? (
 
 <select
-id="inputState"
+id="inputState3"
 className="form-select"
 {...register("lstSubject")}
 onChange={setchaptername}

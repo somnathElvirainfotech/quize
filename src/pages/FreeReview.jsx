@@ -388,6 +388,12 @@ function FreeReview() {
     document.body.classList.remove('bg-salmon');
   }, [question.questionlist]);
 
+  useEffect(()=>{
+    if (process.env.NODE_ENV === 'production') {
+      console.clear();
+    }
+  },[]);
+
   return (
     <>
       <section className="Money-Received">

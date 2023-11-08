@@ -104,6 +104,12 @@ function Result() {
     document.body.classList.remove('bg-salmon');
   },[])
 
+  useEffect(()=>{
+    if (process.env.NODE_ENV === 'production') {
+      console.clear();
+    }
+  },[]);
+
   return (
     <>
       <section className="Money-Received result-box">
