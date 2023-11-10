@@ -85,71 +85,86 @@ function Home() {
   var Navigate = useNavigate();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  
+
   const handleFreeTrial = () => {
     setShow(false);
     setShowtermcondition(true)
-  } 
+  }
   const termconditionhandleClose = () => setShowtermcondition(false);
   const termconditionhandleShow = () => setShowtermcondition(true);
-  
+
+  // ========= free question submit ==========
   const handleExam = async () => {
     setShowtermcondition(false);
-    var data=alldataform;
+    var data = alldataform;
 
-      var checkRandom = "0"; 
+    let chkRandom = data.chkRandom;
+    let chkHide = data.chkHide;
+    if (chkRandom == "true") {
+      var checkRandom = "0";
+    } else {
+      var checkRandom = "1";
+    }
+    if (chkHide == "true") {
       var checkH = "0";
-      var no_of_question = 5;
-    
-    const form = new FormData();
-      form.append("lstSubject", data.lstSubject);
-      form.append("lstNum", no_of_question);
-      form.append("chkRandom", checkRandom);
-      form.append("chkHide", checkH);
-      form.append("radMode", data.radMode);
-      form.append("type", "filter");
-
-      var responce = await userService.FreeQuestion(form);
-
-      if (responce.data.error) {
-        toast.error(responce.data.error);
-      } else {
-        // console.log(responce.data, "jghjgjg");
-        // console.log(responce.data.question_ids, "jghjgjg");
-
-        let new_ans = await removeDuplicates(responce.data.ques.ans);
-
-        responce.data.ques.ans = new_ans;
-
-        
-
-        dispatch(questionActions.questionReset());
-
-        dispatch(questionActions.questionlist(responce.data.ques));
-        dispatch(questionActions.questionid(responce.data.question_ids));
-        dispatch(questionActions.totalQuestion(responce.data.question_count));
-        dispatch(questionActions.subject_name(responce.data.subject_name));
-        dispatch(questionActions.radMode(data.radMode));
-        dispatch(
-          questionActions.speedRefFileLink(
-            responce.data.speed_reference_file_path
-          )
-        );
-
-        dispatch(questionActions.subject_id(data.lstSubject));
-        dispatch(questionActions.flag_type(responce.data.flag_type));
-
-        dispatch(
-          questionActions.passing_percentage(
-            Number(responce.data.passing_percentage)
-          )
-        );
-
-        Navigate("/free-exam");
-      }
-
+    } else {
+      var checkH = "1";
+    }
    
-  } 
+    // var checkRandom = "0";
+    // var checkH = "0";
+    
+    var no_of_question = 5;
+
+    const form = new FormData();
+    form.append("lstSubject", data.lstSubject);
+    form.append("lstNum", no_of_question);
+    form.append("chkRandom", checkRandom);
+    form.append("chkHide", checkH);
+    form.append("radMode", data.radMode);
+    form.append("type", "filter");
+
+    var responce = await userService.FreeQuestion(form);
+
+    if (responce.data.error) {
+      toast.error(responce.data.error);
+    } else {
+      // console.log(responce.data, "jghjgjg");
+      // console.log(responce.data.question_ids, "jghjgjg");
+
+      let new_ans = await removeDuplicates(responce.data.ques.ans);
+
+      responce.data.ques.ans = new_ans;
+
+
+
+      dispatch(questionActions.questionReset());
+
+      dispatch(questionActions.questionlist(responce.data.ques));
+      dispatch(questionActions.questionid(responce.data.question_ids));
+      dispatch(questionActions.totalQuestion(responce.data.question_count));
+      dispatch(questionActions.subject_name(responce.data.subject_name));
+      dispatch(questionActions.radMode(data.radMode));
+      dispatch(
+        questionActions.speedRefFileLink(
+          responce.data.speed_reference_file_path
+        )
+      );
+
+      dispatch(questionActions.subject_id(data.lstSubject));
+      dispatch(questionActions.flag_type(responce.data.flag_type));
+
+      dispatch(
+        questionActions.passing_percentage(
+          Number(responce.data.passing_percentage)
+        )
+      );
+
+      Navigate("/free-exam");
+    }
+
+
+  }
   // ============ desktop view submit form =================
   var submit = async (data) => {
     //alert("ok");
@@ -175,9 +190,9 @@ function Home() {
     setAlldataform(data)
     if (!auth.isAuthenticated) {
       setModalmsg("You are not logged in.");
-     handleShow();
-      
-      
+      handleShow();
+
+
       // const form = new FormData();
       // form.append("lstSubject", data.lstSubject);
       // form.append("lstNum", data.lstNum);
@@ -198,7 +213,7 @@ function Home() {
 
       //   responce.data.ques.ans = new_ans;
 
-        
+
 
       //   dispatch(questionActions.questionReset());
 
@@ -226,7 +241,7 @@ function Home() {
       // }
     } else {
 
-    
+
       const form = new FormData();
       form.append("lstSubject", data.lstSubject);
       form.append("lstNum", data.lstNum);
@@ -250,7 +265,7 @@ function Home() {
 
         let new_ans = await removeDuplicates(responce.data.ques.ans);
 
-        responce.data.ques.ans = new_ans;      
+        responce.data.ques.ans = new_ans;
 
         dispatch(questionActions.questionReset());
         dispatch(questionActions.questionlist(responce.data.ques));
@@ -300,7 +315,7 @@ function Home() {
       setlstlstNumError(false);
     }
 
-    if(selectedVal == "" || (lstNum < 5 && auth.isAuthenticated == false)){
+    if (selectedVal == "" || (lstNum < 5 && auth.isAuthenticated == false)) {
       return;
     }
 
@@ -333,7 +348,7 @@ function Home() {
       setModalmsg("You're NOT logged in to any account.");
       handleShow();
       // const form = new FormData();
-      
+
       // form.append("lstSubject", data.lstSubject);
       // form.append("lstNum", data.lstNum);
       // form.append("chkRandom", checkRandom);
@@ -353,7 +368,7 @@ function Home() {
 
       //   responce.data.ques.ans = new_ans;
 
-   
+
       //   dispatch(questionActions.questionReset());
 
       //   dispatch(questionActions.questionlist(responce.data.ques));
@@ -476,10 +491,10 @@ function Home() {
         }
         // setDropdowndata(response.data)
         // // console.log(response.data, 'responsedata123')
-        
+
         setDropdowndata(arr);
 
-       
+
       }
     } else {
       // console.log("not get token");
@@ -488,82 +503,82 @@ function Home() {
     reset();
   };
   var getFreeTrialDropdownData = async () => {
-  
-      var response = await userService.get_free_trial_dropdown_data();
+
+    var response = await userService.get_free_trial_dropdown_data();
     //  // console.log("free trial data ", response.data);
 
-     
-      if (response.data.error) {
-        setDropdowndata([]);
-      } else {
-        var arr = [];
-        var mobile_arr = [];
-        // console.log("free trial data",response.data.dropdown_data);
-       
-       
-        var drp_data=response.data.dropdown_data;
-        if (auth.isAuthenticated) {
-          drp_data.unshift({option_value:"[FAQ]",option:"Orientation"},{option_value:"[BQ]",option:"Bookmarked"});
-        }
-        // }else{
-        //   drp_data.unshift({option_value:"[FAQ]",option:"Orientation"});
-        // }
-        setDropdowndata(drp_data);
 
-       
-      }
-    
-    reset();
-  };
-  var getnewdropdowndata = async () => {
-  
-    var response = await userService.get_new_dropdown_data();
-  //  // console.log("free trial data ", response.data);
-
-   
     if (response.data.error) {
       setDropdowndata([]);
     } else {
       var arr = [];
       var mobile_arr = [];
-      // console.log("new drop down data",response.data.dropdown_data);
-     
-     
-      var drp_data=response.data.dropdown_data;
+      // console.log("free trial data",response.data.dropdown_data);
+
+
+      var drp_data = response.data.dropdown_data;
       if (auth.isAuthenticated) {
-        drp_data.unshift({option_value:"[FAQ]",option:"Orientation"},{option_value:"[BQ]",option:"Bookmarked"});
+        drp_data.unshift({ option_value: "[FAQ]", option: "Orientation" }, { option_value: "[BQ]", option: "Bookmarked" });
       }
       // }else{
       //   drp_data.unshift({option_value:"[FAQ]",option:"Orientation"});
       // }
       setDropdowndata(drp_data);
 
-     
+
     }
-  
-  reset();
-};
-  var getmobiledropdowndata = async () => {
-   
-      var response = await userService.getmobiledatalist();
-      // console.log("mobile data response ", response.data.dropdown_data);
-      if (response.data.status) {
-        var drp_data=response.data.dropdown_data;
-        if (auth.isAuthenticated) {
-          
-          drp_data.unshift({id:"[FAQ]",value:"Orientation"},{id:"[BQ]",value:"Bookmarked"});
-          setMobileDropdowndata(drp_data);
-        } else {
-          //drp_data.unshift({option_value:"[FAQ]",option:"Orientation"});
-          setMobileDropdowndata(drp_data);
-          
-        }
-      } 
-   
 
     reset();
   };
-  
+  var getnewdropdowndata = async () => {
+
+    var response = await userService.get_new_dropdown_data();
+    //  // console.log("free trial data ", response.data);
+
+
+    if (response.data.error) {
+      setDropdowndata([]);
+    } else {
+      var arr = [];
+      var mobile_arr = [];
+      // console.log("new drop down data",response.data.dropdown_data);
+
+
+      var drp_data = response.data.dropdown_data;
+      if (auth.isAuthenticated) {
+        drp_data.unshift({ option_value: "[FAQ]", option: "Orientation" }, { option_value: "[BQ]", option: "Bookmarked" });
+      }
+      // }else{
+      //   drp_data.unshift({option_value:"[FAQ]",option:"Orientation"});
+      // }
+      setDropdowndata(drp_data);
+
+
+    }
+
+    reset();
+  };
+  var getmobiledropdowndata = async () => {
+
+    var response = await userService.getmobiledatalist();
+    // console.log("mobile data response ", response.data.dropdown_data);
+    if (response.data.status) {
+      var drp_data = response.data.dropdown_data;
+      if (auth.isAuthenticated) {
+
+        drp_data.unshift({ id: "[FAQ]", value: "Orientation" }, { id: "[BQ]", value: "Bookmarked" });
+        setMobileDropdowndata(drp_data);
+      } else {
+        //drp_data.unshift({option_value:"[FAQ]",option:"Orientation"});
+        setMobileDropdowndata(drp_data);
+
+      }
+    }
+
+
+    reset();
+  };
+
 
   // console.log(auth, "!auth.isAuthenticated");
 
@@ -602,54 +617,54 @@ function Home() {
       // console.log(switchclear);
     }
   };
-const getchapterbymodule = async(e) => {
-//alert("ok");
-// console.log(e.target.value,"aglkdfj dflgldf")
-var module_id=e.target.value;
+  const getchapterbymodule = async (e) => {
+    //alert("ok");
+    // console.log(e.target.value,"aglkdfj dflgldf")
+    var module_id = e.target.value;
 
-if(module_id == "[BQ]" || module_id == "[FAQ]"){
-  setValue("lstSubject",module_id);
-  setShowchapter(false)
+    if (module_id == "[BQ]" || module_id == "[FAQ]") {
+      setValue("lstSubject", module_id);
+      setShowchapter(false)
 
-}else{
-  setShowchapter(true)
-  setSelectedModule(e.target.value)
-  let datas = {
-    module_id: e.target.value,
-    
+    } else {
+      setShowchapter(true)
+      setSelectedModule(e.target.value)
+      let datas = {
+        module_id: e.target.value,
+
+      };
+
+      var response = await userService.getchapterbymodule(datas);
+      // console.log("module chapter data response ", response.data.dropdown_data);
+      if (response.data.status) {
+        var drp_data = response.data.dropdown_data;
+        setChapterDropdowndata(drp_data)
+      }
+
+    }
+
+
+
+  }
+  const setchaptername = (e) => {
+    setSelectedChapter(e.target.options[e.target.selectedIndex].text);
+    //var index = e.target.selectedIndex;
+
+    // console.log(e.target.options[e.target.selectedIndex].text,"cghv");
+
+  }
+  const NLogout = () => {
+
+
+    dispatch(authActions.Logout());
+    window.location.replace('https://www.cmfasacademy.com/cmfas_logout.php')
+
   };
-  
-  var response = await userService.getchapterbymodule(datas);
-  // console.log("module chapter data response ", response.data.dropdown_data);
-  if (response.data.status) {
-    var drp_data=response.data.dropdown_data;
-    setChapterDropdowndata(drp_data)
-  } 
-  
-}
-
-
-  
-}
-const setchaptername = (e) => {
-  setSelectedChapter(e.target.options[e.target.selectedIndex].text);
-  //var index = e.target.selectedIndex;
-
-  // console.log(e.target.options[e.target.selectedIndex].text,"cghv");
-
-}
-const NLogout = () => {
-
- 
-  dispatch(authActions.Logout());
-  window.location.replace('https://www.cmfasacademy.com/cmfas_logout.php')
- 
-};
 
   useEffect(() => {
-    if(auth.isAuthenticated){
-    //getdropdowndata();
-    }else{
+    if (auth.isAuthenticated) {
+      //getdropdowndata();
+    } else {
       //getFreeTrialDropdownData();
     }
     getnewdropdowndata();
@@ -657,7 +672,7 @@ const NLogout = () => {
     // setDropdowndatavalue(itemdata)
     document.body.classList.remove("bg-salmon");
 
-    if(auth.isAuthenticated){
+    if (auth.isAuthenticated) {
       setMminstep(10);
       setMmaxstep(100);
       setSelectedVal('');
@@ -668,7 +683,7 @@ const NLogout = () => {
       setSwitchexammode(1);
       setlstSubjectError(false);
       setlstlstNumError(false);
-    }else{
+    } else {
       setMminstep(1);
       setMmaxstep(5);
       setSelectedVal('');
@@ -683,11 +698,11 @@ const NLogout = () => {
 
   }, [auth.isAuthenticated]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (process.env.NODE_ENV === 'production') {
       console.clear();
     }
-  },[]);
+  }, []);
 
   return (
     <>
@@ -695,38 +710,38 @@ const NLogout = () => {
         <div className="container">
           <div className="text-engine-content ">
             <div className="top-login-wrap">
-          <div className="logo mb-2">
-              <NavLink to="/">
-                <img src={logo} alt="logo" className="footer-logo" />
-              </NavLink>
-            </div>
-            {auth.isAuthenticated ? (
-              <div className="top-login">
-                <a
-                          className="login"
-                          href="javascript:void(0)"
-                          onClick={NLogout}
-                          // onClick={loginPageModalShow}
-                        >
-                          Logout
-                        </a>
+              <div className="logo mb-2">
+                <NavLink to="/">
+                  <img src={logo} alt="logo" className="footer-logo" />
+                </NavLink>
               </div>
+              {auth.isAuthenticated ? (
+                <div className="top-login">
+                  <a
+                    className="login"
+                    href="javascript:void(0)"
+                    onClick={NLogout}
+                  // onClick={loginPageModalShow}
+                  >
+                    Logout
+                  </a>
+                </div>
 
-            ):(
-            <div className="top-login">
-            <a
-                      className="login"
-                      href="javascript:void(0)"
-                      data-bs-toggle="modal"
-                      data-bs-target="#loginpopup"
-                      // onClick={loginPageModalShow}
-                    >
-                      Login
-                    </a>
-                    </div>
-                    
-                    )}
-              </div>
+              ) : (
+                <div className="top-login">
+                  <a
+                    className="login"
+                    href="javascript:void(0)"
+                    data-bs-toggle="modal"
+                    data-bs-target="#loginpopup"
+                  // onClick={loginPageModalShow}
+                  >
+                    Login
+                  </a>
+                </div>
+
+              )}
+            </div>
 
             <form
               className="row g-3 text-engine-frm"
@@ -736,56 +751,56 @@ const NLogout = () => {
                 <label htmlFor="inputState1" className="form-label">
                   Pick A Question Set:
                 </label>
-               
-              
-                  <select
-                    id="inputState1"
-                    className="form-select"
-                    {...register("lstModule")}
-                    onChange={getchapterbymodule}
-                  >
-                    <option Value={""}>Choose a Module First</option>
 
-                    {Dropdowndata &&
-                      Dropdowndata.map((item) => {
+
+                <select
+                  id="inputState1"
+                  className="form-select"
+                  {...register("lstModule")}
+                  onChange={getchapterbymodule}
+                >
+                  <option Value={""}>Choose a Module First</option>
+
+                  {Dropdowndata &&
+                    Dropdowndata.map((item) => {
+                      return (
+                        <option value={item.option_value}  >
+                          {item.option}
+                        </option>
+                      );
+                    })}
+                </select>
+
+                <label htmlFor="inputState3" className="form-label">
+
+                </label>
+
+                {showchapter ? (
+
+                  <select
+                    id="inputState3"
+                    className="form-select"
+                    {...register("lstSubject")}
+                    onChange={setchaptername}
+                  >
+                    <option Value={""}>Choose a Filter below</option>
+
+                    {ChapterDropdowndata &&
+                      ChapterDropdowndata.map((item) => {
                         return (
-                          <option value={item.option_value}  >
+                          <option value={item.option_value}>
                             {item.option}
                           </option>
                         );
                       })}
                   </select>
-                
-                  <label htmlFor="inputState3" className="form-label">
-                
-                </label>
-               
-           {showchapter ? (
 
-<select
-id="inputState3"
-className="form-select"
-{...register("lstSubject")}
-onChange={setchaptername}
->
-<option Value={""}>Choose a Filter below</option>
+                ) : null}
 
-{ChapterDropdowndata &&
-  ChapterDropdowndata.map((item) => {
-    return (
-      <option value={item.option_value}>
-        {item.option}
-      </option>
-    );
-  })}
-</select>
 
-           ):null}
-                
 
-                  
-                
-                 {/* <MobileSelector
+
+                {/* <MobileSelector
             MobileDropdowndata={MobileDropdowndata}
             setValue={setValue}
             setSelectedVal={setSelectedVal}
@@ -802,33 +817,33 @@ onChange={setchaptername}
               {/* ============= no  of question ========= */}
               <div className="col-md-8 ">
                 <label htmlFor="inputState" className="form-label">
-                Max Questions to Load:
+                  Max Questions to Load:
                 </label>
-                <a style={{marginLeft:5}}
-                      data-tooltip-id="my-question"
-                      data-tooltip-content="We discourage doing massive questions in one session."
-                    >
-                      ⓘ
-                    </a>
-                    <Tooltip id="my-question" />
-                  <select
-                    id="inputState2"
-                    className="form-select"
-                    {...register("lstNum")}
-                  >
-                    <option selected="" value={10}>
-                      10 Questions
-                    </option>
-                    <option value={25}>25 Questions</option>
-                    <option value={40}>40 Questions</option>
-                    <option value={50}>50 Questions</option>
-                    <option value={60}>60 Questions</option>
-                    <option value={75}>75 Questions</option>
-                    <option value={80}>80 Questions</option>
-                    <option value={100}>100 Questions</option>
-                    <option value={200}>200 Questions</option>
-                  </select>
-             
+                <a style={{ marginLeft: 5 }}
+                  data-tooltip-id="my-question"
+                  data-tooltip-content="We discourage doing massive questions in one session."
+                >
+                  ⓘ
+                </a>
+                <Tooltip id="my-question" />
+                <select
+                  id="inputState2"
+                  className="form-select"
+                  {...register("lstNum")}
+                >
+                  <option selected="" value={10}>
+                    10 Questions
+                  </option>
+                  <option value={25}>25 Questions</option>
+                  <option value={40}>40 Questions</option>
+                  <option value={50}>50 Questions</option>
+                  <option value={60}>60 Questions</option>
+                  <option value={75}>75 Questions</option>
+                  <option value={80}>80 Questions</option>
+                  <option value={100}>100 Questions</option>
+                  <option value={200}>200 Questions</option>
+                </select>
+
                 <p style={{ color: "red" }} className="form-field-error">
                   {errors.lstNum?.message}
                 </p>
@@ -840,7 +855,7 @@ onChange={setchaptername}
                   <li>
                     <input
                       type="checkbox"
-                      
+
                       {...register("chkRandom")}
                     />
                     <label htmlFor="">Sequential</label>
@@ -925,28 +940,28 @@ onChange={setchaptername}
                         </a>
                       </p>
                     </li>
-                  
-                      <li>
-                        <p id="t_test2">
-                          <input
-                            type="radio"
-                            id="answer2"
-                            name="answer"
-                            value={2}
-                            {...register("radMode")}
-                          />
-                          <label for="answer2">
-                            <span>Exam Mode</span>
-                          </label>{" "}
-                          <a
-                            data-tooltip-id="my-skip"
-                            data-tooltip-content="Simulated exam mode. No instant marking, no showing of explanation. Score will be shown at the end"
-                          >
-                            ⓘ
-                          </a>
-                        </p>
-                      </li>
-                  
+
+                    <li>
+                      <p id="t_test2">
+                        <input
+                          type="radio"
+                          id="answer2"
+                          name="answer"
+                          value={2}
+                          {...register("radMode")}
+                        />
+                        <label for="answer2">
+                          <span>Exam Mode</span>
+                        </label>{" "}
+                        <a
+                          data-tooltip-id="my-skip"
+                          data-tooltip-content="Simulated exam mode. No instant marking, no showing of explanation. Score will be shown at the end"
+                        >
+                          ⓘ
+                        </a>
+                      </p>
+                    </li>
+
                   </ul>
                 </div>
                 <button type="submit" className="enter animate-btn">
@@ -967,7 +982,7 @@ onChange={setchaptername}
             setValue={setValue}
             setSelectedVal={setSelectedVal}
             selectedVal={selectedVal}
-          
+
             setSelectedCourseVal={setSelectedCourseVal}
             selectedCourseVal={selectedCourseVal}
             setSelectedId={setSelectedId}
@@ -984,14 +999,14 @@ onChange={setchaptername}
         {/* =-=-Range-start=-=-=- */}
 
         <div className="cmf-mb-filter-range">
-          <label htmlFor="">Max. Questions to Load: <i 
-                  data-tooltip-id="m-my-question"
-                  data-tooltip-content="We discourage doing massive questions in one session."
-                  class="fa-regular fa-circle-question nquestion"
-                ></i>
-                <Tooltip id="m-my-question" /></label>
-         
-                    
+          <label htmlFor="">Max. Questions to Load: <i
+            data-tooltip-id="m-my-question"
+            data-tooltip-content="We discourage doing massive questions in one session."
+            class="fa-regular fa-circle-question nquestion"
+          ></i>
+            <Tooltip id="m-my-question" /></label>
+
+
           <Range
             step={mstep}
             min={mminstep}
@@ -1043,7 +1058,7 @@ onChange={setchaptername}
           </p>
 
           <div className="mobile-range-btm-wrap">
-          <div className="f-wrap">
+            <div className="f-wrap">
               <span className="text">Redo Cleared Questions</span>
 
               <div className="switch-toggle">
@@ -1084,14 +1099,14 @@ onChange={setchaptername}
                 </label>
               </div>
             </div>
-            
+
             <div className="f-wrap">
               <span className="text">Exam Mode</span>
 
               <div className="switch-toggle">
-                <i  data-tooltip-id="m-exam-tooltip"
+                <i data-tooltip-id="m-exam-tooltip"
                   data-tooltip-content="Simulated exam mode. No instant marking, no showing of explanation. Score will be shown at the end" class="fa-regular fa-circle-question"></i>
-                   <Tooltip id="m-exam-tooltip" />
+                <Tooltip id="m-exam-tooltip" />
                 <label class="switch">
                   <input
                     type="checkbox"
@@ -1157,42 +1172,42 @@ onChange={setchaptername}
                     </div>
                 </div>
             </section> */}
-            <Modal show={show} onHide={handleClose}  className="sub-mdl">
+      <Modal show={show} onHide={handleClose} className="sub-mdl">
         <Modal.Header closeButton>
           <Modal.Title>
-          <div className="logo mb-2">
-            <NavLink to="/">
-              <img src={logo} alt="logo" className="footer-logo" />
-            </NavLink>
-          </div>
+            <div className="logo mb-2">
+              <NavLink to="/">
+                <img src={logo} alt="logo" className="footer-logo" />
+              </NavLink>
+            </div>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-         
+
           <div>
 
             <span>
-            {modalmsg}
+              {modalmsg}
             </span>
-            {auth.isAuthenticated && 
-            <>
-            <span style={{marginLeft:5}}>
-            {selectedModule}
-           </span>
-           <span>( {selectedChapter} )
-           </span>
-           </>
+            {auth.isAuthenticated &&
+              <>
+                <span style={{ marginLeft: 5 }}>
+                  {selectedModule}
+                </span>
+                <span>( {selectedChapter} )
+                </span>
+              </>
             }
-            
-          
+
+
           </div>
           <div>
-         We will load 5 free trial Qs
+            We will load 5 free trial Qs
           </div>
           <div>
 
           </div>
-         </Modal.Body>
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleClose} className="cancel-btn">
             Cancel
@@ -1207,86 +1222,86 @@ onChange={setchaptername}
           <Modal.Title>END USER LICENSE AGREEEMENT</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <div
-  align="left"
-  style={{
-    padding: 15,
-    overflow: "auto",
-    fontSize: "11pt",
-    textAlign: "justify",
-    fontFamily: "Open Sans"
-  }}
->
-  <b>Instruction:</b> Read through this and scroll down to the bottom to Agree
-  or Disagree.
-  <br />
-  <br />
-  Upon purchase or registration of any Product from CMFAS Academy (a brand
-  managed by KLOGE LLP), the account owner is granted the right to use ONE copy
-  of the software, subscription or study guide product, for a SINGLE user, for
-  private and non-commercial use. Access to any content provided on a
-  subscription basis is permitted solely to the registered User. It is the
-  responsibility of the User to protect the confidentiality of access
-  credentials such as login User identification and password. The registered
-  User identification (email) and password may NOT be shared with other users.
-  <br />
-  <br />
-  You acknowledge the copyright of all Products are authorised to KLOGE LLP, is
-  protected by Singapore copyright laws and international treaty provisions, and
-  will not challenge KLOGE LLP's Copyright authority for said Product(s).
-  Content within the Product(s) (examples include but are not limited to:
-  Practice Test Software, Study Guide, Web-Based Training, or other provided
-  resource materials) may be managed by or authorised to KLOGE LLP and/or an
-  Independent Contractor Author or Publisher, and is protected by Singapore
-  copyright laws and international treaty provisions.
-  <br />
-  <br />
-  <strong>You may NOT copy</strong> any registered Product, software, test
-  question, study guide, or related document, to any other computer.{" "}
-  <strong>
-    You may NOT share course subscription access credentials such as user name
-    and password with any other user.
-  </strong>{" "}
-  You may NOT permit the public viewing or use of any Product (i.e. software,
-  E-Learning or study guide).
-  <br />
-  <br />
-  <strong>
-    You agree to pay for one additional subscription license for each unique
-    device fingerprint recorded by our system should it be found that your
-    account had been accessed by a third party other than you.
-  </strong>
-  <br />
-  <br />
-  All access to our material without a valid license, or using someone else's
-  license, regardless with or without permission from the account owner, is
-  prohibited. You agree to pay damages for all use of the software without
-  license, including but not limited to the cost of overused licenses, late
-  payment fees, legal fees, court fees and investigation fees.
-  <br />
-  <br />
-  Any type of copying of any Product, software, or product content is prohibited
-  by Copyright Law and/or International Treaties. All Products (eg. software,
-  practice tests, and web-based training) are licensed to the individual or
-  entity (user as defined in this EULA) on a per-user basis. The user agrees
-  with the terms of all sections of this agreement.
-  <br />
-  <br />
-  No warranty is expressed or implied. All information provided by contractors
-  or staff of KLOGE LLP, or within Content (such as test questions, practice
-  tests, databases, web-based training, etcetera), software, Products, and all
-  related information is provided on an 'as-is' basis with no warranty or
-  fitness implied. The user agrees that the various Independent Contractor
-  Authors, Publishers, KLOGE LLP Staff, and KLOGE LLP shall have neither
-  liability nor responsibility to any person or entity with respect to any loss
-  or damages arising from the Product, or any information contained on the KLOGE
-  LLP Web Site or from the use of any KLOGE LLP related information, software,
-  or training programs.
-  <br />
-  <br />
-</div>
+          <div
+            align="left"
+            style={{
+              padding: 15,
+              overflow: "auto",
+              fontSize: "11pt",
+              textAlign: "justify",
+              fontFamily: "Open Sans"
+            }}
+          >
+            <b>Instruction:</b> Read through this and scroll down to the bottom to Agree
+            or Disagree.
+            <br />
+            <br />
+            Upon purchase or registration of any Product from CMFAS Academy (a brand
+            managed by KLOGE LLP), the account owner is granted the right to use ONE copy
+            of the software, subscription or study guide product, for a SINGLE user, for
+            private and non-commercial use. Access to any content provided on a
+            subscription basis is permitted solely to the registered User. It is the
+            responsibility of the User to protect the confidentiality of access
+            credentials such as login User identification and password. The registered
+            User identification (email) and password may NOT be shared with other users.
+            <br />
+            <br />
+            You acknowledge the copyright of all Products are authorised to KLOGE LLP, is
+            protected by Singapore copyright laws and international treaty provisions, and
+            will not challenge KLOGE LLP's Copyright authority for said Product(s).
+            Content within the Product(s) (examples include but are not limited to:
+            Practice Test Software, Study Guide, Web-Based Training, or other provided
+            resource materials) may be managed by or authorised to KLOGE LLP and/or an
+            Independent Contractor Author or Publisher, and is protected by Singapore
+            copyright laws and international treaty provisions.
+            <br />
+            <br />
+            <strong>You may NOT copy</strong> any registered Product, software, test
+            question, study guide, or related document, to any other computer.{" "}
+            <strong>
+              You may NOT share course subscription access credentials such as user name
+              and password with any other user.
+            </strong>{" "}
+            You may NOT permit the public viewing or use of any Product (i.e. software,
+            E-Learning or study guide).
+            <br />
+            <br />
+            <strong>
+              You agree to pay for one additional subscription license for each unique
+              device fingerprint recorded by our system should it be found that your
+              account had been accessed by a third party other than you.
+            </strong>
+            <br />
+            <br />
+            All access to our material without a valid license, or using someone else's
+            license, regardless with or without permission from the account owner, is
+            prohibited. You agree to pay damages for all use of the software without
+            license, including but not limited to the cost of overused licenses, late
+            payment fees, legal fees, court fees and investigation fees.
+            <br />
+            <br />
+            Any type of copying of any Product, software, or product content is prohibited
+            by Copyright Law and/or International Treaties. All Products (eg. software,
+            practice tests, and web-based training) are licensed to the individual or
+            entity (user as defined in this EULA) on a per-user basis. The user agrees
+            with the terms of all sections of this agreement.
+            <br />
+            <br />
+            No warranty is expressed or implied. All information provided by contractors
+            or staff of KLOGE LLP, or within Content (such as test questions, practice
+            tests, databases, web-based training, etcetera), software, Products, and all
+            related information is provided on an 'as-is' basis with no warranty or
+            fitness implied. The user agrees that the various Independent Contractor
+            Authors, Publishers, KLOGE LLP Staff, and KLOGE LLP shall have neither
+            liability nor responsibility to any person or entity with respect to any loss
+            or damages arising from the Product, or any information contained on the KLOGE
+            LLP Web Site or from the use of any KLOGE LLP related information, software,
+            or training programs.
+            <br />
+            <br />
+          </div>
 
-         </Modal.Body>
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={termconditionhandleClose}>
             I DISAGREE
