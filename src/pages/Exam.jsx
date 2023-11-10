@@ -972,6 +972,7 @@ function Exam() {
                   style={{
                     fontSize: `${fontSize}px`,
                     lineHeight: `${lineHeight}px`,
+                    textTransform: "initial"
                   }}
                 >
                   {parse(question.questionlist.question)}
@@ -1000,7 +1001,7 @@ function Exam() {
                   ref={formref}
                   onSubmit={handleSubmit(checkAns)}
                   className="qiz"
-                  style={{ fontSize: `${fontSize}px`, lineHeight: 2 }}
+                  style={{ fontSize: `${fontSize}px`, lineHeight: 2 ,textTransform: "initial"}}
                 >
                   {question.questionlist.ans.length > 1 && (
                     <>
@@ -1027,6 +1028,7 @@ function Exam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice1}
@@ -1051,6 +1053,7 @@ function Exam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice2}
@@ -1075,6 +1078,7 @@ function Exam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice3}
@@ -1099,6 +1103,7 @@ function Exam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice4}
@@ -1133,6 +1138,7 @@ function Exam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice1}
@@ -1157,6 +1163,7 @@ function Exam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice2}
@@ -1181,6 +1188,7 @@ function Exam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice3}
@@ -1205,6 +1213,7 @@ function Exam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice4}

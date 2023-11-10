@@ -932,6 +932,7 @@ function FreeExam() {
                   style={{
                     fontSize: `${fontSize}px`,
                     lineHeight: `${lineHeight}px`,
+                    textTransform: "initial"
                   }}
                 >
                   {parse(question.questionlist.question)}
@@ -961,6 +962,7 @@ function FreeExam() {
                   onSubmit={handleSubmit(checkAns)}
                   className="qiz"
                   style={{ fontSize: `${fontSize}px`, lineHeight: 2 }}
+
                 >
                   {question.questionlist.ans.length > 1 && (
                     <>
@@ -987,6 +989,7 @@ function FreeExam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice1}
@@ -1011,6 +1014,7 @@ function FreeExam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice2}
@@ -1035,6 +1039,7 @@ function FreeExam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice3}
@@ -1059,6 +1064,7 @@ function FreeExam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice4}
@@ -1093,6 +1099,7 @@ function FreeExam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice1}
@@ -1117,6 +1124,7 @@ function FreeExam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice2}
@@ -1141,6 +1149,7 @@ function FreeExam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice3}
@@ -1165,6 +1174,7 @@ function FreeExam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice4}
