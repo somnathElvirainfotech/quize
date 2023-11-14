@@ -701,7 +701,7 @@ function FreeExam() {
           <div className="Money-Received-box d-header">
             <div className="money-header">
             <div className="logo">
-              <a href="/">
+              <a href="/practice">
                 <img src={logo} alt="logo" className="footer-logo" />
                 </a>
             </div>

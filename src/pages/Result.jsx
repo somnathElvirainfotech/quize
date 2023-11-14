@@ -124,7 +124,7 @@ function Result() {
 
             <div className="money-header result-header">
               <div className="logo mb-2">
-              <a href="/">
+              <a href="/practice">
                   <img src={logo} alt="logo" className="footer-logo" />
                 </a>
               </div>

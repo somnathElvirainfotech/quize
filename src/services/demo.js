@@ -5,7 +5,7 @@ class UserService {
 
   async login(data) {
     var myHeaders = new Headers();
-// var session_url = 'https://www.cmfasacademy.com/api.php?params=checklogin';
+// var session_url = 'https://www.cmfas.com.sg/practice/api.php?params=checklogin';
 
 myHeaders.append("Content-Type", "application/json");
 myHeaders.append("Authorization", "Basic c3RhZ2luZzo5QipxbDZmMDM=");
@@ -22,7 +22,7 @@ myHeaders.append("Authorization", "Basic c3RhZ2luZzo5QipxbDZmMDM=");
         body: raw,
         redirect: 'follow'
       };
-      fetch("https://www.cmfasacademy.com/api.php?params=checklogin", requestOptions)
+      fetch("https://www.cmfas.com.sg/practice/api.php?params=checklogin", requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));

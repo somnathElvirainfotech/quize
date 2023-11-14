@@ -80,6 +80,7 @@ function Home() {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(QuestionSchama),
+    // mode: 'all'
   });
 
   var Navigate = useNavigate();
@@ -100,6 +101,7 @@ function Home() {
 
     let chkRandom = data.chkRandom;
     let chkHide = data.chkHide;
+    // alert(chkHide)
     if (chkRandom == "true") {
       var checkRandom = "0";
     } else {
@@ -657,8 +659,7 @@ function Home() {
 
 
     dispatch(authActions.Logout());
-    window.location.replace('https://www.cmfasacademy.com/cmfas_logout.php')
-
+    window.location.replace('https://www.cmfas.com.sg/cmfas_logout.php')
   };
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import axios from 'axios';
 class UserService {
 
   async login(data) {
-    return axios.post('https://www.cmfasacademy.com/api.php?params=checklogin', data, {
+    return axios.post('https://www.cmfas.com.sg/practice/api.php?params=checklogin', data, {
       headers: {
         "Content-Type": "application/json"
       },
@@ -13,7 +13,7 @@ class UserService {
 
   }
   async encryptlogin(data) {
-    return axios.post('https://www.cmfasacademy.com/api.php?params=checkencryptlogin', data, {
+    return axios.post('https://www.cmfas.com.sg/practice/api.php?params=checkencryptlogin', data, {
       headers: {
         "Content-Type": "application/json"
       },
@@ -22,33 +22,33 @@ class UserService {
 
   }
   async getlist(datas){
-    return axios.post('https://www.cmfasacademy.com/api.php?params=TestEngineFilterList',datas,{
+    return axios.post('https://www.cmfas.com.sg/practice/api.php?params=TestEngineFilterList',datas,{
       headers: {
         "Content-Type": "application/json"
       },
     });
   }
   async get_free_trial_dropdown_data(){
-    return axios.get('https://www.cmfasacademy.com/api.php?params=free_trial_dropdown_data');
+    return axios.get('https://www.cmfas.com.sg/practice/api.php?params=free_trial_dropdown_data');
   }
   async get_new_dropdown_data(){
-    return axios.get('https://www.cmfasacademy.com/api.php?params=module_dropdown_data');
+    return axios.get('https://www.cmfas.com.sg/practice/api.php?params=module_dropdown_data');
   }
   // async getchapterbymodule(){
-  //   return axios.get('https://www.cmfasacademy.com/api.php?params=chapter_dropdown_data_module');
+  //   return axios.get('https://www.cmfas.com.sg/practice/api.php?params=chapter_dropdown_data_module');
   // }
   async getchapterbymodule(datas){
-    return axios.post('https://www.cmfasacademy.com/api.php?params=chapter_dropdown_data_module',datas,{
+    return axios.post('https://www.cmfas.com.sg/practice/api.php?params=chapter_dropdown_data_module',datas,{
       headers: {
         "Content-Type": "application/json"
       },
     });
   }
   async getmobiledatalist(){
-    return axios.get('https://www.cmfasacademy.com/api.php?params=mobile_dropdown_data');
+    return axios.get('https://www.cmfas.com.sg/practice/api.php?params=mobile_dropdown_data');
   }
   async Postquestion(data) {
-    return axios.post('https://www.cmfasacademy.com/api.php?params=question', data, {
+    return axios.post('https://www.cmfas.com.sg/practice/api.php?params=question', data, {
       headers: {
         "Content-Type": "application/json"
       },
@@ -58,7 +58,7 @@ class UserService {
   }
 
   async FreeQuestion(data) {
-    return axios.post('https://www.cmfasacademy.com/api.php?params=free_question', data, {
+    return axios.post('https://www.cmfas.com.sg/practice/api.php?params=free_question', data, {
       headers: {
         "Content-Type": "application/json"
       },
@@ -68,7 +68,7 @@ class UserService {
   }
 
   async Nextquestion(datas) {
-    return axios.post('https://www.cmfasacademy.com/api.php?params=next_question', datas, {
+    return axios.post('https://www.cmfas.com.sg/practice/api.php?params=next_question', datas, {
       headers: {
         "Content-Type": "application/json"
       },
@@ -79,7 +79,7 @@ class UserService {
 
 
   async AnswerSubmit(data) {
-    return axios.post('https://www.cmfasacademy.com/api.php?params=answer_submit', data, {
+    return axios.post('https://www.cmfas.com.sg/practice/api.php?params=answer_submit', data, {
       headers: {
         "Content-Type": "application/json"
       },
@@ -90,7 +90,7 @@ class UserService {
 
 
   async AsksMentor(data) {
-    return axios.post('https://www.cmfasacademy.com/api.php?params=ask_mentor', data, {
+    return axios.post('https://www.cmfas.com.sg/practice/api.php?params=ask_mentor', data, {
       headers: {
         "Content-Type": "application/json"
       },
@@ -100,7 +100,7 @@ class UserService {
   }
 
   async ReportQuestion(data) {
-    return axios.post('https://www.cmfasacademy.com/api.php?params=report_question', data, {
+    return axios.post('https://www.cmfas.com.sg/practice/api.php?params=report_question', data, {
       headers: {
         "Content-Type": "application/json"
       },
@@ -111,7 +111,7 @@ class UserService {
 
 
   async AddBookmark(data) {
-    return axios.post('https://www.cmfasacademy.com/api.php?params=add_bookmark', data, {
+    return axios.post('https://www.cmfas.com.sg/practice/api.php?params=add_bookmark', data, {
       headers: {
         "Content-Type": "application/json"
       },
@@ -121,7 +121,7 @@ class UserService {
   }
 
   async RemoveBookmark(data) {
-    return axios.post('https://www.cmfasacademy.com/api.php?params=remove_bookmark', data, {
+    return axios.post('https://www.cmfas.com.sg/practice/api.php?params=remove_bookmark', data, {
       headers: {
         "Content-Type": "application/json"
       },
@@ -131,7 +131,7 @@ class UserService {
   }
 
   async BookmarkList(data) {
-    return axios.post('https://www.cmfasacademy.com/api.php?params=bookmark_list', data, {
+    return axios.post('https://www.cmfas.com.sg/practice/api.php?params=bookmark_list', data, {
       headers: {
         "Content-Type": "application/json"
       },
@@ -140,7 +140,7 @@ class UserService {
 
   }
   async addcopytext(data) {
-    return axios.post('https://www.cmfasacademy.com/api.php?params=copy_track', data, {
+    return axios.post('https://www.cmfas.com.sg/practice/api.php?params=copy_track', data, {
       headers: {
         "Content-Type": "application/json"
       },

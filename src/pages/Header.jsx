@@ -42,8 +42,8 @@ function Header() {
     // localStorage.clear();
     // setIsLoggedIn(true);
     dispatch(authActions.Logout());
-    navigate("/");
-    // window.location.reload();
+    // navigate("/");
+    window.location.href="https://www.cmfas.com.sg/cmfas_logout.php";
     // toast.success("Logout Successfully");
   };
 
@@ -54,7 +54,7 @@ function Header() {
         <div className="nav-area container">
           <div className="cover-nav">
             <div className="logo">
-              <NavLink to="/">
+              <NavLink to="/practice">
                 <img src={logo} alt="logo" className="footer-logo" />
               </NavLink>
             </div>
@@ -68,10 +68,10 @@ function Header() {
             <div className="nav">
               <ul id="menu-bg">
                 <li>
-                  <NavLink to="/">home</NavLink>
+                  <NavLink to="/practice">home</NavLink>
                 </li>
                 {isAuthenticated && <li>
-                  <NavLink to="/bookmark">bookmark</NavLink>
+                  <NavLink to="/practice/bookmark">bookmark</NavLink>
                 </li> }
                 {/* <li>
                   <Link to="/"> about us </Link>

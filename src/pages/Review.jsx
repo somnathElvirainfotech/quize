@@ -403,7 +403,7 @@ function Review() {
             <div className="money-header review">
             
               <div className="logo">
-              <a href="/">
+              <a href="/practice">
                 <img src={logo} alt="logo" className="footer-logo" />
                 </a>
             </div>

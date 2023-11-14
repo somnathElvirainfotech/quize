@@ -27,6 +27,7 @@ import { useEffect } from 'react';
 
 
 
+
 // import Login from './pages/LoginPage';
 
 
@@ -57,7 +58,7 @@ function App() {
       />
       <div className="App">
 
-        <BrowserRouter basename='/quiz'>
+        <BrowserRouter basename='/practice'>
           <Routes>
             <Route path='' element={<BasePage />}>
               <Route index element={<Home />} />
@@ -72,9 +73,10 @@ function App() {
             </Route>
 
             <Route path='/translate' element={<RequireAuth><Translate /></RequireAuth>} />
-            <Route path='/enlogin'   >
-            <Route path=':encrypcode'  element={<EncryptLogin />} />
-              </Route>
+            <Route path='/enlogin'>
+                <Route path=':encrypcode'  element={<EncryptLogin />} />
+            </Route>
+            
             <Route path='*' element={<NotFound />} />
            
           </Routes>

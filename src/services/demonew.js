@@ -5,7 +5,7 @@ class UserService {
 
   async login(data) {
 
-    var session_url = 'https://www.cmfasacademy.com/api.php?params=checklogin';
+    var session_url = 'https://www.cmfas.com.sg/practice/api.php?params=checklogin';
 
 
         // console.log(data)
@@ -27,7 +27,7 @@ class UserService {
             redirect: 'follow'
           };
           // console.log(basicAuth,'basicAuth')
-          fetch("https://www.cmfasacademy.com/api.php?params=checklogin",requestOptions)
+          fetch("https://www.cmfas.com.sg/practice/api.php?params=checklogin",requestOptions)
           .then(response => {
             console.log(response,'response')
             
