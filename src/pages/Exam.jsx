@@ -1288,7 +1288,7 @@ function Exam() {
                     </li>
                     <li>
                       <a
-                        href="/translate"
+                        href="/practice/translate"
                         target="_blank"
                         rel="noopener noreferrer"
                         title="Translation"
@@ -1471,7 +1471,7 @@ function Exam() {
                 </li>
                 <li>
                   <a
-                    href="/translate"
+                    href="/practice/translate"
                     target="_blank"
                     rel="noopener noreferrer"
                     title="Translation"

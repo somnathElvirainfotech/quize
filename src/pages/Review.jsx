@@ -634,7 +634,7 @@ function Review() {
                       </a>
                     </li>
                     <li>
-                      <a href="/translate" target="_blank" rel="noopener noreferrer" title="Translation">
+                      <a href="/practice/translate" target="_blank" rel="noopener noreferrer" title="Translation">
                         <img src={translate} alt="translate" />
                       </a>
                     </li>
@@ -706,7 +706,7 @@ function Review() {
                 </li>
                 <li>
                   <a
-                    href="/translate"
+                    href="/practice/translate"
                     target="_blank"
                     rel="noopener noreferrer"
                     title="Translation"

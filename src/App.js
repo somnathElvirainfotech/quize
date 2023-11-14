@@ -60,7 +60,7 @@ function App() {
 
         <BrowserRouter basename='/practice'>
           <Routes>
-            <Route path='' element={<BasePage />}>
+            <Route path='/' element={<BasePage />}>
               <Route index element={<Home />} />
               
               <Route path='exam' element={<RequireAuth><Exam /></RequireAuth>} />
