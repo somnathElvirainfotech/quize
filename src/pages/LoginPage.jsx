@@ -135,7 +135,7 @@ function LoginPage(props) {
               <div className="modal-content-wrap">
                
                 <div className="model-right">
-                  <h4>Sign In</h4>
+                  <h4>Sign In </h4>
                   <form className="row g-4" onSubmit={handleSubmit(submit)}>
                     <div className="col-md-12">
                       <label htmlFor="">E-Mail Address</label>
@@ -153,7 +153,7 @@ function LoginPage(props) {
                     </div>
                     <div className="col-md-12 my-3">
                       <button className="sign-in " type="submit">
-                        Sign in
+                        Sign in 
                       </button>
                     </div>
                   </form>

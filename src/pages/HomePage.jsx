@@ -37,6 +37,7 @@ import MobileSelector from "./MobileSelector";
 import Modal from 'react-bootstrap/Modal';
 import logo from "../assets/images/logo.png";
 import { authActions } from "../redux/auth";
+
 function Home() {
   // const { user, dispatch } = useContext(userContext);
   const tirggerRef = useRef(null);
