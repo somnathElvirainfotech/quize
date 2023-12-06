@@ -742,7 +742,7 @@
     /* =-=-=-16-10-2023=-=-=- */
 
     .Money-Received .money-Received-review-box .page-count {width: auto; padding: 0 10px;}
-
+ 
 
 }
 
@@ -758,6 +758,6 @@
 
 @media only screen and (max-width:360px) {
   .mheader .question_subject, .mheader .question_id, .mheader .inc_dnc_btn{font-size: 10px;}
-  .mheader .logo {margin-right: 0px;margin-left: 0px;}
+  .mheader .logo {margin-right: 5px;margin-left: 0px;}
   .mheader .logo, .mheader .logo img {max-width: 65px;}
 }

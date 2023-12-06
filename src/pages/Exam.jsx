@@ -810,8 +810,6 @@ function Exam() {
         // console.log(`save === answer=${answer} `);
       }
 
-
-
     }
 
   }
@@ -1511,9 +1509,10 @@ function Exam() {
                 {question.count + 1}/{question.totalQuestion}
               </div>
 
-              <div className="page-count">
-                <span>Marks </span> {question.current_score}
-              </div>
+              {Number(question.radMode) === 1 &&
+                <div className="page-count">
+                  <span>Marks </span> {question.current_score}
+                </div>}
 
               <span className="inc_dnc_btn text-inc-dec" onClick={FontDnc}>
                 A-

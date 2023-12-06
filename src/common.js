@@ -29,6 +29,8 @@ export const removeDuplicates = async (inputString) => {
 export const newQID=(member_id,qid, totalDigits=5)=>{
     const numberString = String(qid);
     const paddingLength = totalDigits - numberString.length;
+
+    member_id=String(member_id).slice(0,5);
     
     if (paddingLength <= 0) {
         return (String(member_id)+numberString); // If the input already has more or equal digits than required, return it as-is.
