@@ -31,8 +31,16 @@ class UserService {
   async get_free_trial_dropdown_data(){
     return axios.get('https://www.cmfas.com.sg/practice/api.php?params=free_trial_dropdown_data');
   }
-  async get_new_dropdown_data(){
-    return axios.get('https://www.cmfas.com.sg/practice/api.php?params=module_dropdown_data');
+  // async get_new_dropdown_data(){
+  //   return axios.get('https://www.cmfas.com.sg/practice/api.php?params=module_dropdown_data');
+  // }
+  
+  async get_new_dropdown_data(datas){
+    return axios.post('https://www.cmfas.com.sg/practice/api.php?params=module_dropdown_data',datas,{
+      headers: {
+        "Content-Type": "application/json"
+      },
+    });
   }
   // async getchapterbymodule(){
   //   return axios.get('https://www.cmfas.com.sg/practice/api.php?params=chapter_dropdown_data_module');
@@ -44,8 +52,15 @@ class UserService {
       },
     });
   }
-  async getmobiledatalist(){
-    return axios.get('https://www.cmfas.com.sg/practice/api.php?params=mobile_dropdown_data');
+  // async getmobiledatalist(){
+  //   return axios.get('https://www.cmfas.com.sg/practice/api.php?params=mobile_dropdown_data');
+  // }
+  async getmobiledatalist(datas){
+    return axios.post('https://www.cmfas.com.sg/practice/api.php?params=mobile_dropdown_data',datas,{
+      headers: {
+        "Content-Type": "application/json"
+      },
+    });
   }
   async Postquestion(data) {
     return axios.post('https://www.cmfas.com.sg/practice/api.php?params=question', data, {

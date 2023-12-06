@@ -534,8 +534,12 @@ function Home() {
     reset();
   };
   var getnewdropdowndata = async () => {
+   
+    let datas = {
+      userId : auth.user_id,
 
-    var response = await userService.get_new_dropdown_data();
+    };
+    var response = await userService.get_new_dropdown_data(datas);
     //  // console.log("free trial data ", response.data);
 
 
@@ -562,8 +566,11 @@ function Home() {
     reset();
   };
   var getmobiledropdowndata = async () => {
+    let datas = {
+      userId : auth.user_id,
 
-    var response = await userService.getmobiledatalist();
+    };
+    var response = await userService.getmobiledatalist(datas);
     // console.log("mobile data response ", response.data.dropdown_data);
     if (response.data.status) {
       var drp_data = response.data.dropdown_data;
@@ -713,9 +720,9 @@ function Home() {
           <div className="text-engine-content ">
             <div className="top-login-wrap">
               <div className="logo mb-2">
-                <NavLink to="/">
+                <a href="https://www.cmfas.com.sg/">
                   <img src={logo} alt="logo" className="footer-logo" />
-                </NavLink>
+                  </a>
               </div>
               {auth.isAuthenticated ? (
                 <div className="top-login">
@@ -967,7 +974,7 @@ function Home() {
                   </ul>
                 </div>
                 <button type="submit" className="enter animate-btn">
-                  Submit
+                  Start Session
                 </button>
               </div>
             </form>
@@ -1120,7 +1127,7 @@ function Home() {
               </div>
             </div>
             <button type="button" onClick={mobileViewSubmit}>
-              Start
+              Start Session
             </button>
           </div>
         </div>

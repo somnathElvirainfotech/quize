@@ -15,6 +15,24 @@ function EncryptLoginPage() {
   //  console.log(encrypcode,"encrypted data");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  function decryptString(encryptedString) {
+    const key = CryptoJS.enc.Hex.parse('dabb05eeb2b45ebe2d291c2d130d0da2');
+    const iv = CryptoJS.enc.Hex.parse('b8aa5adf307351dc');
+    const cipherParams = CryptoJS.lib.CipherParams.create({
+      ciphertext: CryptoJS.enc.Hex.parse(encryptedString),
+    });
+  
+    const decrypted = CryptoJS.AES.decrypt(cipherParams, key, { iv });
+    return decrypted.toString(CryptoJS.enc.Utf8);
+  }
+  
+  
+
+
+
+
+
   useEffect(() => {
     // console.log(param,"gfggggg")
     if (param.encrypcode == undefined) {
@@ -30,6 +48,7 @@ function EncryptLoginPage() {
         //   const myArray = decodedString.split("_");   
         //  console.log(myArray,"dfgjdjf");
         //    checkencryptlogin(myArray);
+      
         checkencryptlogin(param.encrypcode);
       }
       catch (err) {
@@ -44,19 +63,16 @@ function EncryptLoginPage() {
 
   var checkencryptlogin = async (encrypcode) => {
 
-    const data = Base64.decode(encrypcode);
-    const key = 'somnath999';
-  
+    var final_data= decryptString(param.encrypcode);
 
-    const decrypted = CryptoJS.AES.decrypt(data, key);
 
-    var final_data= decrypted.toString(CryptoJS.enc.Utf8);
-
-    // alert(final_data);
+   // alert(final_data);
 
     const myArray = final_data.split("_");
+console.log(myArray,"fldgdjfl");
+    if(myArray[0] !="" && myArray[1] !="" && myArray[2] !=""){
 
-    // ===========================================
+         // ===========================================
     var encrypt_time = myArray[0];
     // console.log(encrypt_time,"agldifjo")
     var jtime = new Date(encrypt_time * 1000);
@@ -92,6 +108,12 @@ function EncryptLoginPage() {
       dispatch(authActions.Logout());
       navigate('/');
     }
+
+    }else{
+      dispatch(authActions.Logout());
+      navigate('/');
+    }
+   
 
   }
 

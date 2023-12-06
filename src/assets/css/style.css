@@ -1112,7 +1112,9 @@ ul.pagination-wrap li:last-child {
   line-height: 22px;
   letter-spacing: 0px;
   color: #2A2A2C;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
+  text-transform: initial;
+  /* text-transform: capitalize; */
   margin-bottom: 20px;
 }
 
@@ -1122,7 +1124,8 @@ ul.pagination-wrap li:last-child {
   font-weight: 600;
   letter-spacing: 0px;
   color: #58595B;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
+  text-transform: initial;
   margin-bottom: 15px;
 }
 
@@ -1195,7 +1198,7 @@ ul.pagination-wrap li:last-child {
 
 .mentor-Popup .modal-content ul li {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 6px;
 }
 
@@ -1206,6 +1209,7 @@ ul.pagination-wrap li:last-child {
   letter-spacing: 0px;
   color: #58595b;
   margin-left: 10px;
+  line-height: 22px;
 }
 
 /* ======== Mentor-popup-End ========= */
@@ -1963,6 +1967,7 @@ li.end-text a {
   appearance: none;
   cursor: pointer;
   border-radius: 4px;
+  margin-top: 5px;
 }
 
 .index-chat-panel-container-z6ffC {

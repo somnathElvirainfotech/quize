@@ -127,12 +127,12 @@ function ReportError() {
                 {" "}
                 {!termsAgree && (
                   <>
-                    <img src={mentor} alt="mentor" /> Report an Erroneous Question
+                    <img src={mentor} alt="mentor" /> Report an erroneous question
                   </>
                 )}
                 {termsAgree && (
                   <>
-                    <img src={mentor} alt="mentor" /> Report an Erroneous Question
+                    <img src={mentor} alt="mentor" /> Report an erroneous question
                   </>
                 )}
               </h2>
@@ -190,7 +190,7 @@ function ReportError() {
                     >
                       Proceed
                     </Button>
-                    <h5 className="ask-m">Report an Erroneous Question</h5>
+                    <h5 className="ask-m">Report an erroneous question</h5>
                   </>
                 )}
 
