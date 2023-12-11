@@ -1,32 +1,41 @@
-
 /*19-10-23*/
 
 @media only screen and (max-width: 1100px) {
-  ul.pagination-wrap{margin-right: 0;}
-  .score-count {width: 105px;}
-  .pagination-wrap li{padding: 1px 5px;}
+  ul.pagination-wrap {
+    margin-right: 0;
+  }
+  .score-count {
+    width: 105px;
+  }
+  .pagination-wrap li {
+    padding: 1px 5px;
+  }
 }
 
-@media only screen and (max-width: 1023px){
-  .mobile-link{display: block;}
-  .desktop-link {display: none;}
+@media only screen and (max-width: 1023px) {
+  .mobile-link {
+    display: block;
+  }
+  .desktop-link {
+    display: none;
+  }
 }
 
 /*14-9-23*/
-@media only screen and (max-width:1024px) {
-  .nav>ul>li {
+@media only screen and (max-width: 1024px) {
+  .nav > ul > li {
     margin: 0 20px;
   }
 
   /*14-9-23*/
   /* =-=-16-10-2023=-=- */
-  .Money-Received .money-re-content .content-right{
+  .Money-Received .money-re-content .content-right {
     padding-bottom: 140px;
   }
-  .Money-Received .multiple-options ul{
+  .Money-Received .multiple-options ul {
     bottom: 84px;
   }
-  button.checkAns.btn.btn-primary{
+  button.checkAns.btn.btn-primary {
     right: 63px;
     left: auto;
   }
@@ -38,11 +47,9 @@
     max-width: 40vw;
     width: 40vw;
   }
-
 }
 
 @media only screen and (max-width: 992px) {
-
   /********NAV BAR*****************/
   .nav {
     float: right;
@@ -83,7 +90,7 @@
     padding: 30px 0;
   }
 
-  .nav>ul>li>a {
+  .nav > ul > li > a {
     padding: 10px 0;
   }
 
@@ -102,7 +109,7 @@
     margin-top: 31px;
   }
 
-  .nav>ul>li {
+  .nav > ul > li {
     display: block;
     margin: 0;
   }
@@ -118,7 +125,6 @@
 
   .servicess___content h5 {
     font-size: 28px;
-
   }
 
   a.comn__btn {
@@ -130,7 +136,7 @@
     padding: 45px 0;
   }
 
-  .nav>ul>li>a.login {
+  .nav > ul > li > a.login {
     width: 124px;
     display: inline-flex;
     align-items: center;
@@ -171,33 +177,32 @@
 
   /*start-19-10-23*/
 
-  #trans-bg-text{
+  #trans-bg-text {
     font-size: 125px !important;
   }
 
   /*end-19-10-23*/
-
-
 }
 /* =-=-=-11-10-2023=-S=-=- */
-@media only screen and (min-width:767px) {
-  .Money-Received .money-re-content .content-left, .Money-Received .money-re-content .content-right{
+@media only screen and (min-width: 767px) {
+  .Money-Received .money-re-content .content-left,
+  .Money-Received .money-re-content .content-right {
     padding-top: 70px;
   }
-  .Money-Received .container{
+  .Money-Received .container {
     max-width: 1280px;
   }
-  .ms-mobile-select .ms-content{
+  .ms-mobile-select .ms-content {
     top: 360px;
   }
-  .ms-mobile-select .ms-content{
+  .ms-mobile-select .ms-content {
     height: 100vh;
   }
 }
 /* =-=-=-11-10-2023=-E=-=- */
-@media only screen and (max-width:767px) {
-    /* =-=-=-11-10-2023=-S=- */
-  .ms-mobile-select .ms-content{
+@media only screen and (max-width: 767px) {
+  /* =-=-=-11-10-2023=-S=- */
+  .ms-mobile-select .ms-content {
     top: 340px;
   }
   /* =-=-=-11-10-2023=-E=- */
@@ -304,14 +309,13 @@
     margin-top: 0px;
     margin-left: 0;
     width: 6px;
-
   }
 
   .Money-Received .money-header {
     padding: 0 30px;
   }
 
-  .result-box .result-header{
+  .result-box .result-header {
     padding: 0;
   }
 
@@ -330,25 +334,28 @@
     width: 100%;
   }
 
-
   /*14-8-23*/
 
   /* 26/09/2023 */
 
-  .model-login-popup .modal-content-wrap img{
+  .model-login-popup .modal-content-wrap img {
     display: none;
   }
 
   .Money-Received .money-header h6,
-   iframe#widget-Botsonic,
-   .Money-Received .content-right .ch-h{
+  iframe#widget-Botsonic,
+  .Money-Received .content-right .ch-h {
     display: none;
   }
 
-  p.question{max-height: 100%;}
+  p.question {
+    max-height: 100%;
+  }
 
-  .mentor-Popup .modal-content ul li{align-items: flex-start;}
-  .mentor-Popup .check-wrap ul li input[type="checkbox"]{
+  .mentor-Popup .modal-content ul li {
+    align-items: flex-start;
+  }
+  .mentor-Popup .check-wrap ul li input[type="checkbox"] {
     top: 7px;
   }
 
@@ -356,127 +363,164 @@
     margin-left: 7px;
   }
 
-  .result-content{
+  .result-content {
     width: 90%;
     margin: auto;
   }
   /* =-=-16-10-2023=-=- */
-  .mfooter .multiple-options ul{
+  .mfooter .multiple-options ul {
     position: static;
   }
   /* =-=-16-10-2023=-=- */
 
- /* =-=-19-10-2023=-=- */
+  /* =-=-19-10-2023=-=- */
 
- .sub-mdl .modal-dialog {
-  max-width: 90vw;
-  width: 90vw;
+  .sub-mdl .modal-dialog {
+    max-width: 90vw;
+    width: 90vw;
+  }
+  .sub-mdl .modal-dialog .modal-body div {
+    font-size: 18px;
+  }
+
+  .sub-mdl .modal-dialog .modal-body div:first-child {
+    padding-top: 0;
+  }
+
+  .styles-module_tooltip__mnnfp {
+    font-size: 12px !important;
+    word-break: break-word;
+    max-width: 90% !important;
+    left: 15px !important;
+    padding: 8px 10px;
+  }
+
+  #trans-bg-text {
+    font-size: 60px !important;
+  }
+
+  /* 20-10-2023 */
+
+  .Money-Received .money-Received-review-box .money-header.review {
+    padding: 0 10px;
+    justify-content: flex-start;
+  }
+
+  .Money-Received .money-Received-review-box .money-header .logo img {
+    width: 100px;
+  }
+
+  .Money-Received .money-Received-review-box .page-count {
+    font-size: 13px;
+    height: 25px;
+    line-height: 25px;
+  }
+
+  .Money-Received .money-Received-review-box ul.pagination-wrap li a img {
+    margin-right: 0 !important;
+  }
+
+  .Money-Received .money-Received-review-box ul.pagination-wrap li a img {
+    margin-left: 0 !important;
+  }
+
+  .Money-Received
+    .money-Received-review-box
+    .money-header.review
+    ul.exam-pagination {
+    gap: 5px;
+    position: absolute;
+    right: 20px;
+  }
+
+  .Money-Received
+    .money-Received-review-box
+    .money-header.review
+    ul.exam-pagination
+    li {
+    padding: 3px 5px;
+    height: 25px !important;
+    overflow: hidden;
+  }
+
+  .Money-Received
+    .money-Received-review-box
+    .money-header.review
+    ul.exam-pagination
+    li
+    a {
+    padding: 1px !important;
+  }
+
+  .Money-Received
+    .money-Received-review-box
+    .money-header.review
+    ul.exam-pagination
+    li:nth-child(2)
+    span {
+    font-size: 15px;
+    line-height: 23px;
+  }
+
+  .Money-Received
+    .money-Received-review-box
+    .money-header.review
+    ul.exam-pagination
+    li
+    a
+    img {
+    margin-top: -14px;
+  }
+
+  .Money-Received
+    .money-Received-review-box
+    .money-header.review
+    ul.exam-pagination
+    li.countnum {
+    position: relative;
+    top: -3px;
+  }
+
+  .mtranslate-popup-top .form-select {
+    width: 180px;
+  }
+
+  .mtranslate-popup-top-left img {
+    width: 100px;
+    height: auto;
+    display: block;
+  }
+
+  .model-translate-Popup .modal-content {
+    padding: 30px 15px;
+  }
+
+  .model-translate-Popup #content {
+    font-size: 14px;
+  }
 }
-.sub-mdl .modal-dialog .modal-body div {
-  font-size: 18px;
-}
 
-.sub-mdl .modal-dialog .modal-body div:first-child{padding-top: 0;}
-
-.styles-module_tooltip__mnnfp {
-  font-size: 12px !important;
-  word-break: break-word;
-  max-width: 90% !important;
-  left: 15px !important;
-  padding: 8px 10px;
-}
-
-#trans-bg-text {
-  font-size: 60px !important;
-}
-
-/* 20-10-2023 */
-
-.Money-Received .money-Received-review-box .money-header.review {
-  padding: 0 10px;
-  justify-content: flex-start;
-}
-
-.Money-Received .money-Received-review-box .money-header .logo img{
-  width: 100px;
-}
-
-.Money-Received .money-Received-review-box .page-count {
-  font-size: 13px;
-  height: 25px;
-  line-height: 25px;
-}
-
-.Money-Received .money-Received-review-box ul.pagination-wrap li a img{
-  margin-right: 0 !important;
-}
-
-.Money-Received .money-Received-review-box ul.pagination-wrap li a img{
-  margin-left: 0 !important;
-}
-
-.Money-Received .money-Received-review-box .money-header.review ul.exam-pagination {
-  gap: 5px;
-  position: absolute;
-  right: 20px;
-}
-
-.Money-Received .money-Received-review-box .money-header.review ul.exam-pagination li {
-  padding: 3px 5px;
-  height: 25px !important;
-  overflow: hidden;
-}
-
-.Money-Received .money-Received-review-box .money-header.review ul.exam-pagination li a{
-  padding: 1px !important;
-}
-
-.Money-Received .money-Received-review-box .money-header.review ul.exam-pagination li:nth-child(2) span {
-  font-size: 15px;
-  line-height: 23px;
-}
-
-.Money-Received .money-Received-review-box .money-header.review ul.exam-pagination li a img{
-  margin-top: -14px;
-}
-
-.Money-Received .money-Received-review-box .money-header.review ul.exam-pagination li.countnum{
-  position: relative;
-  top: -3px;
-}
-
-.mtranslate-popup-top .form-select{
-  width: 180px;
-}
-
-.mtranslate-popup-top-left img {
-  width: 100px;
-  height: auto;
-  display: block;
-}
-
-.model-translate-Popup .modal-content{
-  padding: 30px 15px;
-}
-
-.model-translate-Popup #content{
-  font-size: 14px;
-}
-
-}
-
-@media only screen and (max-width:767px){
-  .mobile_header,.mfooter{display: block;}
-  .mheader {display: flex;flex-wrap: nowrap; align-items: center; position: fixed;
+@media only screen and (max-width: 767px) {
+  .mobile_header,
+  .mfooter {
+    display: block;
+  }
+  .mheader {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     background-color: #fff;
     z-index: 999;
-    box-shadow: 0 0.225rem 0.5rem rgba(0,0,0,0.075) !important;
-    padding: 15px; justify-content: center;}
+    box-shadow: 0 0.225rem 0.5rem rgba(0, 0, 0, 0.075) !important;
+    padding: 15px;
+    justify-content: center;
+  }
 
-  .mheader .inc_dnc_btn{
+  .mheader .inc_dnc_btn {
     padding: 3px;
     margin-right: 5px;
     font-size: 11px;
@@ -488,182 +532,186 @@
     text-align: center;
     border: 1px solid #cbcbcb;
     margin-right: 5px;
-}
-.mheader .question_id {
-  max-width: 48px;
-  min-width: 48px;
-  font-size: 11px;
-  border: 1px solid #cbcbcb;
-  text-align: center;
-  margin-right: 5px;
+  }
+  .mheader .question_id {
+    max-width: 48px;
+    min-width: 48px;
+    font-size: 11px;
+    border: 1px solid #cbcbcb;
+    text-align: center;
+    margin-right: 5px;
+  }
+
+  .mheader .page-count {
+    font-size: 11px;
+    font-weight: 400;
+    margin-right: 5px;
+    height: 35px;
+    flex-wrap: wrap;
+    margin-right: 5px;
+    max-width: 48px;
+  }
+
+  .mheader span.q_title {
+    display: block;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #cbcbcb;
+  }
+
+  .mheader .inc_dnc_btn:last-child {
+    margin-right: 0;
+  }
+
+  .mheader .page-count span {
+    line-height: 14px;
+    font-size: 11px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #cbcbcb;
+  }
+
+  .mheader .logo {
+    margin-right: 10px;
+    margin-left: 5px;
+  }
+
+  .mheader .logo,
+  .mheader .logo img {
+    max-width: 80px;
+  }
+
+  .d-header .money-header {
+    display: none;
+  }
+
+  .d-header {
+    border-top: 0 !important;
+    padding-top: 0 !important;
+    margin-top: 35px;
+  }
+
+  .Money-Received .d-header .ch-h {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .d-header .content-left.question_left p.question {
+    margin-bottom: 0;
+  }
+
+  .d-header .multiple-options,
+  .d-header button.checkAns {
+    display: none;
+  }
+
+  .check-answer-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+
+  .mfooter button.check-ans-btn {
+    height: 30px;
+    line-height: 16px;
+    font-size: 15px;
+  }
+
+  .check-answer-nav a.prev_arrow,
+  .check-answer-nav a.next_arrow {
+    width: 30px;
+    border: 1px solid #97a749;
+    display: flex;
+    justify-content: center;
+    margin-right: 20px;
+    border-radius: 0.375rem;
+    height: 30px;
+  }
+
+  .check-answer-nav a.next_arrow {
+    margin-right: 0px;
+    margin-left: 20px;
+  }
+
+  .mfooter .multiple-options ul {
+    margin-top: 0;
+    padding-left: 0;
+    justify-content: center;
+  }
+
+  .check-answer-nav a.prev_arrow img,
+  .check-answer-nav a.next_arrow img {
+    width: 12px;
+  }
+
+  .mfooter {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    z-index: 99;
+    box-shadow: 0 0.225rem 0.5rem rgba(0, 0, 0, 0.075) !important;
+    padding: 15px;
+    left: 0;
+  }
+
+  .mfooter .multiple-options ul li {
+    height: 30px;
+    width: 30px;
+  }
+
+  .mfooter .multiple-options ul li img {
+    width: 30px;
+  }
+
+  .d-header .money-re-content {
+    max-height: 480px;
+    overflow-y: scroll;
+    border: 1px solid #e2e2e2;
+  }
+  /* -==-03-10-2023=-=- */
+  .check-answer-nav a.next_arrow {
+    font-size: 13px;
+    text-decoration: none;
+    color: #97a749;
+    margin-right: 0;
+  }
+
+  .money_cust_review .multiple-options {
+    display: none;
+  }
+
+  .money_cust_review .content-left {
+    overflow: visible !important;
+  }
+  /* =-=-26-10-2023=-=-S=- */
+  .money_cust_review .content-left #monybgwater {
+    /* z-index: 999; */
+    z-index: -1;
+  }
+  /* =-=-26-10-2023=-=-E=- */
+  .model-translate-Popup .modal-content {
+    height: 400px;
+  }
+
+  .dwatermark {
+    display: none;
+  }
+
+  .Money-Received .money-re-content .content-left,
+  .Money-Received .money-re-content .content-right {
+    overflow: visible;
+  }
 }
 
-.mheader .page-count {
-  font-size: 11px;
-  font-weight: 400;
-  margin-right: 5px;
-  height: 35px;
-  flex-wrap: wrap;
-  margin-right: 5px;
-  max-width: 48px;
-}
-
-.mheader span.q_title {
-  display: block;
-  width: 100%;
-  text-align: center;
-  border-bottom: 1px solid #cbcbcb;
-}
-
-.mheader .inc_dnc_btn:last-child {
-  margin-right: 0;
-}
-
-.mheader .page-count span {
-  line-height: 14px;
-  font-size: 11px;
-  display: block;
-  width: 100%;
-  text-align: center;
-  border-bottom: 1px solid #cbcbcb;
-}
-
-.mheader .logo{
-  margin-right: 10px;
-  margin-left: 5px;
-}
-
-.mheader .logo, .mheader .logo img {
-  max-width: 80px;
-}
-
-.d-header .money-header {
-  display: none;
-}
-
-.d-header{
-  border-top: 0 !important;
-  padding-top: 0 !important;
-  margin-top: 35px;
-}
-
-.Money-Received .d-header .ch-h {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-.d-header .content-left.question_left p.question {
-  margin-bottom: 0;
-}
-
-.d-header .multiple-options, .d-header button.checkAns {
-  display: none;
-}
-
-.check-answer-nav {
-  display: flex;
-  justify-content: center;
-  margin-top: 0;
-  margin-bottom: 15px;
-}
-
-.mfooter button.check-ans-btn{
-  height: 30px;
-  line-height: 16px;
-  font-size: 15px;
-}
-
-.check-answer-nav a.prev_arrow, .check-answer-nav a.next_arrow {
-  width: 30px;
-  border: 1px solid #97a749;
-  display: flex;
-  justify-content: center;
-  margin-right: 20px;
-  border-radius: 0.375rem;
-  height: 30px;
-}
-
-.check-answer-nav a.next_arrow{
-  margin-right: 0px;
-  margin-left: 20px;
-}
-
-.mfooter .multiple-options ul {
-  margin-top: 0;
-  padding-left: 0;
-  justify-content: center;
-}
-
-.check-answer-nav a.prev_arrow img, .check-answer-nav a.next_arrow img {
-  width: 12px;
-}
-
-.mfooter {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #fff;
-  z-index: 21474800021411;
-  box-shadow: 0 0.225rem 0.5rem rgba(0,0,0,0.075) !important;
-  padding: 15px;
-  left: 0;
-}
-
-.mfooter .multiple-options ul li {
-  height: 30px;
-  width: 30px;
-}
-
-.mfooter .multiple-options ul li img {
-  width: 30px;
-}
-
-.d-header .money-re-content {
-  max-height: 480px;
-  overflow-y: scroll;
-  border: 1px solid #e2e2e2;
-}
-/* -==-03-10-2023=-=- */
-.check-answer-nav a.next_arrow{
-  font-size: 13px;
-  text-decoration: none;
-  color: #97a749;
-  margin-right: 0;
-}
-
-.money_cust_review .multiple-options {
-  display: none;
-}
-
-.money_cust_review .content-left {
-  overflow: visible !important;
-}
-/* =-=-26-10-2023=-=-S=- */
-.money_cust_review .content-left #monybgwater {
-  /* z-index: 999; */
-  z-index: -1;
-}
-/* =-=-26-10-2023=-=-E=- */
-.model-translate-Popup .modal-content{
-  height: 400px;
-}
-
-.dwatermark{
-  display: none;
-}
-
-.Money-Received .money-re-content .content-left, .Money-Received .money-re-content .content-right{
-  overflow: visible;
-}
-
-}
-
-@media only screen and (min-width:568px) {
-  .cmf-mb-filter{
+@media only screen and (min-width: 568px) {
+  .cmf-mb-filter {
     display: none;
   }
 }
-@media only screen and (max-width:568px) {
+@media only screen and (max-width: 568px) {
   /*button.checkAns.btn.btn-primary{
     position: static;
   }*/
@@ -671,13 +719,13 @@
   /* section.text-engine.d_mode{
     display: none;
   } */
-  section.text-engine.d_mode .text-engine-frm{
-   display: none;
+  section.text-engine.d_mode .text-engine-frm {
+    display: none;
   }
-  .top-login-wrap  .logo  img{
-  width: 110px;
+  .top-login-wrap .logo img {
+    width: 110px;
   }
-  .text-engine .text-engine-content{
+  .text-engine .text-engine-content {
     padding: 0;
     background: transparent;
     border: none;
@@ -716,48 +764,72 @@
   }
   /*=-=-=-=- 21-09-2023=-=-=-=- */
   body.bg-salmon footer,
-  body.bg-salmon header{
+  body.bg-salmon header {
     display: none;
   }
   /* -=-==-=-=-22-09-2023=-=-=- */
-  .text-engine .mode-of-exam ul{
+  .text-engine .mode-of-exam ul {
     flex-direction: column;
   }
   /* =-=-11-10-2023=-=- */
-  .license-agree-modal  .modal-title.h4,
-  .sub-mdl .modal-title.h4{
+  .license-agree-modal .modal-title.h4,
+  .sub-mdl .modal-title.h4 {
     font-size: 16px;
   }
-    /* =-=-11-10-2023=-=- */
-    /* =-=-=-16-10-2023=-=-=- */
-    .Money-Received .d-header .ch-h{
-      display: none;
-    }
-    .top-login a.login{
-      padding: 5px 20px;
-    }
-    .ms-mobile-select{
-      display: block;
-    }
-    /* =-=-=-16-10-2023=-=-=- */
+  /* =-=-11-10-2023=-=- */
+  /* =-=-=-16-10-2023=-=-=- */
+  .Money-Received .d-header .ch-h {
+    display: none;
+  }
+  .top-login a.login {
+    padding: 5px 20px;
+  }
+  .ms-mobile-select {
+    display: block;
+  }
+  /* =-=-=-16-10-2023=-=-=- */
 
-    .Money-Received .money-Received-review-box .page-count {width: auto; padding: 0 10px;}
+  .Money-Received .money-Received-review-box .page-count {
+    width: auto;
+    padding: 0 10px;
+  }
+
+  /* 11-12-2023 */
+   
+  .Money-Received {
+    padding: 60px 0 50px 0;
+}
  
-
 }
 
-@media only screen and (max-width:394px){
-  .Money-Received .money-Received-review-box .money-header.review ul.exam-pagination li{
+@media only screen and (max-width: 394px) {
+  .Money-Received
+    .money-Received-review-box
+    .money-header.review
+    ul.exam-pagination
+    li {
     padding: 3px;
   }
 }
 
-@media only screen and (max-width:375px){
-  .Money-Received .money-Received-review-box .money-header .logo img{width: 90px;}
+@media only screen and (max-width: 375px) {
+  .Money-Received .money-Received-review-box .money-header .logo img {
+    width: 90px;
+  }
 }
 
-@media only screen and (max-width:360px) {
-  .mheader .question_subject, .mheader .question_id, .mheader .inc_dnc_btn{font-size: 10px;}
-  .mheader .logo {margin-right: 5px;margin-left: 0px;}
-  .mheader .logo, .mheader .logo img {max-width: 65px;}
+@media only screen and (max-width: 360px) {
+  .mheader .question_subject,
+  .mheader .question_id,
+  .mheader .inc_dnc_btn {
+    font-size: 10px;
+  }
+  .mheader .logo {
+    margin-right: 5px;
+    margin-left: 0px;
+  }
+  .mheader .logo,
+  .mheader .logo img {
+    max-width: 65px;
+  }
 }

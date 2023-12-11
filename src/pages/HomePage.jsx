@@ -69,6 +69,7 @@ function Home() {
   const [selectedModule, setSelectedModule] = useState("");
   const [selectedChapter, setSelectedChapter] = useState("");
   const [showchapter, setShowchapter] = useState(true);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
   //  =========== end mobile view state =================
 
   // const [Dropdowndatavalue, setDropdowndatavalue] = useState([]);
@@ -113,10 +114,10 @@ function Home() {
     } else {
       var checkH = "1";
     }
-   
+
     // var checkRandom = "0";
     // var checkH = "0";
-    
+
     var no_of_question = 5;
 
     const form = new FormData();
@@ -312,7 +313,7 @@ function Home() {
       setlstSubjectError(false);
     }
 
-    if (lstNum[0] < 5 && auth.isAuthenticated == false) {
+    if (lstNum[currentStepIndex] < 5 && auth.isAuthenticated == false) {
       setlstlstNumError(true);
     } else {
       setlstlstNumError(false);
@@ -324,7 +325,7 @@ function Home() {
 
     var data = {
       lstSubject: selectedId,
-      lstNum: lstNum[0],
+      lstNum: lstNum[currentStepIndex],
       chkRandom: switchrandom,
       chkHide: switchclear,
       radMode: Switchexammode,
@@ -534,9 +535,9 @@ function Home() {
     reset();
   };
   var getnewdropdowndata = async () => {
-   
+
     let datas = {
-      userId : auth.user_id,
+      userId: auth.user_id,
 
     };
     var response = await userService.get_new_dropdown_data(datas);
@@ -567,7 +568,7 @@ function Home() {
   };
   var getmobiledropdowndata = async () => {
     let datas = {
-      userId : auth.user_id,
+      userId: auth.user_id,
 
     };
     var response = await userService.getmobiledatalist(datas);
@@ -670,11 +671,50 @@ function Home() {
     window.location.replace('https://www.cmfas.com.sg/cmfas_logout.php')
   };
 
+
+  const handleInputChange = (e) => {
+    // alert(1)
+    setCurrentStepIndex(Number(e.currentTarget.value));
+
+    // const range = document.getElementById("custom_range"); // Use getElementById for simplicity
+    const bubble = document.getElementById("custom_bubble");
+    // const val = range.value;
+    // const min = range.min ? range.min : 0;
+    // const max = range.max ? range.max : 100;
+    const val = lstNum[Number(e.currentTarget.value)];
+    const min = auth.isAuthenticated ? 10 : 0;
+    const max = auth.isAuthenticated ? 100 : 0;
+    const newVal = Number(((val - min) * 100) / (max - min));
+    // alert(newVal);
+    bubble.innerHTML = val;
+    // Sorta magic numbers based on size of the native UI thumb
+    bubble.style.left = `calc(${newVal}% + (${8 - newVal * 0.15}px))`;
+  };
+
+  const customRangeValuePreSet = () => {
+    // const range = document.getElementById("custom_range"); // Use getElementById for simplicity
+    const bubble = document.getElementById("custom_bubble");
+    // const val = range.value;
+    // const min = range.min ? range.min : 0;
+    // const max = range.max ? range.max : 100;
+    const val = auth.isAuthenticated ? 10 : 5;
+    const min = auth.isAuthenticated ? 10 : 0;
+    const max = auth.isAuthenticated ? 100 : 0;
+    const newVal = Number(((val - min) * 100) / (max - min));
+    // alert(newVal);
+    bubble.innerHTML = val;
+    // Sorta magic numbers based on size of the native UI thumb
+    bubble.style.left = `calc(${newVal}% + (${8 - newVal * 0.15}px))`;
+    // bubble.style.left = `calc(0% + 8px))`;
+  };
+
   useEffect(() => {
     if (auth.isAuthenticated) {
       //getdropdowndata();
+      customRangeValuePreSet()
     } else {
       //getFreeTrialDropdownData();
+      customRangeValuePreSet()
     }
     getnewdropdowndata();
     getmobiledropdowndata();
@@ -686,7 +726,7 @@ function Home() {
       setMmaxstep(100);
       setSelectedVal('');
       setSelectedId('');
-      setLstNum([10]);
+      setLstNum([10, 25, 45, 50, 60, 75, 80, 100]);
       setSwitchrandom(0);
       setSwitchclear(0);
       setSwitchexammode(1);
@@ -713,6 +753,9 @@ function Home() {
     }
   }, []);
 
+
+
+
   return (
     <>
       <section className="text-engine d_mode">
@@ -722,7 +765,7 @@ function Home() {
               <div className="logo mb-2">
                 <a href="https://www.cmfas.com.sg/">
                   <img src={logo} alt="logo" className="footer-logo" />
-                  </a>
+                </a>
               </div>
               {auth.isAuthenticated ? (
                 <div className="top-login">
@@ -1015,13 +1058,31 @@ function Home() {
           ></i>
             <Tooltip id="m-my-question" /></label>
 
+          <div className="range-wrap">
+            <input
+              type="range"
+              className="custom_range"
+              id="custom_range"
+              onInput={handleInputChange}
+              step="1"
+              min="0"
+              max={auth.isAuthenticated ? "7" : "0"}
+              value={currentStepIndex}
+            />
+            <output
+              className="custom_bubble"
+              id="custom_bubble"
+            // style={{ left: "calc(0% + 8px)" }}
+            ></output>
+          </div>
 
-          <Range
+
+          {/* <Range
             step={mstep}
             min={mminstep}
             max={mmaxstep}
             values={lstNum}
-            onChange={(value) => setLstNum(value)}
+            // onChange={(value) => setLstNum(value)}
             renderTrack={({ props, children }) => (
               <div
                 {...props}
@@ -1052,10 +1113,12 @@ function Home() {
                   outline: "0",
                 }}
               >
-                {lstNum[0]}
+                {lstNum[currentStepIndex]}
               </div>
             )}
-          />
+          /> */}
+
+
 
           <p
             style={{ color: "red", fontSize: "16px" }}
