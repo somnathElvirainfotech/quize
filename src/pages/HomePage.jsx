@@ -1072,7 +1072,7 @@ function Home() {
             <output
               className="custom_bubble"
               id="custom_bubble"
-            // style={{ left: "calc(0% + 8px)" }}
+              style={{ left: "calc(0% + 8px)" }}
             ></output>
           </div>
 
