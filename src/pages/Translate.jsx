@@ -62,7 +62,7 @@ function Translate() {
           <div id="content" onCopy={(e) => textcopy(auth.user_id, auth.user_data.email)}>
             
             ({question.subject_name}) | QID:{" "}
-            {newQID(auth.user_id, question.questionlist.id)} |{" "}
+            <span>{newQID(auth.user_id, question.questionlist.id)}</span> |{" "}
             {moment().format("YYYY-MM-DD")}
             <br />
             <br />

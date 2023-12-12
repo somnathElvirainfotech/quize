@@ -1071,7 +1071,7 @@ function Exam() {
                 <div className="ch-h">
                   <h3>{question.subject_name}</h3>
                   <small>
-                    QID: {newQID(auth.user_id, question.questionlist.id)}{" "}
+                    QID: <span>{newQID(auth.user_id, question.questionlist.id)}</span>{" "}
                   </small>
                 </div>
                 <p

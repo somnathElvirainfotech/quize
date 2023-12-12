@@ -923,7 +923,7 @@ function FreeExam() {
                 <div className="ch-h">
                   <h3>{question.subject_name}</h3>
                   <small>
-                    QID: {newQID("00000", question.questionlist.id)}{" "}
+                    QID: <span>{newQID("00000", question.questionlist.id)}</span>{" "}
                   </small>
                 </div>
                 <p
