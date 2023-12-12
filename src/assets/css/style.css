@@ -909,22 +909,24 @@ ul.pagination-wrap li:last-child {
   background: #f6f6f6 0% 0% no-repeat padding-box;
   border-radius: 10px;
 }
-
+/* 12-12-2023 */
 .Money-Received .ch-h h3 {
   margin: 0;
   letter-spacing: 0px;
   font-weight: 600;
   font-size: 16px;
   color: #2a2a2c;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
+  text-transform: inherit;
 }
-
+/* 12-12-2023 */
 .Money-Received .ch-h small {
   font-size: 14px;
   font-weight: normal;
   letter-spacing: 0px;
   color: #58595b;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
+  text-transform: inherit;
 }
 
 .Money-Received .ch-h {
