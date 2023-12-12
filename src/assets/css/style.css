@@ -925,10 +925,13 @@ ul.pagination-wrap li:last-child {
   font-weight: normal;
   letter-spacing: 0px;
   color: #58595b;
-  /* text-transform: capitalize; */
+  text-transform: capitalize;
   text-transform: inherit;
 }
-
+.Money-Received .ch-h small > span{
+  text-transform: lowercase;
+}
+/* 12-12-2023 */
 .Money-Received .ch-h {
   display: flex;
   justify-content: space-between;
@@ -2677,7 +2680,11 @@ p.translate-content div#content {
   padding-bottom: 30px;
   font-size: 15px;
 }
-
+/* 12-12-2023===== */
+p.translate-content div#content > span{
+  text-transform: lowercase;
+}
+/* 12-12-2023===== */
 
 /* Modal Translate popup */
 
