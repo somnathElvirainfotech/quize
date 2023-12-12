@@ -1211,7 +1211,7 @@ function FreeExam() {
                           textcopy(auth.user_id, auth.user_data.email)
                         }
                       >
-                        {question.questionlist.explanation}
+                        {parse(question.questionlist.explanation)}
                       </span>
                     </p>
                   </>

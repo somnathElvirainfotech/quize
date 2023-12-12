@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import logo from "../assets/images/logo.png";
 import moment from "moment";
 import { newQID,textcopy } from "../common";
+import parse from "html-react-parser";
 
 
 function Translate() {
@@ -110,7 +111,7 @@ function Translate() {
             <br /> Explanation:
             <br />
             <br />
-            {question.questionlist.explanation}
+            {parse(question.questionlist.explanation)}
             <br />
             <br />
             <br /> Tip: If you are weak in English, you'll need more practice

@@ -39,6 +39,7 @@ import Loader from "./Loader";
 import logo from "../assets/images/logo.png";
 import Modal from 'react-bootstrap/Modal';
 
+
 function Exam() {
   const dispatch = useDispatch();
   const question = useSelector((state) => state.question);
@@ -1357,7 +1358,7 @@ function Exam() {
                           textcopy(auth.user_id, auth.user_data.email)
                         }
                       >
-                        {question.questionlist.explanation}
+                        {parse(question.questionlist.explanation)}
                       </span>
                     </p>
                   </>
