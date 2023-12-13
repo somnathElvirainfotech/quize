@@ -66,7 +66,7 @@ function Translate() {
             {moment().format("YYYY-MM-DD")}
             <br />
             <br />
-            Question: {question.questionlist.question}
+            Question: {parse(question.questionlist.question)}
             <br />
             <br />
             <p
