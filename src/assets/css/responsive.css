@@ -833,3 +833,12 @@
     max-width: 65px;
   }
 }
+
+/* 13.12.23 */
+
+@media only screen and (max-width: 575px) {
+
+  .Money-Received { padding: 60px 0 0px; }
+  .mfooter{position: relative; height: 105px; margin-top: 20px;}
+  .Money-Received-box .money-re-content{min-height: auto; max-height: calc(100vh - 230px);}
+}
