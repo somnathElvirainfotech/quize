@@ -836,9 +836,18 @@
 
 /* 13.12.23 */
 
-@media only screen and (max-width: 575px) {
+ @media only screen and (max-width: 575px) {
 
   .Money-Received { padding: 60px 0 0px; }
-  .mfooter{position: relative; height: 105px; margin-top: 20px;}
-  .Money-Received-box .money-re-content{min-height: auto; max-height: calc(100vh - 230px);}
-}
+  .Money-Received-box{margin-top: 50px;}
+  .mfooter{ /* position: relative; */ height: 105px; margin-top: 20px; display: flex; flex-wrap: wrap; align-items: center;justify-content: center;}
+  .Money-Received-box .money-re-content{min-height: auto; max-height: calc(100vh - 230px); overflow: auto;}
+  .mfooter .check-answer-nav{margin-bottom: 0;}
+
+  .multiple-options{flex: 0 0 100%; margin: 15px 0 0;}
+  .multiple-options ul{position: relative; bottom: 0; margin: 0px 0 0; right: 0; padding: 0; display: flex; justify-content: center;}
+  .Money-Received-box.money-Received-review-box {margin-top: -50px;}
+  .Money-Received-box.money-Received-review-box .mfooter{height: 85px;}
+  .Money-Received-box.money-Received-review-box .mfooter .multiple-options{margin: 0px 0 0;}
+  .content-right{overflow: hidden !important;}
+} 
