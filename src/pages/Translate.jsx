@@ -103,7 +103,7 @@ function Translate() {
                   : "black",
               }}
             >
-              D) {question.questionlist.choice3}
+              D) {question.questionlist.choice4}
             </p>{" "}
             Answer:
             {question.questionlist.ans}

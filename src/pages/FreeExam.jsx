@@ -849,7 +849,7 @@ function FreeExam() {
           <div className="Money-Received-box d-header">
             <div className="money-header">
             <div className="logo">
-              <a href="/">
+            <a href="/practice">
                 <img src={logo} alt="logo" className="footer-logo" />
                 </a>
             </div>
@@ -923,7 +923,7 @@ function FreeExam() {
                 <div className="ch-h">
                   <h3>{question.subject_name}</h3>
                   <small>
-                    QID: <span>{newQID("00000", question.questionlist.id)}</span>{" "}
+                    QID: <span>{newQID(auth.user_id, question.questionlist.id)}</span>{" "}
                   </small>
                 </div>
                 <p
@@ -940,7 +940,7 @@ function FreeExam() {
 
                 <div id="monybgwater">
                   <p id="bg-text">
-                    {newQID("00000", question.questionlist.id)}
+                    {newQID(auth.user_id, question.questionlist.id)}
                   </p>
                 </div>
               </div>
@@ -1294,7 +1294,7 @@ function FreeExam() {
 
                 <div id="monybgwater">
                   <p id="bg-text">
-                    {newQID("00000", question.questionlist.id)}
+                    {newQID(auth.user_id, question.questionlist.id)}
                   </p>
                 </div>
               </div>
