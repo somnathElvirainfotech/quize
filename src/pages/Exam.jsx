@@ -110,7 +110,7 @@ function Exam() {
     setValue,
     getValues,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: { test1: false,test2: false,test3: false,test4: false,t_test1:false,t_test2:false,t_test3:false,t_test4:false } });
 
   const handleNext = async () => {
     var index = question.count;
@@ -413,6 +413,16 @@ function Exam() {
   const checkAns = async (data) => {
     // e.preventDefault();
 
+    console.log(data.test1,"answer 1 ==========");
+        console.log(data.test2,"answer 2 ==========");
+        console.log(data.test3,"answer 3 ==========");
+        console.log(data.test4,"answer 4 ==========");
+
+        console.log(data.t_test1,"radio answer 1 ==========");
+        console.log(data.t_test2,"radio answer 2 ==========");
+        console.log(data.t_test3,"radio answer 3 ==========");
+        console.log(data.t_test4,"radio answer 4 ==========");
+
     if (data.ans_type === "checkbox") {
       if (!data.test1 && !data.test2 && !data.test3 && !data.test4) {
         toast.warning("Please select at least one option !!");
@@ -426,6 +436,7 @@ function Exam() {
       form.querySelector("#t_test2").className = "";
       form.querySelector("#t_test3").className = "";
       form.querySelector("#t_test4").className = "";
+      
 
       var answer = "";
       if (data.test1) {
@@ -598,6 +609,8 @@ function Exam() {
       var test4 = getValues("test4");
 
       if (test1 || test2 || test3 || test4) {
+
+        
         var answer = "";
         if (test1) {
           answer += test1;
@@ -1124,6 +1137,7 @@ function Exam() {
                           id="test1"
                           {...register("test1")}
                           value={"A"}
+                        
                           disabled={question.questionReseltChecked}
                         />
                         <label

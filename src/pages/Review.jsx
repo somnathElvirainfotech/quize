@@ -301,7 +301,7 @@ function Review() {
           setValue("answer", i.ans);
 
           // alert(question.questionlist.ans.includes('A'))
-
+console.log(i,"llllllll")
           var answer = i.ans;
 
           // var newForm = formref.current;

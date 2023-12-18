@@ -607,6 +607,7 @@ function Home() {
       toast.warning("With out login exam mode not active!");
     }
   };
+  
 
   const toggleDisplayRandom = () => {
     if (switchrandom == 0) {
@@ -1000,6 +1001,7 @@ function Home() {
                           id="answer2"
                           name="answer"
                           value={2}
+
                           {...register("radMode")}
                         />
                         <label for="answer2">

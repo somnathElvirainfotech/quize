@@ -84,7 +84,7 @@ function FreeExam() {
     setValue,
     getValues,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: { test1: false,test2: false,test3: false,test4: false,t_test1:false,t_test2:false,t_test3:false,t_test4:false } });
 
   const handleNext = async () => {
     var index = question.count;
