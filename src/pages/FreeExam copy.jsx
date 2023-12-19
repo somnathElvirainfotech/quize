@@ -52,6 +52,7 @@ function FreeExam() {
   const [explanationdisplay, setExplanationdisplay] = useState(false);
   const [explanationfontSize, setExplanationfontSize] = useState(14);
   const [loader, setLoader] = useState(false);
+  const [answerstatus, setAnswerstatus] = useState(0);
   const submitBtnRef = useRef(null);
 
   const FontInc = () => {
@@ -83,7 +84,7 @@ function FreeExam() {
     setValue,
     getValues,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: { test1: false,test2: false,test3: false,test4: false,t_test1:false,t_test2:false,t_test3:false,t_test4:false } });
 
   const handleNext = async () => {
     var index = question.count;
@@ -212,8 +213,19 @@ function FreeExam() {
     for (const [index, i] of oldQA_obj.entries()) {
       if (question.questionlist.id === i.qid) {
         // console.log("fffffff " + i.ans.length);
+        if(Number(question.radMode) === 1){
+          dispatch(questionActions.questionReseltChecked(true));
+         
+        }
+        var form = formref.current;
         if (question.questionlist.ans.length > 1) {
+          
+          form.querySelector("#t_test1").className = "";
+          form.querySelector("#t_test2").className = "";
+          form.querySelector("#t_test3").className = "";
+          form.querySelector("#t_test4").className = "";
           const myArray = i.ans.split("");
+          var answer = i.ans;
           // console.log(`ans id == ${i.qid} === ${myArray}`);
           for (var j of myArray) {
             if (j === "A") {
@@ -226,10 +238,146 @@ function FreeExam() {
               setValue("test4", j);
             }
           }
+
+          // remove checked answer on click previous button in case of exam mode
+          if(Number(question.radMode) === 1){
+            setExplanationdisplay(true);
+            if (question.questionlist.ans === answer) {
+            
+              // toast.success("your answer right");
+              setAnswerstatus(1);
+              if (answer.includes("A")) {
+                form.querySelector("#t_test1").className = "right_ans";
+                
+  
+              }
+  
+              if (answer.includes("B")) {
+                form.querySelector("#t_test2").className = "right_ans";
+              }
+  
+              if (answer.includes("C")) {
+                form.querySelector("#t_test3").className = "right_ans";
+              }
+  
+              if (answer.includes("D")) {
+                form.querySelector("#t_test4").className = "right_ans";
+              }
+            } else {
+              setAnswerstatus(2);
+             // toast.success("your answer is wrong");
+              if (question.questionlist.ans.includes("A")) {
+                if (answer.includes("A")) {
+                  form.querySelector("#t_test1").className = "right_ans";
+                } else {
+                  form.querySelector("#t_test1").className = "user_not_select_right_ans";
+                }
+              } else if (answer.includes("A")) {
+                form.querySelector("#t_test1").className = "wrong_ans";
+              }
+  
+              if (question.questionlist.ans.includes("B")) {
+                if (answer.includes("B")) {
+                  form.querySelector("#t_test2").className = "right_ans";
+                } else {
+                  form.querySelector("#t_test2").className = "user_not_select_right_ans";
+                }
+              } else if (answer.includes("B")) {
+                form.querySelector("#t_test2").className = "wrong_ans";
+              }
+  
+              if (question.questionlist.ans.includes("C")) {
+                if (answer.includes("C")) {
+                  form.querySelector("#t_test3").className = "right_ans";
+                } else {
+                  form.querySelector("#t_test3").className = "user_not_select_right_ans";
+                }
+              } else if (answer.includes("C")) {
+                form.querySelector("#t_test3").className = "wrong_ans";
+              }
+  
+              if (question.questionlist.ans.includes("D")) {
+                if (answer.includes("D")) {
+                  form.querySelector("#t_test4").className = "right_ans";
+                } else {
+                  form.querySelector("#t_test4").className = "user_not_select_right_ans";
+                }
+              } else if (answer.includes("D")) {
+                form.querySelector("#t_test4").className = "wrong_ans";
+              }
+  
+              
+            }
+           
+          }
+
+          // show checked answer on click previous button in case of learning mode
+          
         } else {
+         
+          form.querySelector("#t_test1").className = "";
+          form.querySelector("#t_test2").className = "";
+          form.querySelector("#t_test3").className = "";
+          form.querySelector("#t_test4").className = "";
           setValue("answer", i.ans);
+          var answer = i.ans;
+
+          // var newForm = formref.current;
+
+          // alert(answer)
+
+          // console.log("newForm ",newForm)
+          if(Number(question.radMode) === 1){
+            setExplanationdisplay(true);
+            if (question.questionlist.ans === answer) {
+              // toast.success("your answer right");
+              setAnswerstatus(1);
+              if (answer.includes("A")) {
+                form.querySelector("#t_test1").className = "right_ans";
+              } else if (answer.includes("B")) {
+                form.querySelector("#t_test2").className = "right_ans";
+              } else if (answer.includes("C")) {
+                form.querySelector("#t_test3").className = "right_ans";
+              } else if (answer.includes("D")) {
+                form.querySelector("#t_test4").className = "right_ans";
+              }
+            } else {
+              setAnswerstatus(2);
+              // toast.error("Your answer wrong");
+  
+              // var form = formref.current;
+  
+              // alert(11)
+  
+              if (answer.includes("A")) {
+                form.querySelector("#t_test1").className = "wrong_ans";
+              } else if (answer.includes("B")) {
+                form.querySelector("#t_test2").className = "wrong_ans";
+              } else if (answer.includes("C")) {
+                form.querySelector("#t_test3").className = "wrong_ans";
+              } else if (answer.includes("D")) {
+                form.querySelector("#t_test4").className = "wrong_ans";
+              }
+  
+              if (question.questionlist.ans.includes("A")) {
+                form.querySelector("#t_test1").className = "right_ans";
+              } else if (question.questionlist.ans.includes("B")) {
+                form.querySelector("#t_test2").className = "right_ans";
+              } else if (question.questionlist.ans.includes("C")) {
+                form.querySelector("#t_test3").className = "right_ans";
+              } else if (question.questionlist.ans.includes("D")) {
+                form.querySelector("#t_test4").className = "right_ans";
+              }
+            }
+          }
+          
+          
         }
         break;
+      }else{
+        setAnswerstatus(0);
+        setExplanationdisplay(false);
+        dispatch(questionActions.questionReseltChecked(false));
       }
     }
   };
@@ -488,7 +636,7 @@ function FreeExam() {
         }
       }
 
-      // console.log(`save === test1=${test1} | test2=${test2} | test3=${test3} | test4=${test4} `);
+      // console.log( `save === test1=${test1} | test2=${test2} | test3=${test3} | test4=${test4} `);
     } else {
       var answer = getValues("answer");
 
@@ -698,10 +846,10 @@ function FreeExam() {
         <div className="container">
           {/* ===== question and exam list ====== */}
 
-          <div className="Money-Received-box d-header">
+          <div className="Money-Received-box money-Received-review-box">
             <div className="money-header">
             <div className="logo">
-              <a href="/practice">
+            <a href="/practice">
                 <img src={logo} alt="logo" className="footer-logo" />
                 </a>
             </div>
@@ -775,7 +923,7 @@ function FreeExam() {
                 <div className="ch-h">
                   <h3>{question.subject_name}</h3>
                   <small>
-                    QID: {newQID("00000", question.questionlist.id)}{" "}
+                    QID: <span>{newQID(auth.user_id, question.questionlist.id)}</span>{" "}
                   </small>
                 </div>
                 <p
@@ -784,6 +932,7 @@ function FreeExam() {
                   style={{
                     fontSize: `${fontSize}px`,
                     lineHeight: `${lineHeight}px`,
+                    textTransform: "initial"
                   }}
                 >
                   {parse(question.questionlist.question)}
@@ -791,7 +940,7 @@ function FreeExam() {
 
                 <div id="monybgwater">
                   <p id="bg-text">
-                    {newQID("00000", question.questionlist.id)}
+                    {newQID(auth.user_id, question.questionlist.id)}
                   </p>
                 </div>
               </div>
@@ -813,6 +962,7 @@ function FreeExam() {
                   onSubmit={handleSubmit(checkAns)}
                   className="qiz"
                   style={{ fontSize: `${fontSize}px`, lineHeight: 2 }}
+
                 >
                   {question.questionlist.ans.length > 1 && (
                     <>
@@ -839,6 +989,7 @@ function FreeExam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice1}
@@ -863,6 +1014,7 @@ function FreeExam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice2}
@@ -887,6 +1039,7 @@ function FreeExam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice3}
@@ -911,6 +1064,7 @@ function FreeExam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice4}
@@ -945,6 +1099,7 @@ function FreeExam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice1}
@@ -969,6 +1124,7 @@ function FreeExam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice2}
@@ -993,6 +1149,7 @@ function FreeExam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice3}
@@ -1017,6 +1174,7 @@ function FreeExam() {
                             style={{
                               fontSize: `${fontSize}px`,
                               lineHeight: 1.5,
+                              textTransform: "initial"
                             }}
                           >
                             {question.questionlist.choice4}
@@ -1053,7 +1211,7 @@ function FreeExam() {
                           textcopy(auth.user_id, auth.user_data.email)
                         }
                       >
-                        {question.questionlist.explanation}
+                        {parse(question.questionlist.explanation)}
                       </span>
                     </p>
                   </>
@@ -1136,7 +1294,7 @@ function FreeExam() {
 
                 <div id="monybgwater">
                   <p id="bg-text">
-                    {newQID("00000", question.questionlist.id)}
+                    {newQID(auth.user_id, question.questionlist.id)}
                   </p>
                 </div>
               </div>

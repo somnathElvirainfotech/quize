@@ -17,7 +17,6 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import prev from "../assets/images/prev.svg";
 import next from "../assets/images/next.svg";
-import mobile_new_session from "../assets/images/mobile_new_session.png";
 import add from "../assets/images/add.svg";
 import search from "../assets/images/search.svg";
 import translate from "../assets/images/translate.svg";
@@ -34,21 +33,14 @@ import { bookmarkActions } from "../redux/bookmark";
 import report_error from '../assets/images/reporterror.png';
 import ReportError from "./Modal/ReportError";
 import parse from 'html-react-parser';
+import Swal from "sweetalert2";
 import Reporticon from "../assets/images/report.png";
-import logo from "../assets/images/logo.png";
-import Calculatoricon from "../assets/images/calculator.png";
-import ScientificCalculator from "./Modal/ScientificCalculator";
-import Loader from "./Loader";
-import Swal from 'sweetalert2';
 
-function Review() {
+function FreeReview() {
   const dispatch = useDispatch();
   const question = useSelector((state) => state.question);
   const auth = useSelector((state) => state.auth);
   const [answerstatus, setAnswerstatus] = useState(0);
-  const [explanationdisplay, setExplanationdisplay] = useState(false);
-  const [explanationfontSize, setExplanationfontSize] = useState(14);
-  const [loader, setLoader] = useState(false);
   // console.log("questionid  ", question.questionid);
   // console.log("questionlist  ", question.questionlist);
 
@@ -68,8 +60,6 @@ function Review() {
   const handleNext = async () => {
     var index = question.count;
     if (question.count < question.totalQuestion - 1) {
-      setLoader(true);
-      setExplanationdisplay(false);
       index = index + 1;
 
       dispatch(questionActions.count(index));
@@ -78,8 +68,6 @@ function Review() {
       // // console.log(currentIndex, 'currentIndex')
       //   await saveAnswerObj();
       await getquestiondata(`qid${index}`);
-
-      setLoader(false);
     }
   };
 
@@ -87,7 +75,6 @@ function Review() {
     // // console.log(currentIndex, 'currentIndex')
     var index = question.count;
     if (question.count > 0) {
-      setLoader(true);
       index = index - 1;
 
       dispatch(questionActions.count(index));
@@ -97,8 +84,6 @@ function Review() {
       //   await saveAnswerObj();
 
       await getquestiondata(`qid${index}`);
-
-      setLoader(false);
     }
   };
 
@@ -199,9 +184,6 @@ function Review() {
 
         if (question.questionlist.ans.length > 1) {
           // =============== check box ============= //
-
-          setExplanationdisplay(true);
-
           form.querySelector("#t_test1").className = "";
           form.querySelector("#t_test2").className = "";
           form.querySelector("#t_test3").className = "";
@@ -209,6 +191,7 @@ function Review() {
 
           const myArray = i.ans.split("");
           var answer = i.ans;
+
 
           // console.log(`ans id == ${i.qid} === ${myArray}`);
 
@@ -225,12 +208,12 @@ function Review() {
           }
 
           if (question.questionlist.ans === answer) {
-
+            
             // toast.success("your answer right");
             setAnswerstatus(1);
             if (answer.includes("A")) {
               form.querySelector("#t_test1").className = "right_ans";
-
+              
 
             }
 
@@ -247,7 +230,7 @@ function Review() {
             }
           } else {
             setAnswerstatus(2);
-            // toast.success("your answer is wrong");
+           // toast.success("your answer is wrong");
             if (question.questionlist.ans.includes("A")) {
               if (answer.includes("A")) {
                 form.querySelector("#t_test1").className = "right_ans";
@@ -288,12 +271,12 @@ function Review() {
               form.querySelector("#t_test4").className = "wrong_ans";
             }
 
-
+            // form['c_test1'].className = 'sdf';
+            // form['c_test2'].className = 'wer'
+            // // console.log("chekcans  ", data)
           }
         } else {
           //  ============== radio ============= ///
-
-          setExplanationdisplay(true);
 
           form.querySelector("#t_test1").className = "";
           form.querySelector("#t_test2").className = "";
@@ -303,7 +286,7 @@ function Review() {
           setValue("answer", i.ans);
 
           // alert(question.questionlist.ans.includes('A'))
-          console.log(i, "llllllll")
+
           var answer = i.ans;
 
           // var newForm = formref.current;
@@ -353,8 +336,7 @@ function Review() {
           }
         }
         break;
-      } else {
-        setExplanationdisplay(false);
+      }else{
         setAnswerstatus(0);
       }
     }
@@ -392,26 +374,6 @@ function Review() {
     dispatch(bookmarkActions.questionReset());
   }
 
-  const newSession = async () => {
-
-    // Swal.fire({
-    //   title: 'Do you want to start new session?',
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   confirmButtonColor: '#3085d6',
-    //   cancelButtonColor: '#d33',
-    //   confirmButtonText: 'Yes',
-    //   cancelButtonText: "No"
-    // }).then(async (result) => {
-
-    //   if (result.isConfirmed) {
-    //     navigate("/")
-    //   }
-    // })
-    navigate("/")
-
-  }
-
 
   useEffect(() => {
     // // console.log(user.questionlist.ans.length, '  user.questionlist.ans.length ')
@@ -426,30 +388,30 @@ function Review() {
     document.body.classList.remove('bg-salmon');
   }, [question.questionlist]);
 
-  useEffect(() => {
+  useEffect(()=>{
     if (process.env.NODE_ENV === 'production') {
       console.clear();
     }
-  }, []);
+  },[]);
 
   return (
     <>
-      {loader && <Loader />}
       <section className="Money-Received">
         <div className="container">
           {/* ===== question and exam list ====== */}
 
-          <div className="Money-Received-box money-Received-review-box">
+          <div className="Money-Received-box">
             <div className="money-header review">
-
-              <div className="logo">
-                <a href="/practice">
-                  <img src={logo} alt="logo" className="footer-logo" />
-                </a>
+              <div className="money-h-left">
+                <h6>{question.subject_name}</h6>
+                {/* <select id="inputState" className="form-select">
+                  <option selected="">Section #1</option>
+                  <option>Section #2</option>
+                </select> */}
               </div>
               <div className="money-h-middle">
-
-                <span className="page-count">Attempted : {question.answerObj.length}/{question.totalQuestion}</span>
+              
+              <span className="page-count">Attempted : {question.answerObj.length}/{question.totalQuestion}</span>
                 <ul className="pagination-wrap exam-pagination">
                   <li>
                     <a href="#" onClick={handlePrevious}>
@@ -458,43 +420,36 @@ function Review() {
                     </a>
                   </li>
                   <li className="countnum">
+                    
                     <span>{question.count + 1}</span>/<span>{question.totalQuestion}</span>
                   </li>
-
                   <li>
-                    {(question.count === question.totalQuestion - 1) ? (<>
-                      <a href="#" onClick={newSession}>
-                        Do New Session
-                        <img src={mobile_new_session} alt="next" className="mobile_new_session" />
-                      </a>
-                    </>) : (
-                      <a href="#" onClick={handleNext}>
-                        Next Question
-                        <img src={next} alt="next" />
-                      </a>)}
+                    <a href="#" onClick={handleNext}>
+                      Next Question
+                      <img src={next} alt="next" />
+                    </a>
                   </li>
-
                 </ul>
 
               </div>
               <div className="money-h-right">
-
-
-                {answerstatus === 1 &&
-                  <span style={{ color: "#090", fontSize: "16px" }}>
-                    Correct answer
-                  </span>
-                }
-                {answerstatus === 2 &&
-                  <span style={{ color: "#ff0000", fontSize: "16px" }}>
-                    Wrong answer
-                  </span>
-                }
-                {answerstatus === 0 &&
-                  <span style={{ fontSize: "16px" }}>
-                    Not attempted
-                  </span>
-                }
+                
+            
+              {answerstatus === 1 && 
+                   <span style={{color:"#090",fontSize: "16px"}}>
+                   Correct answer
+                 </span>
+              }
+              {answerstatus === 2 && 
+                   <span style={{color:"#ff0000",fontSize: "16px"}}>
+                   Wrong answer
+                 </span>
+              }
+              {answerstatus === 0 && 
+                   <span style={{fontSize: "16px"}}>
+                   Not attempted
+                 </span>
+              }
                 {/* <div className="pagination-res">
                   <span className="tr-fl">
                     <i className="fa-solid fa-circle-check" />
@@ -504,33 +459,26 @@ function Review() {
                 </div> */}
               </div>
             </div>
-            <div className="money-re-content money_cust_review">
+            <div className="money-re-content">
               <div className="content-left">
                 <div className="ch-h">
                   <h3>{question.subject_name}</h3>
-                  <small>QID: {newQID(auth.user_id, question.questionlist.id)}</small>
+                  <small>QID: {newQID('00000', question.questionlist.id)}</small>
                 </div>
-                <p onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
-                  {parse(question.questionlist.question)}
-
-                </p>
+                <p onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
+                { parse(question.questionlist.question)}
+                  
+                  </p>
 
                 <div id="monybgwater">
-                  <p id="bg-text">{newQID(auth.user_id, question.questionlist.id)}</p>
+                  <p id="bg-text">{newQID('00000', question.questionlist.id)}</p>
                 </div>
 
               </div>
               <div className="content-right">
-                {question.questionlist.ans.length > 1 ? (
-                  <div className="ch-h">
-                    <h3>Select all options that apply</h3>
-                  </div>
-                ) : (
-                  <div className="ch-h">
-                    <h3>Select the best option</h3>
-                  </div>
-                )}
-
+                <div className="ch-h">
+                  <h3>Select An Answer</h3>
+                </div>
 
                 {/* ======== FORM 2 ANS length check =========  */}
 
@@ -550,7 +498,7 @@ function Review() {
                           value={"A"}
                           disabled={true}
                         />
-                        <label htmlFor="test1" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="test1" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {question.questionlist.choice1}
                         </label>
                       </p>
@@ -562,7 +510,7 @@ function Review() {
                           value={"B"}
                           disabled={true}
                         />
-                        <label htmlFor="test2" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="test2" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {question.questionlist.choice2}
                         </label>
                       </p>
@@ -574,7 +522,7 @@ function Review() {
                           value={"C"}
                           disabled={true}
                         />
-                        <label htmlFor="test3" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="test3" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {question.questionlist.choice3}
                         </label>
                       </p>
@@ -586,7 +534,7 @@ function Review() {
                           value={"D"}
                           disabled={true}
                         />
-                        <label htmlFor="test4" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="test4" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {question.questionlist.choice4}
                         </label>
                       </p>
@@ -608,7 +556,7 @@ function Review() {
                           value={"A"}
                           disabled={true}
                         />
-                        <label htmlFor="answer1" onCopy={e => textcopy(auth.user_id, auth.user_data.email)} >
+                        <label htmlFor="answer1"  onCopy={e=>textcopy(auth.user_id,auth.user_data.email)} >
                           {question.questionlist.choice1}
                         </label>
                       </p>
@@ -620,7 +568,7 @@ function Review() {
                           value={"B"}
                           disabled={true}
                         />
-                        <label htmlFor="answer2" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="answer2" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {question.questionlist.choice2}
                         </label>
                       </p>
@@ -632,7 +580,7 @@ function Review() {
                           value={"C"}
                           disabled={true}
                         />
-                        <label htmlFor="answer3" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="answer3" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {question.questionlist.choice3}
                         </label>
                       </p>
@@ -644,7 +592,7 @@ function Review() {
                           value={"D"}
                           disabled={true}
                         />
-                        <label htmlFor="answer4" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="answer4" onCopy={e=>textcopy(auth.user_id,auth.user_data.email)}>
                           {question.questionlist.choice4}
                         </label>
                       </p>
@@ -652,166 +600,79 @@ function Review() {
                   )}
                 </form>
 
-                {explanationdisplay && (
-                  <>
-                    <p
-                      className="ex-custom-bor"
-                      style={{ fontSize: explanationfontSize, lineHeight: 1.5 }}
-                    >
-                      <span style={{ color: "green", fontWeight: "bold" }}>
-                        Explanation :
-                      </span>
-                      <span
-                        style={{ marginLeft: "5px", color: "green" }}
-                        onCopy={(e) =>
-                          textcopy(auth.user_id, auth.user_data.email)
-                        }
-                      >
-                        {parse(question.questionlist.explanation)}
-                      </span>
-                    </p>
-                  </>
-                )}
-
                 {/* ======== END FORM 2 ANS length check =========  */}
 
                 <div className="multiple-options">
                   <ul>
+                   
                     <li>
                       <a
                         href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#scientificCalculatorPopup"
-                        title="Scientific Calculator"
-                      >
-                        <img src={Calculatoricon} alt="query" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" title="Add Bookmark" onClick={addBookmark} >
-                        <img src={add} alt="add" />
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#searchpopup"
                         title="Speed Reference"
+                        onClick={() =>
+                          Swal.fire({
+                            title: "Notice",
+                            html: '<br/><br/>SpeedRef™ is an on-screen integration with the official study guide for quick referencing.<br/><br/><br/>Upgrade to Silver Plan or higher through the Dashboard page in order to use this feature.',
+                            icon: "notice",
+                            confirmButtonText: "Ok",
+                          })
+                        }
                       >
                         <img src={search} alt="search" />
                       </a>
                     </li>
                     <li>
-                      <a href="/practice/translate" target="_blank" rel="noopener noreferrer" title="Translation">
+                      <a href="#" 
+                      title="Translation"
+                      onClick={() =>
+                          Swal.fire({
+                            title: "Notice",
+                            html: '<br/><br/>Questions, choices and explanations can now be shown in your native language.<br/><br/><br/>Upgrade to Silver Plan or higher through the Dashboard page to use this feature.',
+                            icon: "notice",
+                            confirmButtonText: "Ok",
+                          })}
+                      >
                         <img src={translate} alt="translate" />
                       </a>
                     </li>
                     {question.flag_type === "ask_mentor" ? (
                       <li>
-                        <a
-                          href="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#mentorpopup"
-                          title="Ask a Mentor"
-                        // onClick={aksMentorRefhandleShow}
-                        >
-                          <img src={query} alt="query" />
-                        </a>
-                      </li>
+                      <a
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#mentorpopup"
+                        title="Ask a Mentor"
+                      // onClick={aksMentorRefhandleShow}
+                      >
+                        <img src={query} alt="query" />
+                      </a>
+                    </li>
 
-                    ) : (
+                    ):(
                       <li>
-                        <a
-                          href="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#Rerrorpopup"
-                          title="Report an Erroneous Question"
-                        // onClick={aksMentorRefhandleShow}
-                        >
-                          <img src={Reporticon} alt="report_error" />
-                        </a>
-                      </li>
+                      <a
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#Rerrorpopup"
+                        title="Report an Erroneous Question"
+                      // onClick={aksMentorRefhandleShow}
+                      >
+                        <img src={Reporticon} alt="report_error" />
+                      </a>
+                    </li>
 
                     )}
                   </ul>
                 </div>
                 <div id="monybgwater">
-                  <p id="bg-text">{newQID(auth.user_id, question.questionlist.id)}</p>
+                  <p id="bg-text">{newQID('00000', question.questionlist.id)}</p>
                 </div>
               </div>
             </div>
 
-          </div>
 
-          <div class="mfooter">
-            <div className="multiple-options">
-              <ul>
-                <li>
-                  <a
-                    href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#scientificCalculatorPopup"
-                    title="Scientific Calculator"
-                  >
-                    <img src={Calculatoricon} alt="query" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#" title="Add Bookmark" onClick={addBookmark}>
-                    <img src={add} alt="add" />
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#searchpopup"
-                    title="Speed Reference"
-                  // onClick={speedRefhandleShow}
-                  >
-                    <img src={search} alt="search" />
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/practice/translate"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Translation"
-                  >
-                    <img src={translate} alt="translate" />
-                  </a>
-                </li>
-                {question.flag_type === "ask_mentor" ? (
-                  <li>
-                    <a
-                      href="#"
-                      data-bs-toggle="modal"
-                      data-bs-target="#mentorpopup"
-                      title="Ask a Mentor"
-                    // onClick={aksMentorRefhandleShow}
-                    >
-                      <img src={query} alt="query" />
-                    </a>
-                  </li>
-                ) : (
-                  <li>
-                    <a
-                      href="#"
-                      data-bs-toggle="modal"
-                      data-bs-target="#Rerrorpopup"
-                      title="Report an Erroneous Question"
-                    // onClick={aksMentorRefhandleShow}
-                    >
-                      <img src={Reporticon} alt="report_error" />
-                    </a>
-                  </li>
-                )}
-              </ul>
-            </div>
-          </div>
 
+          </div>
 
           {/* <div className="btn-wrap exam-btn">
             {question.count > 0 && (
@@ -857,17 +718,13 @@ function Review() {
       </section>
 
       {/* ======== custom modal ======== */}
-      <SpeedRef />
+      {/* <SpeedRef /> */}
 
       <AskMentor />
 
       <ReportError />
-
-      <ScientificCalculator />
-
     </>
-
   );
 }
 
-export default Review;
+export default FreeReview;
