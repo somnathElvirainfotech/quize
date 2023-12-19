@@ -2893,3 +2893,11 @@ width: 100%;
   display: none;
 }
 /* ============= end custom range =============== */
+/* 19-12-2023 */
+
+ img.mobile_new_session{
+  display: none;
+} 
+section.text-engine.d_mode  .check-wrap ul input[type="checkbox"]{
+  margin-top: 0 !important;
+}

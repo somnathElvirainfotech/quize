@@ -850,4 +850,6 @@
   .Money-Received-box.money-Received-review-box .mfooter{height: 85px;}
   .Money-Received-box.money-Received-review-box .mfooter .multiple-options{margin: 0px 0 0;}
   .content-right{overflow: hidden !important;}
+  /* 19-12-2023 */
+  img.mobile_new_session{display: inline-block; width: 11px !important;}
 } 
