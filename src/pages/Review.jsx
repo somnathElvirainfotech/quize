@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import prev from "../assets/images/prev.svg";
 import next from "../assets/images/next.svg";
-import mobile_new_session from "../assets/images/mobile_new_session.png";
+import mobile_new_session from "../assets/images/icon556.png";
 import add from "../assets/images/add.svg";
 import search from "../assets/images/search.svg";
 import translate from "../assets/images/translate.svg";
