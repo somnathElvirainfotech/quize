@@ -59,7 +59,7 @@ function Translate() {
               {newQID(auth.user_id, question.questionlist.id)}
             </p>
           </div>
-          <div id="content" onCopy={(e) => textcopy(auth.user_id, auth.user_data.email)}>
+          <div id="content" onCopy={(e) => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)}>
             
             ({question.subject_name}) | QID:{" "}
             <span>{newQID(auth.user_id, question.questionlist.id)}</span> |{" "}

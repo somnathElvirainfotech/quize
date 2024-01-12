@@ -4,18 +4,20 @@ import Button from "react-bootstrap/Button";
 
 import mentor from "../../assets/images/mentor.svg";
 import Swal from "sweetalert2";
-import { useSelector } from "react-redux";
+import { useSelector ,useDispatch} from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AsksMentorSchama } from "../../schema";
 import userService from "../../services/user.service";
 import { toast } from "react-toastify";
 import { ColorRing } from 'react-loader-spinner'
-
-
+import { authActions } from "../../redux/auth";
+import { useLocation, useNavigate } from "react-router-dom";
 function AskMentor() {
   const question = useSelector((state) => state.question);
   const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [loader,setLoader]=useState(false);
   const modalClose = useRef(null);
   const {
@@ -59,7 +61,9 @@ function AskMentor() {
 
 
     data.qid = question.questionlist.id;
-    // console.log(data);
+   data.qid2 = question.encryptquestionid[`qid${question.count}`];
+   data.token = auth.encrypt_user_id;
+     console.log(data);
 
     var responce = await userService.AsksMentor(data);
 
@@ -75,14 +79,15 @@ function AskMentor() {
           title: "Warning",
           text: responce.data.msg,
           icon: "warning",
-          confirmButtonText: "Ok",
+          confirmButtonText: "OK",
         });
+        
       } else {
         Swal.fire({
           title: "Successful",
           text: responce.data.msg,
           icon: "success",
-          confirmButtonText: "Ok",
+          confirmButtonText: "OK",
         });
       }
     } else {
@@ -91,8 +96,14 @@ function AskMentor() {
         title: "Error",
         text: responce.data.error,
         icon: "error",
-        confirmButtonText: "Ok",
+        confirmButtonText: "OK",
       });
+      if(!responce.data.status){
+        if(responce.data.auth == 0){
+          dispatch(authActions.Logout());
+          navigate('/');
+        }
+      }
     }
   };
 

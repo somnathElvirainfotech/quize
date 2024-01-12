@@ -4,6 +4,7 @@ const initialState = {
     count: 0,
     questionlist: {},
     questionid: {},
+    encryptquestionid: {},
     totalQuestion: 0,
     totalCurrectAns:0,
     subject_name: "",
@@ -34,6 +35,9 @@ const questionSlice = createSlice({
         },
         questionid(state, action) {
             state.questionid = action.payload;
+        },
+        encrypted_questionid(state, action) {
+            state.encryptquestionid = action.payload;
         },
         totalQuestion(state, action) {
             state.totalQuestion = action.payload;

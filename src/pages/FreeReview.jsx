@@ -126,6 +126,8 @@ function FreeReview() {
     if (q_id !== "") {
       let datas = {
         next_qid: question.questionid[q_id],
+        next_qid2: question.encryptquestionid[q_id],
+        token:"guest"
       };
 
       var response = await userService.Nextquestion(datas);
@@ -378,7 +380,7 @@ function FreeReview() {
     form.append("user_id", auth.user_id);
     form.append("question_id", question.questionlist.id);
     form.append("subject_name", question.subject_name);
-
+    form.append("token", auth.encrypt_user_id);
     var responce = await userService.AddBookmark(form);
 
     // console.log("AddBookmark ", responce.data)
@@ -511,7 +513,7 @@ function FreeReview() {
                   <h3>{question.subject_name}</h3>
                   <small>QID: {newQID(auth.user_id, question.questionlist.id)}</small>
                 </div>
-                <p onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                <p onCopy={e => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)}>
                   {parse(question.questionlist.question)}
 
                 </p>
@@ -551,7 +553,7 @@ function FreeReview() {
                           value={"A"}
                           disabled={true}
                         />
-                        <label htmlFor="test1" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="test1" onCopy={e => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)}>
                           {question.questionlist.choice1}
                         </label>
                       </p>
@@ -563,7 +565,7 @@ function FreeReview() {
                           value={"B"}
                           disabled={true}
                         />
-                        <label htmlFor="test2" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="test2" onCopy={e => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)}>
                           {question.questionlist.choice2}
                         </label>
                       </p>
@@ -575,7 +577,7 @@ function FreeReview() {
                           value={"C"}
                           disabled={true}
                         />
-                        <label htmlFor="test3" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="test3" onCopy={e => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id,auth.encrypt_user_id)}>
                           {question.questionlist.choice3}
                         </label>
                       </p>
@@ -609,7 +611,7 @@ function FreeReview() {
                           value={"A"}
                           disabled={true}
                         />
-                        <label htmlFor="answer1" onCopy={e => textcopy(auth.user_id, auth.user_data.email)} >
+                        <label htmlFor="answer1" onCopy={e => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)} >
                           {question.questionlist.choice1}
                         </label>
                       </p>
@@ -621,7 +623,7 @@ function FreeReview() {
                           value={"B"}
                           disabled={true}
                         />
-                        <label htmlFor="answer2" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="answer2" onCopy={e => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)}>
                           {question.questionlist.choice2}
                         </label>
                       </p>
@@ -633,7 +635,7 @@ function FreeReview() {
                           value={"C"}
                           disabled={true}
                         />
-                        <label htmlFor="answer3" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="answer3" onCopy={e => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)}>
                           {question.questionlist.choice3}
                         </label>
                       </p>
@@ -665,7 +667,7 @@ function FreeReview() {
                       <span
                         style={{ marginLeft: "5px", color: "green" }}
                         onCopy={(e) =>
-                          textcopy(auth.user_id, auth.user_data.email)
+                          textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                         }
                       >
                         {parse(question.questionlist.explanation)}

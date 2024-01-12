@@ -145,6 +145,8 @@ function FreeExam() {
     if (q_id !== "") {
       let datas = {
         next_qid: question.questionid[q_id],
+        next_qid2: question.encryptquestionid[q_id],
+        token:"guest"
       };
 
       var response = await userService.Nextquestion(datas);
@@ -605,10 +607,7 @@ function FreeExam() {
 
           for (const [index, i] of oldQA_obj.entries()) {
             if (question.questionlist.id === i.qid) {
-              // var newQA_obj={"qid":user.questionlist.id,"ans":userAns,"status":ans_status};
-              // oldQA_obj[index].ans = answer;
-              // oldQA_obj[index].status = ans_status;
-
+             
               var obj = { index, answer, ans_status };
 
               dispatch(questionActions.answerObjUpdate(obj));
@@ -682,9 +681,7 @@ function FreeExam() {
         }
 
         if (oldQA_obj.length === 0) {
-          // oldQA_obj.push(newQA_obj);
-          // console.log(oldQA_obj)
-          // dispatch(questionActions.answerObj(oldQA_obj));
+        
           dispatch(questionActions.answerObjAdd(newQA_obj));
         }
       }
@@ -804,7 +801,7 @@ function FreeExam() {
     form.append("user_id", auth.user_id);
     form.append("question_id", question.questionlist.id);
     form.append("subject_name", question.subject_name);
-
+    form.append("token", auth.encrypt_user_id);
     var responce = await userService.AddBookmark(form);
 
     // console.log("AddBookmark ", responce.data);
@@ -927,7 +924,7 @@ function FreeExam() {
                   </small>
                 </div>
                 <p
-                  onCopy={(e) => textcopy(auth.user_id, auth.user_data.email)}
+                  onCopy={(e) => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)}
                   className="question"
                   style={{
                     fontSize: `${fontSize}px`,
@@ -982,7 +979,7 @@ function FreeExam() {
                         <label
                           htmlFor="test1"
                           onCopy={(e) =>
-                            textcopy(auth.user_id, auth.user_data.email)
+                            textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                           }
                         >
                           <span
@@ -1007,7 +1004,7 @@ function FreeExam() {
                         <label
                           htmlFor="test2"
                           onCopy={(e) =>
-                            textcopy(auth.user_id, auth.user_data.email)
+                            textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                           }
                         >
                           <span
@@ -1032,7 +1029,7 @@ function FreeExam() {
                         <label
                           htmlFor="test3"
                           onCopy={(e) =>
-                            textcopy(auth.user_id, auth.user_data.email)
+                            textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                           }
                         >
                           <span
@@ -1057,7 +1054,7 @@ function FreeExam() {
                         <label
                           htmlFor="test4"
                           onCopy={(e) =>
-                            textcopy(auth.user_id, auth.user_data.email)
+                            textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                           }
                         >
                           <span
@@ -1092,7 +1089,7 @@ function FreeExam() {
                         <label
                           htmlFor="answer1"
                           onCopy={(e) =>
-                            textcopy(auth.user_id, auth.user_data.email)
+                            textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                           }
                         >
                           <span
@@ -1117,7 +1114,7 @@ function FreeExam() {
                         <label
                           htmlFor="answer2"
                           onCopy={(e) =>
-                            textcopy(auth.user_id, auth.user_data.email)
+                            textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                           }
                         >
                           <span
@@ -1142,7 +1139,7 @@ function FreeExam() {
                         <label
                           htmlFor="answer3"
                           onCopy={(e) =>
-                            textcopy(auth.user_id, auth.user_data.email)
+                            textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                           }
                         >
                           <span
@@ -1167,7 +1164,7 @@ function FreeExam() {
                         <label
                           htmlFor="answer4"
                           onCopy={(e) =>
-                            textcopy(auth.user_id, auth.user_data.email)
+                            textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                           }
                         >
                           <span
@@ -1208,7 +1205,7 @@ function FreeExam() {
                       <span
                         style={{ marginLeft: "5px", color: "green" }}
                         onCopy={(e) =>
-                          textcopy(auth.user_id, auth.user_data.email)
+                          textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                         }
                       >
                         {parse(question.questionlist.explanation)}
