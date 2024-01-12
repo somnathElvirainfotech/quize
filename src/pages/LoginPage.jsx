@@ -56,58 +56,26 @@ function LoginPage(props) {
   });
   var submit = async (data) => {
     // console.log(data);
-
-    setLoader(true);
-    
-
-
+    setLoader(true);   
     const form = new FormData();
     form.append("email", data.email);
     form.append("password", data.password);
 
     var responce = await userService.login(form);
 
-    // console.log(responce.data);
-    if (responce.data.error) {
+     console.log(responce.data,"login response");
+    if (!responce.data.status) {
       toast.error(responce.data.error);
-    } else {
-      // console.log("login successfull");
-    //   toast.success("login successfull");
-
-     
-
-      // localStorage.setItem("userdata", JSON.stringify(responce.data.data[0]));
-      // localStorage.setItem("userid", responce.data.data[0].id);
-      // // console.log(responce.data.data[0].id, 'id')
-      // // console.log(responce.data.data[0], 'user')
-
-      // dispatch({ type: "id", value: responce.data.data[0].id });
-      // dispatch({ type: "name", value: responce.data.data[0].name });
-      // dispatch({ type: "email", value: responce.data.data[0].email });
-
-      // dispatch(questionActions.questionReset());
-
+    } else {    
+      
       dispatch(authActions.Login(responce.data.data[0]));
-
+      dispatch(authActions.Save_encrypt_value(responce.data.token));
       modalCloseRef.current.click();
 
       //   alert(data.report_id,'response')
-    }
-    // if(responce.data.msg)
-    // {
-    //   reset();
-    //   // console.log("login successfull")
-    //     toast.success("login successfull")
-    //     localStorage.setItem("userid",responce.data[0].id);
-    //     // navigate("/admin")
-
-    // }else{
-    //   toast.error(responce.data.error)
-    // }
+    }  
     reset();
-
     setLoader(false);
-
     navigate('/');
   };
   return (

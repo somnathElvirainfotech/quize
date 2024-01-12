@@ -40,7 +40,7 @@ import Calculatoricon from "../assets/images/calculator.png";
 import ScientificCalculator from "./Modal/ScientificCalculator";
 import Loader from "./Loader";
 import Swal from 'sweetalert2';
-
+import { authActions } from "../redux/auth";
 function Review() {
   const dispatch = useDispatch();
   const question = useSelector((state) => state.question);
@@ -51,7 +51,7 @@ function Review() {
   const [loader, setLoader] = useState(false);
   // console.log("questionid  ", question.questionid);
   // console.log("questionlist  ", question.questionlist);
-
+  const [speedRefhandleShow, setSpeedRefhandleShow] = useState(false);
   const formref = useRef(null);
 
   const {
@@ -126,12 +126,20 @@ function Review() {
     if (q_id !== "") {
       let datas = {
         next_qid: question.questionid[q_id],
+        next_qid2: question.encryptquestionid[q_id],
+        token:auth.encrypt_user_id
       };
 
       var response = await userService.Nextquestion(datas);
 
       if (response.data.error) {
         toast.error(response.data.error);
+        if(!response.data.status){         
+          if(response.data.auth == 0){
+            dispatch(authActions.Logout());
+            navigate('/');
+          }
+        }
       } else {
         // // console.log(response.data)
 
@@ -377,8 +385,9 @@ function Review() {
     const form = new FormData();
     form.append("user_id", auth.user_id);
     form.append("question_id", question.questionlist.id);
+    form.append("question_id2", question.encryptquestionid[`qid${question.count}`]);
     form.append("subject_name", question.subject_name);
-
+    form.append("token", auth.encrypt_user_id);
     var responce = await userService.AddBookmark(form);
 
     // console.log("AddBookmark ", responce.data)
@@ -387,6 +396,12 @@ function Review() {
       toast.success(responce.data.msg);
     } else {
       toast.warning(responce.data.error);
+      if(!responce.data.status){         
+        if(responce.data.auth == 0){
+          dispatch(authActions.Logout());
+          navigate('/');
+        }
+      }
     }
 
     dispatch(bookmarkActions.questionReset());
@@ -510,7 +525,7 @@ function Review() {
                   <h3>{question.subject_name}</h3>
                   <small>QID: {newQID(auth.user_id, question.questionlist.id)}</small>
                 </div>
-                <p onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                <p onCopy={e => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)}>
                   {parse(question.questionlist.question)}
 
                 </p>
@@ -550,7 +565,7 @@ function Review() {
                           value={"A"}
                           disabled={true}
                         />
-                        <label htmlFor="test1" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="test1" onCopy={e => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)}>
                           {question.questionlist.choice1}
                         </label>
                       </p>
@@ -562,7 +577,7 @@ function Review() {
                           value={"B"}
                           disabled={true}
                         />
-                        <label htmlFor="test2" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="test2" onCopy={e => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)}>
                           {question.questionlist.choice2}
                         </label>
                       </p>
@@ -574,7 +589,7 @@ function Review() {
                           value={"C"}
                           disabled={true}
                         />
-                        <label htmlFor="test3" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="test3" onCopy={e => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)}>
                           {question.questionlist.choice3}
                         </label>
                       </p>
@@ -608,7 +623,7 @@ function Review() {
                           value={"A"}
                           disabled={true}
                         />
-                        <label htmlFor="answer1" onCopy={e => textcopy(auth.user_id, auth.user_data.email)} >
+                        <label htmlFor="answer1" onCopy={e => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)} >
                           {question.questionlist.choice1}
                         </label>
                       </p>
@@ -620,7 +635,7 @@ function Review() {
                           value={"B"}
                           disabled={true}
                         />
-                        <label htmlFor="answer2" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="answer2" onCopy={e => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)}>
                           {question.questionlist.choice2}
                         </label>
                       </p>
@@ -632,7 +647,7 @@ function Review() {
                           value={"C"}
                           disabled={true}
                         />
-                        <label htmlFor="answer3" onCopy={e => textcopy(auth.user_id, auth.user_data.email)}>
+                        <label htmlFor="answer3" onCopy={e => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)}>
                           {question.questionlist.choice3}
                         </label>
                       </p>
@@ -664,7 +679,7 @@ function Review() {
                       <span
                         style={{ marginLeft: "5px", color: "green" }}
                         onCopy={(e) =>
-                          textcopy(auth.user_id, auth.user_data.email)
+                          textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                         }
                       >
                         {parse(question.questionlist.explanation)}
@@ -698,6 +713,7 @@ function Review() {
                         data-bs-toggle="modal"
                         data-bs-target="#searchpopup"
                         title="Speed Reference"
+                        onClick={() => setSpeedRefhandleShow(true)}
                       >
                         <img src={search} alt="search" />
                       </a>
@@ -768,7 +784,7 @@ function Review() {
                     data-bs-toggle="modal"
                     data-bs-target="#searchpopup"
                     title="Speed Reference"
-                  // onClick={speedRefhandleShow}
+                    onClick={() => setSpeedRefhandleShow(true)}
                   >
                     <img src={search} alt="search" />
                   </a>
@@ -857,7 +873,8 @@ function Review() {
       </section>
 
       {/* ======== custom modal ======== */}
-      <SpeedRef />
+      <SpeedRef speedRefhandleShow={speedRefhandleShow} setSpeedRefhandleShow={setSpeedRefhandleShow} />
+
 
       <AskMentor />
 

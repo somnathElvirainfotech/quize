@@ -62,7 +62,10 @@ function EncryptLoginPage() {
   }, [])
 
   var checkencryptlogin = async (encrypcode) => {
+
     var final_data= decryptString(param.encrypcode);
+
+
    // alert(final_data);
 
     const myArray = final_data.split("_");
@@ -70,47 +73,43 @@ console.log(myArray,"fldgdjfl");
     if(myArray[0] !="" && myArray[1] !="" && myArray[2] !=""){
 
          // ===========================================
-    // var encrypt_time = myArray[0];
-    // // console.log(encrypt_time,"agldifjo")
-    // var jtime = new Date(encrypt_time * 1000);
-    // var startTime = moment(jtime, 'hh:mm:ss');
+    var encrypt_time = myArray[0];
+    // console.log(encrypt_time,"agldifjo")
+    var jtime = new Date(encrypt_time * 1000);
+    var startTime = moment(jtime, 'hh:mm:ss');
 
-    // var endTime = moment(new Date(), 'hh:mm:ss');
+    var endTime = moment(new Date(), 'hh:mm:ss');
 
-    // var hoursDiff = endTime.diff(startTime, 'seconds');
+    var hoursDiff = endTime.diff(startTime, 'seconds');
 
-    //   const form = new FormData();
-   
-    //   form.append("token",param.encrypcode);
-      
-    //   form.append("session_id", myArray[2]);
-      var data={
-        "token":param.encrypcode,
-        "session_id":myArray[2]
-      }     
-      
-      var responce = await userService.encryptlogin(JSON.stringify(data));
+    // console.log('seconds:' + hoursDiff);
 
-      console.log(responce.data,"encryption response");
+
+    if (hoursDiff < 43200) {
+      const form = new FormData();
+      form.append("user_id", myArray[1]);
+      form.append("session_id", myArray[2]);
+
+      var responce = await userService.encryptlogin(form);
+
+      //console.log(responce.data);
       if (!responce.data.status) {
         //toast.error(responce.data.error);
-        alert(responce.data.error);
         // console.log(responce.data.error,"error log")
         dispatch(authActions.Logout());
         navigate('/');
       } else {
         // console.log("login successfull");
-        dispatch(authActions.Save_encrypt_value(param.encrypcode));
         dispatch(authActions.Login(responce.data.data[0]));
         navigate('/');
       }
-    // }catch(err) {
-    //   console.log(err.message)
-    // }
-    
+
+    } else {
+      dispatch(authActions.Logout());
+      navigate('/');
+    }
 
     }else{
-      alert('Invalid or expired login session. Please re-login.')
       dispatch(authActions.Logout());
       navigate('/');
     }
@@ -119,7 +118,7 @@ console.log(myArray,"fldgdjfl");
   }
 
   
-  return (<></>)
+  return (<>t</>)
 }
 
 export default EncryptLoginPage;

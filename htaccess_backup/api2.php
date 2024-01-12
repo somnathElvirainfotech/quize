@@ -2,32 +2,39 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: PUT, GET, POST");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-//chdir('/var/www/vhosts/cmfas.com.sg/httpdocs');
+chdir('/var/www/vhosts/cmfas.com.sg/httpdocs');
 include_once 'common/mysql.php';
 include_once 'phpmailer/emailfunctions.php';
 include_once 'scrypt.php';
 //print_r($con);
 $status = false;
 $response = [];
-
+include_once 'logerr.php';
+logerr('practice/api2.txt',json_encode($_REQUEST));
+logerr('practice/api2.txt',json_encode($_POST));
+logerr('practice/api2.txt',file_get_contents('php://input'));
+logerr('practice/api2.txt','<br>');
 
 
 function checkuser($hash) {
-    if (substr_count($hash,'_') < 2) { return 0; exit; }
-    $decrypted = explode('_',scrypt($hash, 'd')); 
-    $x = time() - (int)$decrypted[0];
-    if (
-        ((int)$x < 86400) && 
-        (
-        ((int)$decrypted[1] < 999999) || 
-        (strlen($decrypted[1]) == 64)
-        )
-       ) {
-        return $decrypted;  
-    }
+    $d = scrypt($hash, 'd');
+    if (is_null($d) || substr_count($d,'_') < 2) { return 0; }
     else {
-        return 0;
-    }
+    	$decrypted = explode('_',$d); 
+   		$x = time() - (int)$decrypted[0];
+    	if (
+       	 ((int)$x < 86400) && 
+       	 (
+       	 ((int)$decrypted[1] < 999999) || 
+       	 (strlen($decrypted[1]) == 64)
+       	 )
+       	) {
+       	 return $decrypted;  
+    	}
+    	else {
+        	return 0;
+    	}
+	}
 }
 
 function invalidorexpired() {
@@ -39,54 +46,75 @@ function invalidorexpired() {
 }
 
 function encrypt_qid($qid) {
-   return $qid.'_'.scrypt(time());
+   return scrypt($qid.'_'.time());
 }
 
 function decrypt_qid($qid) {
-    if (substr_count($qid,'_') == 1) {
-        $a = explode('_',$qid);
-        $x = scrypt($a[1],'d');
-        if (time() - (int) $x > 83400) {
-        return $x;
+    $x = scrypt($qid,'d');
+    if (substr_count($x,'_') == 1) {
+        $a = explode('_',$x);
+     	if (time() - (int) $a[1] < 83400) {
+        return $a[0];
         }
+        else {
+         invalidorexpired();
+     	}
      }
      else {
          invalidorexpired();
      }
 }
 
+function get_data($input) {
+    if (!isset($input) || is_null($input) || $input=='') { return 0; exit; }
+    global $con;
+    $y = array();
+    $y = json_decode($input, true);
+    function myescape(&$val) { 
+        if (!is_array($val)) {
+            global $con; 
+            return mysqli_real_escape_string($con, $val);
+        }
+        else { 
+            //error_log('Unable to escape/sanitize array: '.json_encode($val)); 
+        }
+    }
+    if (!is_null($y) && is_array($y)) { array_walk($y, 'myescape'); }
+    return $y;
+}
+$post_data = array();
+$post_data = get_data(file_get_contents('php://input'));
+
+
 switch ($_REQUEST['params']) {
-	case 'checklogin':
+
+case 'checklogin':
 		// HTTP PUT method request will be used to create a new user
-		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$data = file_get_contents('php://input');
-			$post_data = json_decode($data, true);
-
-			// Print the POST array
-
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {   
 			if (!empty($post_data)) {
 				// Decode the json string from the request to Array
 				// $request_body = json_decode($_POST, true);
-				$txtLogin = mysqli_real_escape_string($con, (string) $post_data['email']);
-				$txtPassword = mysqli_real_escape_string($con, (string) $post_data['password']);
+				$txtLogin = $post_data['email'];
+				$txtPassword = $post_data['password'];
 
 				$hash = md5((string) $txtPassword);
 				$hash2 = md5('P@ssw0rd'.date('Ymd'));
-				$query = "select * FROM tmember WHERE email='$txtLogin' AND (left(hash,32)='$hash' OR '$hash'='$hash2')";
+				$query = "select id,name,email,loginsession FROM tmember WHERE email='$txtLogin' AND (left(hash,32)='$hash' OR '$hash'='$hash2') order by id desc limit 1";
 				//echo $query;exit;
-				$result = mysqli_query($con, $query);
+				$qresult = mysqli_query($con, $query);
 				$data_array = array();
-				if ($result->num_rows > 0) {
-					//$data = $result -> fetch_array(MYSQLI_ASSOC);
+				if ($qresult->num_rows > 0) {
+					//$data = $qresult -> fetch_array(MYSQLI_ASSOC);
 					//print_r($data);
-					while ($row = $result->fetch_assoc()) {
+					while ($row = $qresult->fetch_assoc()) {
 						$data_array[] = $row;
 					}
-                    $permission = fetchrow("select group_concat(b.a) as list from (SELECT examid a FROM `subscribetbl` where memid='".$result['id']."' and edate >= CURDATE() group by examid) b");
-                    $token = scrypt(time().'_'.$result['id'].'_'.$result['loginsession'].'_'.$permission['list']);
+                    $permission = fetchrow("select group_concat(b.a) as list from (SELECT examid a FROM `subscribetbl` where memid='".$data_array[0]['id']."' and edate >= CURDATE() group by examid) b");
+                    $token = scrypt(time().'_'.$data_array[0]['id'].'_'.$data_array[0]['loginsession'].'_'.$permission[0]);
 					$status = true;
 					$response = array("status" => true, "data" => $data_array,"token"=> $token);
-				} else {
+
+                } else {
 					$status = true;
 					$response = array("status" => false, "error" => "Invalid Username or Password");
 				}
@@ -102,14 +130,10 @@ switch ($_REQUEST['params']) {
 
 
 		break;
-		case 'checkencryptlogin':
+case 'checkencryptlogin':
 			// HTTP PUT method request will be used to create a new user
 			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-				$data = file_get_contents('php://input');
-				$post_data = json_decode($data, true);
-	
-				// Print the POST array
-	
+                              
 				if (!empty($post_data)) {
 					// Decode the json string from the request to Array
 					// $request_body = json_decode($_POST, true);
@@ -118,6 +142,7 @@ switch ($_REQUEST['params']) {
                     $userid = $user[1];
 				    $session_id=$user[2];
 					if (strlen($userid) == 64 && $session_id === 'aia') {
+							$token = scrypt(time().'_'.$userid.'_aia_050S,080S,08AS,090S,09AS,110S,161S,162S');
 							$data_array = array(
 							0 => array (
 						    "id" => $userid,
@@ -128,18 +153,19 @@ switch ($_REQUEST['params']) {
 							$response = array("status" => true, "data" => $data_array);
 					}
 					elseif (is_numeric($userid)) {
-						$query = "select * FROM tmember WHERE id='" . $userid . "' AND loginsession='".$session_id."'";
+						$query = "select id,name,email,loginsession FROM tmember WHERE id='" . $userid . "' AND loginsession='".$session_id."'";
 						//echo $query;exit;
-						$result = mysqli_query($con, $query);
+						$qresult = mysqli_query($con, $query);
 						$data_array = array();
-						if ($result->num_rows > 0) {
-							//$data = $result -> fetch_array(MYSQLI_ASSOC);
+						if ($qresult->num_rows > 0) {
+							//$data = $qresult -> fetch_array(MYSQLI_ASSOC);
 							//print_r($data);
-							while ($row = $result->fetch_assoc()) {
+							while ($row = $qresult->fetch_assoc()) {
 								$data_array[] = $row;
 							}
-                            $permission = fetchrow("select group_concat(b.a) as list from (SELECT examid a FROM `subscribetbl` where memid='".$result['id']."' and edate >= CURDATE() group by examid) b");
-                            $token = scrypt(time().'_'.$result['id'].'_'.$result['loginsession'].'_'.$permission['list']);
+
+                            $permission = fetchrow("select group_concat(b.a) as list from (SELECT examid a FROM `subscribetbl` where memid='".$data_array[0]['id']."' and edate >= CURDATE() group by examid) b");
+                            $token = scrypt(time().'_'.$data_array[0]['id'].'_'.$data_array[0]['loginsession'].'_'.$permission[0]);
 							$status = true;
 							$response = array("status" => true, "data" => $data_array,"token"=> $token);
 								} else {
@@ -154,12 +180,10 @@ switch ($_REQUEST['params']) {
 						}
 			break;
 		
-	case 'TestEngineFilterList':
+case 'TestEngineFilterList':
 		// HTTP POST method will be used the update the data for the requested user id
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$data = file_get_contents('php://input');
-			$post_data = json_decode($data, true);
-
+			
 			if (!empty($post_data)) {
 				$user = checkuser($post_data['token']);
                 if ($user == 0) { $mem_id = 0; }
@@ -228,7 +252,7 @@ switch ($_REQUEST['params']) {
 					//print_r($main_dropdown_data);exit;
 					$status = true;
 					$response = $main_dropdown_data;
-				} elseif ($engine_type == "normal") {
+				} elseif ($engine_type == "normal") {  // not in use
 
 					$subresults = "SELECT TO_DAYS(eDate) - TO_DAYS(CURDATE()) as xx,examName,examId,memId,sDate,eDate FROM  subscribetbl WHERE memId='" . $mem_id . "' and examId not like '%E'  and examId not like '%M' order by examId ASC";
 					$subresults_1 = mysqli_query($con, $subresults);
@@ -293,15 +317,6 @@ switch ($_REQUEST['params']) {
 							$main_dropdown_data[$ii]['option_value'] = $sid;
 						}
 
-						/* $mysql = "select * from subjects where id >= 0 and excl != 1 and id='".$sid."' and id NOT LIKE '%E' order by id";
-                      $msql_1 = mysqli_query($con, $mysql);
-                      $row1 = mysqli_fetch_array($msql_1);
-                      $subjectname=$row1['shortname'];
-
-                      if($row['xx'] > 0)
-                      {
-                      $active .= '<option value="'.$sid.'">'.$subjectname.'</option>';
-                      } */
 						$ii++;
 					}
 
@@ -345,12 +360,8 @@ switch ($_REQUEST['params']) {
 		}
 		break;
 
-	case 'question':
+case 'question':
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$data = file_get_contents('php://input');
-			$post_data = json_decode($data, true);
-
-			// Print the POST array
 
 			if (!empty($post_data)) {
 
@@ -451,7 +462,7 @@ switch ($_REQUEST['params']) {
 					$i = 0;
 					$res = [];
 					while ($re = mysqli_fetch_array($sqls)) {
-						$res[$i] = encrypt_qid($re['id']);
+						$res[$i] = $re['id'];
 						$i++;
 					}
 
@@ -467,12 +478,13 @@ switch ($_REQUEST['params']) {
 					$msg = "";
 
 					$question_ids = array();
-
+                    $question_ids2 = array();
 
 
 
 					for ($i = 0; $i < $nq; $i++) {
-						$question_ids['qid' . $i] = encrypt_qid($res[$i]);
+						$question_ids['qid' . $i] = $res[$i];
+						$question_ids2['qid' . $i] = encrypt_qid($res[$i]);
 					}
 
 					$question_count = $nq;
@@ -481,7 +493,7 @@ switch ($_REQUEST['params']) {
 
 
 					// ============ cmfas_testengine_1.php ================== //
-					$sqlqry_questions = "SELECT * FROM questions where id='" . $question_ids['qid0'] . "'";
+					$sqlqry_questions = "SELECT id,subject_id,question,choice1,choice2,choice3,choice4,ans,qno,image,explanation FROM questions where id='" . $question_ids['qid0'] . "'";
 					$firstQns = mysqli_query($con, $sqlqry_questions);
 					$ques = mysqli_fetch_array($firstQns);
 
@@ -491,8 +503,8 @@ switch ($_REQUEST['params']) {
 					if (is_numeric($question_ids['qid0'])) {
 
 					$query = "select subject_id,image from questions where id=" . $question_ids['qid0'];
-					$results_qry = mysqli_query($con, $query);
-					$phrase = mysqli_fetch_array($results_qry);
+					$qresults_qry = mysqli_query($con, $query);
+					$phrase = mysqli_fetch_array($qresults_qry);
 					$encrypted_time = scrypt(time());
 					$speed_reference_file_path = "https://" . $_SERVER['SERVER_NAME'] . "/library/ebook.php?key=".$encrypted_time."&exid=" . substr((string) $phrase['subject_id'], 0, 3) . "&q=" . addslashes($phrase['image']);
 					}
@@ -508,6 +520,7 @@ switch ($_REQUEST['params']) {
 						"status" => true,
 						"subject_name" => $subject_name,
 						"question_ids" => $question_ids,
+                        "question_ids2" => $question_ids2,
 						"ques" => $ques,
 						"speed_reference_file_path" => $speed_reference_file_path,
 						"flag_type" => $flag_type,
@@ -528,9 +541,9 @@ switch ($_REQUEST['params']) {
 
 
 					$query = "SELECT * FROM subjects where id like '" . trim($var1) . "%' limit 1";
-					$results_qry = mysqli_query($con, $query);
+					$qresults_qry = mysqli_query($con, $query);
 
-					$test1 = mysqli_fetch_array($results_qry);
+					$test1 = mysqli_fetch_array($qresults_qry);
 					$sid = $test1['id'];
 					$examarray = array('050]', '080]', '08A]', '090]', '09A]', '110]', '161]', '162]');
 					if (isset($userid) && strlen($userid) == 64 && in_array(trim(substr($var1,-4)), $examarray)) {
@@ -553,7 +566,6 @@ switch ($_REQUEST['params']) {
 						$query_subtbl = "SELECT * FROM subscribetbl where memId='" . $userid . "' and examId like '" . $examidthreechar . "%' AND eDate >= CURDATE() order BY id DESC LIMIT 1";
 						$test_qry = mysqli_query($con, $query_subtbl);
 						$test = mysqli_fetch_array($test_qry);
-
 
 						if ($test['id'] != 0) {
 
@@ -648,6 +660,7 @@ switch ($_REQUEST['params']) {
 									$validend = "1";
 								}
 							}
+
 							// if no change required for sdate and edate, give access rights if end date hasnt passed.
 							if ($enddateorig >= $tday) {
 								$accessrights = "OK";
@@ -661,7 +674,6 @@ switch ($_REQUEST['params']) {
 							$accessrights = "NO";
 						}
 					}
-
 
 					if ($var3 == 'filter') {     ## filter affects subjects or subjects2 table, and subject_id like vs tag like
 						$subtable = 'subjects2';
@@ -783,12 +795,13 @@ switch ($_REQUEST['params']) {
 						$msg = "";
 
 						$question_ids = array();
-
+                        $question_ids2 = array();
 
 
 
 						for ($i = 0; $i < $nq; $i++) {
-							$question_ids['qid' . $i] = encrypt_qid($res[$i]);
+                            $question_ids['qid' . $i] = $res[$i];
+                            $question_ids2['qid' . $i] = encrypt_qid($res[$i]);
 						}
 
 						$question_count = $nq;
@@ -797,7 +810,7 @@ switch ($_REQUEST['params']) {
 
 
 						// ============ cmfas_testengine_1.php ================== //
-						$sqlqry_questions = "SELECT * FROM questions where id='" . $question_ids['qid0'] . "'";
+						$sqlqry_questions = "SELECT id,subject_id,question,choice1,choice2,choice3,choice4,ans,qno,image,explanation FROM questions where id='" . $question_ids['qid0'] . "'";
 						$firstQns = mysqli_query($con, $sqlqry_questions);
 						$ques = mysqli_fetch_array($firstQns);
 
@@ -807,8 +820,8 @@ switch ($_REQUEST['params']) {
 						if (is_numeric($question_ids['qid0'])) {
 
 							$query = "select subject_id,image from questions where id=" . $question_ids['qid0'];
-							$results_qry = mysqli_query($con, $query);
-							$phrase = mysqli_fetch_array($results_qry);
+							$qresults_qry = mysqli_query($con, $query);
+							$phrase = mysqli_fetch_array($qresults_qry);
 							$encrypted_time = scrypt(time());
 							$speed_reference_file_path = "https://" . $_SERVER['SERVER_NAME'] . "/library/ebook.php?key=".$encrypted_time."&exid=" . substr((string) $phrase['subject_id'], 0, 3) . "&q=" . addslashes($phrase['image']);
 						}
@@ -826,6 +839,7 @@ switch ($_REQUEST['params']) {
 							"status" => true,
 							"subject_name" => $subject_name,
 							"question_ids" => $question_ids,
+                            "question_ids2" => $question_ids2,
 							"ques" => $ques,
 							"speed_reference_file_path" => $speed_reference_file_path,
 							"flag_type" => $flag_type,
@@ -863,22 +877,18 @@ switch ($_REQUEST['params']) {
 
 		break;
 
-	case 'next_question':
+case 'next_question':
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$data = file_get_contents('php://input');
-			$post_data = json_decode($data, true);
-
-
+			
 			if (!empty($post_data)) {
 
-				// $subid = $post_data['subid'];
-				// $cur_qid = $post_data['cur_qid']; 
-				// $userid = $post_data['token'];
-				$next_qid = decrypt_qid($post_data['next_qid']);
+				$user = checkuser($post_data['token']);
+				$userid = $user[1];
+				$next_qid = decrypt_qid($post_data['next_qid2']);
 
 				// ===== next question fetch ====== ///
-				$sqlqry_questions = "SELECT * FROM questions where id='" . $next_qid . "'";
+				$sqlqry_questions = "SELECT id,subject_id,question,choice1,choice2,choice3,choice4,ans,qno,image,explanation FROM questions where id='" . $next_qid . "'";
 				$firstQns = mysqli_query($con, $sqlqry_questions);
 				$ques = mysqli_fetch_array($firstQns);
 
@@ -887,8 +897,8 @@ switch ($_REQUEST['params']) {
 				$speed_reference_file_path = "";
 				if (is_numeric($next_qid)) {
 					$query = "select subject_id,image from questions where id=" . $next_qid;
-					$results_qry = mysqli_query($con, $query);
-					$phrase = mysqli_fetch_array($results_qry);
+					$qresults_qry = mysqli_query($con, $query);
+					$phrase = mysqli_fetch_array($qresults_qry);
 					$encrypted_time = scrypt(time());
 					$speed_reference_file_path = "https://" . $_SERVER['SERVER_NAME'] . "/library/ebook.php?key=".$encrypted_time."&exid=" . substr((string) $phrase['subject_id'], 0, 3) . "&q=" . addslashes($phrase['image']);
 				}
@@ -915,12 +925,9 @@ switch ($_REQUEST['params']) {
 		break;
 
 
-	case 'answer_submit':
+case 'answer_submit':
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$data = file_get_contents('php://input');
-			$post_data = json_decode($data, true);
-
 
 			if (!empty($post_data)) {
 
@@ -991,7 +998,7 @@ switch ($_REQUEST['params']) {
 
 		            // end of qcounter code
 
-					mysqli_query($con, "INSERT IGNORE INTO $table (`subid`, `qids`, `memid`,`ans`, `qdate`) VALUES ('$subid', '" . $cur_qid . "', '" . $userid . "','" . $ans_status . "', '" . date("Y-m-d") . "')");
+					mysqli_query($con, "REPLACE INTO $table (`subid`, `qids`, `memid`,`ans`, `qdate`) VALUES ('$subid', '" . $cur_qid . "', '" . $userid . "','" . $ans_status . "', '" . date("Y-m-d") . "')");
 				
 
 				}
@@ -1012,26 +1019,22 @@ switch ($_REQUEST['params']) {
 
 		break;
 
-	case 'speed_reference':
+case 'speed_reference':
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-			$data = file_get_contents('php://input');
-			$post_data = json_decode($data, true);
-
 
 			if (!empty($post_data)) {
 					$user = checkuser($post_data['token']);
                 if ($user == 0) { invalidorexpired(); }
                     $userid = $user[1];
 				    $session_id = $user[2];
-                    $qid = decrypt_qid($post_data['qid']);
+                    $qid = decrypt_qid($post_data['qid2']);
 
 				// ============== speed_reference ==========
 				if (is_numeric($qid)) {
 
 					$query = "select subject_id,image from questions where id=" . $qid;
-					$results_qry = mysqli_query($con, $query);
-					$phrase = mysqli_fetch_array($results_qry);
+					$qresults_qry = mysqli_query($con, $query);
+					$phrase = mysqli_fetch_array($qresults_qry);
 					$encrypted_time = scrypt(time());
 					$full_path = "https://" . $_SERVER['SERVER_NAME'] . "/library/ebook.php?key=".$encrypted_time."&exid=" . substr((string) $phrase['subject_id'], 0, 3) . "&q=" . addslashes($phrase['image']);
 	
@@ -1055,11 +1058,9 @@ switch ($_REQUEST['params']) {
 		break;
 
 
-	case 'ebook_view':
+case 'ebook_view':
 		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-			// $data = file_get_contents('php://input');
-			// $post_data = json_decode($data, true);
 					$user = checkuser($post_data['token']);
                 if ($user == 0) { invalidorexpired(); }
                     $userid = $user[1];
@@ -1140,35 +1141,47 @@ switch ($_REQUEST['params']) {
 
 
 
-	case 'ask_mentor':
+case 'ask_mentor':
+case 'report_question':
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-			$data = file_get_contents('php://input');
-			$post_data = json_decode($data, true);
-
-
 			if (!empty($post_data)) {
 					$user = checkuser($post_data['token']);
                 if ($user == 0) { invalidorexpired(); }
                     $userid = $user[1];
 				    $session_id=$user[2];
-                    $question_id = decrypt_qid($post_data['qid']);
-				$question_error = mysqli_query($con, "SELECT * from questions where id = " . $question_id);
+                    $question_id = decrypt_qid($post_data['qid2']);
+				$question_error = mysqli_query($con, "SELECT id,subject_id,question,choice1,choice2,choice3,choice4,ans,qno,image,explanation FROM questions where id = " . $question_id);
 				$question_error_array = mysqli_fetch_array($question_error);
 
-				$question = $question_error_array['question'];
-				$choice1 = $question_error_array['choice1'];
-				$choice2 = $question_error_array['choice2'];
-				$choice3 = $question_error_array['choice3'];
-				$choice4 = $question_error_array['choice4'];
-				$choice5 = $question_error_array['choice5'];
-				$image = $question_error_array['image'];
-				$explanation = $question_error_array['explanation'];
-				$ans = $question_error_array['ans'];
-				$reported_by = $post_data['txtemail'];
+				$question = mysqli_real_escape_string($con, (string) $question_error_array['question']);
+				$choice1 = mysqli_real_escape_string($con, (string) $question_error_array['choice1']);
+				$choice2 = mysqli_real_escape_string($con, (string) $question_error_array['choice2']);
+				$choice3 = mysqli_real_escape_string($con, (string) $question_error_array['choice3']);
+				$choice4 = mysqli_real_escape_string($con, (string) $question_error_array['choice4']);
+				$choice5 = mysqli_real_escape_string($con, (string) $question_error_array['choice5']);
+				$image = mysqli_real_escape_string($con, (string) $question_error_array['image']);
+				$explanation = mysqli_real_escape_string($con, (string) $question_error_array['explanation']);
+				$ans = mysqli_real_escape_string($con, (string) $question_error_array['ans']);
+				$reported_by = mysqli_real_escape_string($con, (string) $post_data['txtemail']);
 				$status = '0';
-				$reason = $post_data['reason'];
-				$subject = $post_data['sub'];
+				$reason = mysqli_real_escape_string($con, (string) $post_data['reason']);
+				$subject = mysqli_real_escape_string($con, (string) $post_data['sub']);
+				$subject_id = mysqli_real_escape_string($con, (string) $question_error_array['subject_id']);
+				if ((string) $subject == 'Need Clarification') { 
+					$x = substr($subject_id,0,3).'L';
+					$y = substr($subject_id,0,3).'V';
+					if (!str_contains($user[3], $x) && !str_contains($user[3], $y)) { invalidorexpired(); } // if user does not have valid subscription to Gold or Diamond, should not be able to use Need Clarification
+					$emailheading = 'Ask a Mentor Question ID: ';
+					$emailmsg = "Dear Candidate,<br><br> We've received your request for clarification from an online mentor. <br><br> We strive to respond within 3 business days. <br><br> Good luck to your upcoming exam!<br><br>";
+					$intemailheading = "<b>Question from Candidate: </b>";
+					$reply = "Thank you. We'll get back to you within 3 business days.";
+				}
+				else {
+					$emailheading = 'Erroneous Question Report ID: ';
+					$emailmsg = "Dear Candidate,<br><br> Thank you for reporting this potential error to us.<br><br> We will review it within one week.<br><br> Do kindly seek clarifications from documents such as the official study guide issued by IBF or SCI College.<br><br> If you need help from an online mentor to explain and discuss certain topics, please sign up or upgrade to the Gold/Diamond package. :)<br><br> <br><br> Good luck to your upcoming exam!<br><br>";
+					$intemailheading = "<b>Reason for Reporting: </b>";
+					$reply = "Thank you for reporting. We will review it within a week. You may or may not receive a follow-up.";
+				}
 				$error_reported_date = date("Y-m-d");
 
 				$selectQuery = "select * from questions_error where question_id= '" . $question_id . "' and reported_by = '" . $reported_by . "'";
@@ -1176,57 +1189,43 @@ switch ($_REQUEST['params']) {
 				$num_rows = mysqli_num_rows($selecthandle);
 
 				if ($num_rows > 0) {
-					// $resultString = "<br><br><b>You have reported this question before. Please do not re-submit.</b><br><br>";
+					// $qresultString = "<br><br><b>You have reported this question before. Please do not re-submit.</b><br><br>";
 
 					$status = true;
-					$response = array("status" => true, "msg" => "You have reported this question before. Please do not re-submit.");
+					$response = array("status" => true, "msg" => "The previous submission was successful. Please do not re-submit again.");
 				} else {
-					$updateQuestions = "insert into questions_error set `question_id` = '" . mysqli_real_escape_string($con, (string) $question_id) . "',
+					$updateQuestions = "insert into questions_error set `question_id` = '" . $question_id. "',
 					`status` = '0',
-					`subject_id` = '" . mysqli_real_escape_string($con, (string) $subject_error_array['subject_id']) . "',
-					`question` = '" . mysqli_real_escape_string($con, (string) $question) . "',
-					`choice1` = '" . mysqli_real_escape_string($con, (string) $choice1) . "',
-					`choice2` = '" . mysqli_real_escape_string($con, (string) $choice2) . "',
-					`choice3` = '" . mysqli_real_escape_string($con, (string) $choice3) . "',
-					`choice4` = '" . mysqli_real_escape_string($con, (string) $choice4) . "',
-					`choice5` = '" . mysqli_real_escape_string($con, (string) $choice5) . "',
-					`ans` = '" . mysqli_real_escape_string($con, (string) $ans) . "',
-					`explanation` = '" . mysqli_real_escape_string($con, (string) $explanation) . "',
-						`image` = '" . mysqli_real_escape_string($con, (string) $image) . "',
-					`subject` = '" . mysqli_real_escape_string($con, (string) $subject) . "',
-					`reported_date` = '" . mysqli_real_escape_string($con, $error_reported_date) . "',
-					`reported_by` = '" . mysqli_real_escape_string($con, (string) $reported_by) . "',
-					`reason` = '" . mysqli_real_escape_string($con, (string) $post_data['reason']) . "' ,
-					`uniquekey` = '" . mysqli_real_escape_string($con, (string) $question_id) . "#" . mysqli_real_escape_string($con, (string) $reported_by) . "'";
+					`subject_id` = '" . $subject_id . "',
+					`question` = '" . $question . "',
+					`choice1` = '" . $choice1 . "',
+					`choice2` = '" . $choice2 . "',
+					`choice3` = '" . $choice3 . "',
+					`choice4` = '" . $choice4 . "',
+					`choice5` = '" . $choice5 . "',
+					`ans` = '" . $ans . "',
+					`explanation` = '" . $explanation . "',
+						`image` = '" . $image . "',
+					`subject` = '" . $subject . "',
+					`reported_date` = '" .$error_reported_date . "',
+					`reported_by` = '" . $reported_by . "',
+					`reason` = '" . $reason . "' ,
+					`uniquekey` = '" . $question_id . "#" . $reported_by . "'";
 
 					mysqli_query($con, $updateQuestions);
-					$mailsubject = "Ask a Mentor: Question ID : " . $question_id;
-					$sendDetails_member = "<font face='tahoma' style='font-size:9px'><b>." . $mailsubject . "</b><br><br>";
-					$sendDetails_member = "<font face='tahoma' style='font-size:9px'>Dear Candidate,<br><br>
-					
-					We've received your request for clarification. 
-					<br><br>
-					We strive to respond within 3 business days.
-					<br><br>
-					
-					Good luck to your upcoming exam!<br><br>
-					";
+					$mailsubject = $emailheading.$question_id;
+					$sendDetails_member = $emailmsg;
 
-					if ($post_data['txtemail']) {
-						supportemail($post_data['txtemail'], $mailsubject, $sendDetails_member);
+					if (isset($reported_by)) {
+						supportemail($reported_by, $mailsubject, $sendDetails_member);
 					}
 
 
-					if ($post_data['uid']) {
-						$sendDetails .= "<b>Email: </b>" . $post_data['txtemail'] . "<br><br>";
-					} else {
-						$sendDetails .= "<b>Email: </b>" . $post_data['txtemail'] . "<br><br>";
-					}
-
+					$sendDetails .= "<b>Email: </b>" . $reported_by . "<br><br>";
 					$sendDetails .= "<b>e-Book version: </b>" . $post_data['txtEbook'] . "<br><br>";
 					$sendDetails .= "<b>Subject: </b>" . $subject_error_array['subject_name'] . "<br><br>";
 					$sendDetails .= "<b>Question ID: </b>" . $question_id . "<br><br>";
-					$sendDetails .= "<b>Question: </b>" . $question_error_array['question'] . "<br><br>";
+					$sendDetails .= "<b>Question: </b>" . $question . "<br><br>";
 
 					switch ($question_error_array['ans']) {
 						case 'A':
@@ -1255,16 +1254,14 @@ switch ($_REQUEST['params']) {
 					if ($question_error_array['explanation']) $sendDetails .= "<b>Explanation: </b>" . $question_error_array['explanation'] . "<br><br>";
 					if ($question_error_array['image']) $sendDetails .= "<b>Image: </b>" . $question_error_array['image'] . "<br><br>";
 
-					$sendDetails .= "<b>Question from Candidate: </b>" . $post_data['reason'] . "<br><br>";
+					$sendDetails .= $intemailheading . $reason . "<br><br>";
 
-					$mailSub1 = "CMFAS - Ask a Mentor - QID: " . $question_id;
+					$mailSub1 = $emailheading . $question_id;
 
 					alert999($mailSub1, $sendDetails);
 
-					// $resultString = "<br><br><b>Thank you. We'll get back to you within 3 business days.</b><br><br>";
-
 					$status = true;
-					$response = array("status" => true, "msg" => "Thank you. We'll get back to you within 3 business days.");
+					$response = array("status" => true, "msg" => $reply);
 				}
 			} else {
 				$status = true;
@@ -1277,167 +1274,23 @@ switch ($_REQUEST['params']) {
 
 
 		break;
-	case 'report_question':
+
+case 'add_bookmark':
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-			$data = file_get_contents('php://input');
-			$post_data = json_decode($data, true);
-
-
 			if (!empty($post_data)) {
                 $user = checkuser($post_data['token']);
-                if ($user == 0) { invalidorexpired(); }
-                    $userid = $user[1];
-				    $session_id=$user[2];
-                    $question_id = decrypt_qid($post_data['qid']);
-				$question_error = mysqli_query($con, "SELECT * from questions where id = '$question_id'");
-				$question_error_array = mysqli_fetch_array($question_error);
-
-				$question = $question_error_array['question'];
-				$choice1 = $question_error_array['choice1'];
-				$choice2 = $question_error_array['choice2'];
-				$choice3 = $question_error_array['choice3'];
-				$choice4 = $question_error_array['choice4'];
-				$choice5 = $question_error_array['choice5'];
-				$image = $question_error_array['image'];
-				$explanation = $question_error_array['explanation'];
-				$ans = $question_error_array['ans'];
-				$reported_by = $post_data['txtemail'];
-				$status = '0';
-				$reason = $post_data['reason'];
-				$subject = $post_data['sub'];
-				$error_reported_date = date("Y-m-d");
-
-				$selectQuery = "select * from questions_error where question_id= '" . $question_id . "' and reported_by = '" . $reported_by . "'";
-				$selecthandle = mysqli_query($con, $selectQuery);
-				$num_rows = mysqli_num_rows($selecthandle);
-
-				if ($num_rows > 0) {
-					//$resultString = "<br><br><b>You have reported this question before. Please do not re-submit.</b><br><br>";
-
-					$status = true;
-					$response = array("status" => true, "msg" => "You have reported this question before. Please do not re-submit.");
-				} else {
-					$updateQuestions = "insert into questions_error set `question_id` = '" . mysqli_real_escape_string($con, (string) $question_id) . "',
-						`status` = '0',
-						`subject_id` = '" . mysqli_real_escape_string($con, (string) $subject_error_array['subject_id']) . "',
-						`question` = '" . mysqli_real_escape_string($con, (string) $question) . "',
-						`choice1` = '" . mysqli_real_escape_string($con, (string) $choice1) . "',
-						`choice2` = '" . mysqli_real_escape_string($con, (string) $choice2) . "',
-						`choice3` = '" . mysqli_real_escape_string($con, (string) $choice3) . "',
-						`choice4` = '" . mysqli_real_escape_string($con, (string) $choice4) . "',
-						`choice5` = '" . mysqli_real_escape_string($con, (string) $choice5) . "',
-						`ans` = '" . mysqli_real_escape_string($con, (string) $ans) . "',
-						`explanation` = '" . mysqli_real_escape_string($con, (string) $explanation) . "',
-							`image` = '" . mysqli_real_escape_string($con, (string) $image) . "',
-						`subject` = '" . mysqli_real_escape_string($con, (string) $subject) . "',
-						`reported_date` = '" . mysqli_real_escape_string($con, $error_reported_date) . "',
-						`reported_by` = '" . mysqli_real_escape_string($con, (string) $reported_by) . "',
-						`reason` = '" . mysqli_real_escape_string($con, (string) $post_data['reason']) . "' ,
-						`uniquekey` = '" . mysqli_real_escape_string($con, (string) $question_id) . "#" . mysqli_real_escape_string($con, (string) $reported_by) . "'";
-
-					mysqli_query($con, $updateQuestions);
-					$mailsubject = "Erroneous Question Report ID : " . $question_id;
-					$sendDetails_member = "<font face='tahoma' style='font-size:9px'><b>." . $mailsubject . "</b><br><br>";
-					$sendDetails_member = "<font face='tahoma' style='font-size:9px'>Dear Member,<br><br>
-						
-						Thank you for reporting this potential error to us.<br><br>
-	
-						We will review it within one week.<br><br>
-					
-						Do kindly seek clarifications from documents such as the official study guide issued by IBF or SCI College.<br><br>
-						
-						If you need help from an online mentor to explain and discuss certain topics, please sign up or upgrade to the Gold/Diamond package. :)<br><br>
-						<br><br>
-						
-						Good luck to your upcoming exam!<br><br>
-						";
-
-					if ($post_data['txtemail']) {
-						supportemail($post_data['txtemail'], $mailsubject, $sendDetails_member);
-					}
-
-
-					if ($post_data['uid']) {
-						$sendDetails .= "<b>Email: </b>" . $post_data['txtemail'] . "<br><br>";
-					} else {
-						$sendDetails .= "<b>Email: </b>" . $post_data['txtemail'] . "<br><br>";
-					}
-
-					$sendDetails .= "<b>e-Book version: </b>" . $post_data['txtEbook'] . "<br><br>";
-					$sendDetails .= "<b>Subject: </b>" . $subject_error_array['subject_name'] . "<br><br>";
-					$sendDetails .= "<b>Question ID: </b>" . $question_id . "<br><br>";
-					$sendDetails .= "<b>Question: </b>" . $question_error_array['question'] . "<br><br>";
-
-					switch ($question_error_array['ans']) {
-						case 'A':
-							$choice = $question_error_array['choice1'];
-							break;
-						case 'B':
-							$choice = $question_error_array['choice2'];
-							break;
-						case 'C':
-							$choice = $question_error_array['choice3'];
-							break;
-						case 'D':
-							$choice = $question_error_array['choice4'];
-							break;
-						case 'E':
-							$choice = $question_error_array['choice5'];
-							break;
-					}
-
-					$sendDetails .= "<b>Answer: </b>" . $question_error_array['ans'] . "<br><br>";
-					if ($question_error_array['choice1']) $sendDetails .= "<b>Choice 1: </b>" . $question_error_array['choice1'] . "<br><br>";
-					if ($question_error_array['choice2']) $sendDetails .= "<b>Choice 2: </b>" . $question_error_array['choice2'] . "<br><br>";
-					if ($question_error_array['choice3']) $sendDetails .= "<b>Choice 3: </b>" . $question_error_array['choice3'] . "<br><br>";
-					if ($question_error_array['choice4']) $sendDetails .= "<b>Choice 4: </b>" . $question_error_array['choice4'] . "<br><br>";
-					if ($question_error_array['choice5']) $sendDetails .= "<b>Choice 5: </b>" . $question_error_array['choice5'] . "<br><br>";
-					if ($question_error_array['explanation']) $sendDetails .= "<b>Explanation: </b>" . $question_error_array['explanation'] . "<br><br>";
-					if ($question_error_array['image']) $sendDetails .= "<b>Image: </b>" . $question_error_array['image'] . "<br><br>";
-
-					$sendDetails .= "<b>Reason for Reporting: </b>" . $post_data['reason'] . "<br><br>";
-
-					$mailSub1 = "CMFAS - Error Report ID : " . $question_id;
-
-					alert999($mailSub1, $sendDetails);
-
-					// $resultString = "<br><br><b>Thank you. We'll get back to you within 3 business days.</b><br><br>";
-
-					$status = true;
-					$response = array("status" => true, "msg" => "Thank you for reporting!");
-				}
-			} else {
-				$status = true;
-				$response = array("status" => false, "error" => "Invalid parameters");
-			}
-		} else {
-			$status = true;
-			$response = array("status" => false, "error" => "Something went wrong");
-		}
-
-
-		break;
-	case 'add_bookmark':
-		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-			$data = file_get_contents('php://input');
-			$post_data = json_decode($data, true);
-			if (!empty($post_data)) {
-                $user = checkuser($post_data['token']);
+                $userid = $user[1];
 				$subject_name = $post_data['subject_name'];
-				$question_id = decrypt_qid($post_data['question_id']);
-				$userid = $user[1];
+				$question_id = decrypt_qid($post_data['question_id2']);
 				$sqlqry = "SELECT * FROM bookmark_questions where user_id='" . $userid . "' AND subject_name='" . $subject_name . "' AND question_id='" . $question_id . "'";
 				$sqls = mysqli_query($con, $sqlqry);
 				$row = mysqli_num_rows($sqls);
 				if ($row) {
-
 					$status = true;
 					$response = array("status" => false, "error" => "Bookmark removed. Click 
 					again to bookmark it again");
 				} else {
-					mysqli_query($con, "INSERT IGNORE INTO bookmark_questions (`question_id`, `subject_name`, `userid`) VALUES ('" . $question_id . "', '" . $subject_name . "', '" . $userid . "')");
+					mysqli_query($con, "REPLACE INTO bookmark_questions (`question_id`, `subject_name`, `user_id`) VALUES ('" . $question_id . "', '" . $subject_name . "', '" . $userid . "')");
 
 					$status = true;
 					$response = array("status" => true, "msg" => "Question Bookmarked");
@@ -1452,20 +1305,18 @@ switch ($_REQUEST['params']) {
 		}
 
 		break;
-	case 'remove_bookmark':
+case 'remove_bookmark':
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-			$data = file_get_contents('php://input');
-			$post_data = json_decode($data, true);
 			if (!empty($post_data)) {
             $user = checkuser($post_data['token']);
 
-				$question_id = decrypt_qid($post_data['question_id']);
+				$question_id = $post_data['question_id'];
 				$userid = $user[1];
-				mysqli_query($con, "DELETE FROM bookmark_questions WHERE question_id='" . $question_id . "' AND userid='" . $userid . "'");
+				mysqli_query($con, "DELETE FROM bookmark_questions WHERE question_id='" . $question_id . "' AND user_id='" . $userid . "'");
 
 				$status = true;
-				$response = array("status" => true, "msg" => "Question un-bookmarked.");
+				$response = array("status" => true, "msg" => "Removed from bookmark.");
 			} else {
 				$status = true;
 				$response = array("status" => false, "error" => "Invalid parameters");
@@ -1477,11 +1328,9 @@ switch ($_REQUEST['params']) {
 
 		break;
 
-	case 'bookmark_list':
+case 'bookmark_list':
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-			$data = file_get_contents('php://input');
-			$post_data = json_decode($data, true);
 			if (!empty($post_data)) {
             $user = checkuser($post_data['token']);
 				$userid = $user[1];
@@ -1507,15 +1356,17 @@ switch ($_REQUEST['params']) {
 					$msg = "";
 
 					$question_ids = array();
+					$question_ids2 = array();
 
 
 
 
 					for ($i = 0; $i < $nq; $i++) {
-						$question_ids['qid' . $i] = encrypt_qid($res[$i]);
+						$question_ids['qid' . $i] = $res[$i];
+                        $question_ids2['qid' . $i] = encrypt_qid($res[$i]);
 					}
 					// ============ cmfas_testengine_1.php ================== //
-					$sqlqry_questions = "SELECT * FROM questions where id='" . $question_ids['qid0'] . "'";
+					$sqlqry_questions = "SELECT id,subject_id,question,choice1,choice2,choice3,choice4,ans,qno,image,explanation FROM questions where id='" . $question_ids['qid0'] . "'";
 					$firstQns = mysqli_query($con, $sqlqry_questions);
 					$ques = mysqli_fetch_array($firstQns);
 
@@ -1529,6 +1380,7 @@ switch ($_REQUEST['params']) {
 						"status" => true,
 						"subject_name" => $subject_name[0],
 						"question_ids" => $question_ids,
+                        "question_ids2" => $question_ids2,
 						"ques" => $ques,
 						"question_count" => $nq
 
@@ -1552,23 +1404,22 @@ switch ($_REQUEST['params']) {
 		}
 
 		break;
-		case 'mobile_dropdown_data':
+
+case 'mobile_dropdown_data':
 			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	
-				 $data = file_get_contents('php://input');
-				 $post_data = json_decode($data, true);
+
 				 if (!empty($post_data)) {
 					global $con; //connection is included
                 $user = checkuser($post_data['token']);
                 $userid = $user[1];
-				if (strlen($userid) !== 64) {
+				if (isset($userid) && strlen($userid) !== 64) {
 						$sql = "SELECT id,tag,shortname,qty,TR,sub_group FROM `subjects2` ORDER BY TR, id, shortname ASC;";
 					}
 					else {
 						$sql = "SELECT id,tag,shortname,qty,TR,sub_group FROM `subjects2` where left(id,2) IN ('05','08','09','11','16') ORDER BY  id, shortname ASC;";
 					}
 
-										$result = mysqli_query($con, $sql);
+										$qresult = mysqli_query($con, $sql);
 				
 					if(!$sql){
 						$status = true;
@@ -1578,7 +1429,7 @@ switch ($_REQUEST['params']) {
 					$data = [];
 					$map = []; //[string]number keps track of the index of each subgroup as we retrieve query results
 					$data_index_counter = -1;//keep track of $data array
-					while ($row = mysqli_fetch_assoc($result)){
+					while ($row = mysqli_fetch_assoc($qresult)){
 						$key = $row["sub_group"]; //the sub_group is the key for grouping all records from db
 				
 						#check if there's already an entry for a sub_group
@@ -1617,79 +1468,21 @@ switch ($_REQUEST['params']) {
 			}
 	
 			break;
-			case 'free_trial_dropdown_data':
-				if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-		
-				 $data = file_get_contents('php://input');
-				 $post_data = json_decode($data, true);
-					 if (!empty($post_data)) {
-						global $con; //connection is included
-                        $user = checkuser($post_data['token']);
-                        $userid = $user[1];
-                        if (strlen($userid) !== 64) {
-						$sql = "SELECT id,tag,shortname,qty,TR,sub_group FROM `subjects2` ORDER BY TR, id, shortname ASC;";
-					}
-					else {
-						$sql = "SELECT id,tag,shortname,qty,TR,sub_group FROM `subjects2` where left(id,2) IN ('05','08','09','11','16') ORDER BY  id, shortname ASC;";
-					}
-						
-						$result = mysqli_query($con, $sql);
-					
-						if(!$sql){
-							$status = true;
-							$response = array("status" => false, "error" => "Something went wrong");
-						}
-					
-						$data = [];
-						$map = []; //[string]number keps track of the index of each subgroup as we retrieve query results
-						$data_index_counter = -1;//keep track of $data array
-						
-						$t = 0;
-							
-
-							while ($row_full = mysqli_fetch_array($result)) {
-								$subjectname = $row_full['shortname'];
-								$data[$t]['option'] = $subjectname;
-								$data[$t]['option_value'] = $row_full['tag'];
-								$t++;
-								
-							}
-					
-						
-						$status = true;
-						$response = [
-							"status" => true,
-							"dropdown_data" => $data
-						];
-						
-					 } else {
-					 	$status = true;
-					 	$response = array("status" => false, "error" => "Invalid parameters");
-					 }
-				} else {
-					$status = true;
-					$response = array("status" => false, "error" => "Something went wrong");
-				}
-		
-				break;
-				case 'module_dropdown_data':
+			
+case 'module_dropdown_data':
 					if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			
-						$data = file_get_contents('php://input');
-						$post_data = json_decode($data, true);
 						if (!empty($post_data)) {
-                        $user = checkuser($post_data['token']);
-						$userid = $user[1];
 						global $con; //connection is included
 
-						if (strlen($userid) !== 64) {
+						if (isset($post_data['token']) && strlen(checkuser($post_data['token'])[1]) !== 64) {
 						$sql = "SELECT id,tag,shortname,qty,TR,sub_group FROM `subjects2` ORDER BY TR, id, shortname ASC;";
 					}
 					else {
 						$sql = "SELECT id,tag,shortname,qty,TR,sub_group FROM `subjects2` where left(id,2) IN ('05','08','09','11','16') ORDER BY  id, shortname ASC;";
 					}
 	
-					$result = mysqli_query($con, $sql);
+					$qresult = mysqli_query($con, $sql);
 				
 					if(!$sql){
 						$status = true;
@@ -1699,14 +1492,10 @@ switch ($_REQUEST['params']) {
 					$data = [];
 					$map = []; //[string]number keps track of the index of each subgroup as we retrieve query results
 					$data_index_counter = -1;//keep track of $data array
-					while ($row = mysqli_fetch_assoc($result)){
-						 $g = $row['sub_group'];
-		/**			if (substr($g,0,1) == 'M') { $g = 'Module '.substr($g,1); }	
-elseif (substr($g,0,2) == 'HI') { $g = 'Health Insurance'; }	
-   elseif (substr($g,0,4) == 'CACS') { $g = 'CACS Paper '.substr($g,-1); }	
-   elseif (substr($g,0,5) == 'ACAMS') { $g = 'ACAMS AML SG'; }	
-**/
-$key = $g; //the sub_group is the key for grouping all records from db
+					while ($row = mysqli_fetch_assoc($qresult)){
+						$g = $row['sub_group'];
+
+						$key = $g; //the sub_group is the key for grouping all records from db
 				
 						#check if there's already an entry for a sub_group
 						if(!isset($map[$key])){
@@ -1740,17 +1529,15 @@ $key = $g; //the sub_group is the key for grouping all records from db
 					}
 			
 					break;
-					case 'chapter_dropdown_data_module':
+case 'chapter_dropdown_data_module':
 						if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				
-							$data = file_get_contents('php://input');
-							$post_data = json_decode($data, true);
 							if (!empty($post_data)) {
 								$module_id = $post_data['module_id'];
 								global $con; //connection is included
 								$sql = "SELECT id,tag,shortname,qty,TR,sub_group FROM `subjects2` WHERE sub_group='" . $module_id . "' ORDER BY TR, id, shortname ASC;";
 							
-								$result = mysqli_query($con, $sql);
+								$qresult = mysqli_query($con, $sql);
 							
 								if(!$sql){
 									$status = true;
@@ -1764,7 +1551,7 @@ $key = $g; //the sub_group is the key for grouping all records from db
 								$t = 0;
 									
 		
-									while ($row_full = mysqli_fetch_array($result)) {
+									while ($row_full = mysqli_fetch_array($qresult)) {
 										$subjectname = $row_full['shortname'];
 										$shortName = preg_replace(["/.*[(]\s*(?=.+)/", "/(?=.+)\s*[)]\s*/"], "", $row_full["shortname"]);
    if (substr($shortName,0,1) == 'M') { $shortName = 'Module '.substr($shortName,1); }
@@ -1792,28 +1579,32 @@ $key = $g; //the sub_group is the key for grouping all records from db
 				
 						break;
 
-	case 'DELETE':
+case 'DELETE':
 		// HTTP DELETE method will delete the user
 		list($status, $response) = $this->deleteUser();
 		break;
 
-	case 'copy_track':
+case 'copy_track':
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$data = file_get_contents('php://input');
-			$post_data = json_decode($data, true);
-
 
 			if (!empty($post_data)) {
 
                 $user = checkuser($post_data['token']);
 				$mid = $user[1];
-				$copied = mysqli_real_escape_string($con, (string) $post_data['copied_text']);
+				if (isset($mid) && strlen($mid) == 64) {
+					$aiamid = fetchrow("select id from aia_usage where memid='$mid' order by qdate ASC limit 1");
+					$mid = 'a'.$aiamid[0];
+				}
+				elseif ($mid == '' || $mid == '0') {
+					exit;
+				}
+				$copied = $post_data['copied_text'];
 				$email = $post_data['user_email'];
 
 				$md5 = md5($mid . '-' . $copied);
 
-				$query1 = "INSERT IGNORE INTO `copytrack` (`memid`, `copied`, `md5`) VALUES ('$mid', '$copied', '$md5')";
+				$query1 = "REPLACE INTO `copytrack` (`memid`, `copied`, `md5`) VALUES ('$mid', '$copied', '$md5')";
 				mysqli_query($con, $query1);
 
 				if (mysqli_insert_id($con) > 0) {
@@ -1883,18 +1674,14 @@ $key = $g; //the sub_group is the key for grouping all records from db
 
 		break;
 
-	case 'GET':
+case 'GET':
 		// HTTP GET method will fetch the user details
 		list($status, $response) = $this->getUser();
 		break;
 
 
-	case 'free_question':
+case 'free_question':
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$data = file_get_contents('php://input');
-			$post_data = json_decode($data, true);
-
-			// Print the POST array
 
 			if (!empty($post_data)) {
 
@@ -1933,12 +1720,12 @@ $key = $g; //the sub_group is the key for grouping all records from db
 				do {
 
 					$query = "SELECT * FROM subjects2 where tag like '" . trim($var1) . "%' limit 1";
-					$results_qry = mysqli_query($con, $query);
-					$subject = mysqli_fetch_array($results_qry);
+					$qresults_qry = mysqli_query($con, $query);
+					$subject = mysqli_fetch_array($qresults_qry);
 
-					$sqlqry = "SELECT * FROM questions WHERE `tag` LIKE " . $subject['tag'] . " ORDER BY `id` DESC LIMIT 5";
-					$results_qry = mysqli_query($con, $query);
-					$questions = mysqli_fetch_array($results_qry);
+					$sqlqry = "SELECT id,subject_id,question,choice1,choice2,choice3,choice4,ans,qno,image,explanation FROM questions WHERE `tag` LIKE " . $subject['tag'] . " ORDER BY `id` DESC LIMIT 5";
+					$qresults_qry = mysqli_query($con, $query);
+					$questions = mysqli_fetch_array($qresults_qry);
 
 					if (count($questions) > 0 && count($questions) == $var2) {
 						$run = false;
@@ -1947,8 +1734,8 @@ $key = $g; //the sub_group is the key for grouping all records from db
 				} while ($run);
 
 				// $query = "SELECT * FROM subjects2 ORDER BY RAND() LIMIT 1";
-				// $results_qry = mysqli_query($con, $query);
-				// $subject = mysqli_fetch_array($results_qry);
+				// $qresults_qry = mysqli_query($con, $query);
+				// $subject = mysqli_fetch_array($qresults_qry);
 
 				// $status = true;
 				// $response = array("error" => $subject);
@@ -2005,12 +1792,13 @@ $key = $g; //the sub_group is the key for grouping all records from db
 				$msg = "";
 
 				$question_ids = array();
-
+                $question_ids2 = array();
 
 
 
 				for ($i = 0; $i < $nq; $i++) {
-					$question_ids['qid' . $i] = encrypt_qid($res[$i]);
+					$question_ids['qid' . $i] = $res[$i];
+                    $question_ids2['qid' . $i] = encrypt_qid($res[$i]);
 				}
 
 				$question_count = $nq;
@@ -2019,7 +1807,7 @@ $key = $g; //the sub_group is the key for grouping all records from db
 
 
 				// ============ cmfas_testengine_1.php ================== //
-				$sqlqry_questions = "SELECT * FROM questions where id='" . $question_ids['qid0'] . "'";
+				$sqlqry_questions = "SELECT id,subject_id,question,choice1,choice2,choice3,choice4,ans,qno,image,explanation FROM questions where id='" . $question_ids['qid0'] . "'";
 				$firstQns = mysqli_query($con, $sqlqry_questions);
 				$ques = mysqli_fetch_array($firstQns);
 
@@ -2029,8 +1817,8 @@ $key = $g; //the sub_group is the key for grouping all records from db
 				if (is_numeric($question_ids['qid0'])) {
 
 					$query = "select subject_id,image from questions where id=" . $question_ids['qid0'];
-					$results_qry = mysqli_query($con, $query);
-					$phrase = mysqli_fetch_array($results_qry);
+					$qresults_qry = mysqli_query($con, $query);
+					$phrase = mysqli_fetch_array($qresults_qry);
 					$encrypted_time = scrypt(time());
 					$speed_reference_file_path = "https://" . $_SERVER['SERVER_NAME'] . "/library/ebook.php?key=".$encrypted_time."&exid=" . substr((string) $phrase['subject_id'], 0, 3) . "&q=" . addslashes($phrase['image']);
 				}
@@ -2042,6 +1830,7 @@ $key = $g; //the sub_group is the key for grouping all records from db
 					"status" => true,
 					"subject_name" => $subject_name,
 					"question_ids" => $question_ids,
+                    "question_ids2" => $question_ids2,
 					"ques" => $ques,
 					"speed_reference_file_path" => $speed_reference_file_path,
 					"flag_type" => "report_error",

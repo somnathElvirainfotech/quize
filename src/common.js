@@ -1,4 +1,5 @@
 import userService from './services/user.service';
+
 export const removeDuplicates = async (inputString) => {
 
     // const arr = str.split("");
@@ -41,7 +42,8 @@ export const newQID=(member_id,qid, totalDigits=5)=>{
     // console.log("n_qid",+member_id);
     return (String(member_id)+String(n_qid));
 }
-export const textcopy = async (user_id,email) => {
+export const textcopy = async (user_id,email,token) => {
+   
     const selectedText = window.getSelection().toString();
     
     // Do something with the selected text (e.g., display it in a console)
@@ -50,7 +52,8 @@ export const textcopy = async (user_id,email) => {
         var data = {
             "user_id": user_id,
             "copied_text": String(selectedText),
-            "user_email": email
+            "user_email": email,
+            "token": token
           };
         var responce = await userService.addcopytext(data);
         // console.log("copy text response", responce.data)

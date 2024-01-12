@@ -38,7 +38,7 @@ import Calculatoricon from "../assets/images/calculator.png";
 import Loader from "./Loader";
 import logo from "../assets/images/logo.png";
 import Modal from 'react-bootstrap/Modal';
-
+import { authActions } from "../redux/auth";
 
 function Exam() {
   const dispatch = useDispatch();
@@ -66,7 +66,9 @@ function Exam() {
     const form = new FormData();
     form.append("user_id", auth.user_id);
     form.append("question_id", question.questionlist.id);
-
+    form.append("question_id2", question.encryptquestionid[`qid${question.count}`]);
+    form.append("token", auth.encrypt_user_id);
+    
     //  console.log("remove question_id ", question.questionlist.id);
 
     var responce = await userService.RemoveBookmark(form);
@@ -76,7 +78,14 @@ function Exam() {
     if (responce.data.status) {
       //toast.success(responce.data.msg);
     } else {
+      
       toast.error(responce.data.error);
+      if(!responce.data.status){
+        if(responce.data.auth == 0){
+          dispatch(authActions.Logout());
+          navigate('/');
+        }
+      }
     }
 
   }
@@ -122,7 +131,6 @@ function Exam() {
       index = index + 1;
 
       dispatch(questionActions.count(index));
-
       // setCurrentIndex();
       // console.log(currentIndex, 'currentIndex')
       await learningModeAnsDbSubmit();
@@ -177,12 +185,23 @@ function Exam() {
     if (q_id !== "") {
       let datas = {
         next_qid: question.questionid[q_id],
+        token: auth.encrypt_user_id,
+        next_qid2: question.encryptquestionid[q_id],
+        
       };
 
+      //console.log(datas,"next question data");
       var response = await userService.Nextquestion(datas);
 
       if (response.data.error) {
+
         toast.error(response.data.error);
+        if(!response.data.status){
+            if(response.data.auth == 0){
+              dispatch(authActions.Logout());
+              navigate('/');
+            }
+        }
       } else {
         // console.log(response.data)
 
@@ -784,12 +803,19 @@ function Exam() {
 
           var data = {
             subid: question.subject_id,
-            userId: auth.user_id,
+            token: auth.encrypt_user_id,
             ans_data: [newQA_obj],
           };
 
           var responce = await userService.AnswerSubmit(data);
-
+         
+          if(!responce.data.status){
+            toast.error(responce.data.error);
+            if(responce.data.auth == 0){
+              dispatch(authActions.Logout());
+              navigate('/');
+            }
+          }
           // console.log("single ans submit done (checkbox)")
 
 
@@ -811,12 +837,18 @@ function Exam() {
 
           var data = {
             subid: question.subject_id,
-            userId: auth.user_id,
+            token: auth.encrypt_user_id,
             ans_data: [newQA_obj],
           };
 
           var responce = await userService.AnswerSubmit(data);
-
+          if(!responce.data.status){
+            toast.error(responce.data.error);
+            if(responce.data.auth == 0){
+              dispatch(authActions.Logout());
+              navigate('/');
+            }
+          }
           // console.log("single ans submit done (radio)")
 
         }
@@ -919,12 +951,18 @@ function Exam() {
 
       var data = {
         subid: question.subject_id,
-        userId: auth.user_id,
+        token: auth.encrypt_user_id,
         ans_data: new_answerObj,
       };
 
       var responce = await userService.AnswerSubmit(data);
-
+      if(!responce.data.status){
+        toast.error(responce.data.error);
+        if(responce.data.auth == 0){
+          dispatch(authActions.Logout());
+          navigate('/');
+        }
+      }
       // console.log("responce ans submit", responce.data);
     }
 
@@ -946,14 +984,22 @@ function Exam() {
     const form = new FormData();
     form.append("user_id", auth.user_id);
     form.append("question_id", question.questionlist.id);
+    form.append("question_id2", question.encryptquestionid[`qid${question.count}`]);
     form.append("subject_name", question.subject_name);
-
+    form.append("token", auth.encrypt_user_id);
+    
     var responce = await userService.AddBookmark(form);
 
     // console.log("AddBookmark ", responce.data);
 
     if (responce.data.status) {
       toast.success(responce.data.msg);
+      if(!responce.data.status){
+        if(responce.data.auth == 0){
+          dispatch(authActions.Logout());
+          navigate('/');
+        }
+    }
     } else {
 
       toast.warning(responce.data.error);
@@ -1088,7 +1134,7 @@ function Exam() {
                   </small>
                 </div>
                 <p
-                  onCopy={(e) => textcopy(auth.user_id, auth.user_data.email)}
+                  onCopy={(e) => textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)}
                   className="question"
                   style={{
                     fontSize: `${fontSize}px`,
@@ -1143,7 +1189,7 @@ function Exam() {
                         <label
                           htmlFor="test1"
                           onCopy={(e) =>
-                            textcopy(auth.user_id, auth.user_data.email)
+                            textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                           }
                         >
                           <span
@@ -1168,7 +1214,7 @@ function Exam() {
                         <label
                           htmlFor="test2"
                           onCopy={(e) =>
-                            textcopy(auth.user_id, auth.user_data.email)
+                            textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                           }
                         >
                           <span
@@ -1193,7 +1239,7 @@ function Exam() {
                         <label
                           htmlFor="test3"
                           onCopy={(e) =>
-                            textcopy(auth.user_id, auth.user_data.email)
+                            textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                           }
                         >
                           <span
@@ -1218,7 +1264,7 @@ function Exam() {
                         <label
                           htmlFor="test4"
                           onCopy={(e) =>
-                            textcopy(auth.user_id, auth.user_data.email)
+                            textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                           }
                         >
                           <span
@@ -1253,7 +1299,7 @@ function Exam() {
                         <label
                           htmlFor="answer1"
                           onCopy={(e) =>
-                            textcopy(auth.user_id, auth.user_data.email)
+                            textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                           }
                         >
                           <span
@@ -1278,7 +1324,7 @@ function Exam() {
                         <label
                           htmlFor="answer2"
                           onCopy={(e) =>
-                            textcopy(auth.user_id, auth.user_data.email)
+                            textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                           }
                         >
                           <span
@@ -1303,7 +1349,7 @@ function Exam() {
                         <label
                           htmlFor="answer3"
                           onCopy={(e) =>
-                            textcopy(auth.user_id, auth.user_data.email)
+                            textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                           }
                         >
                           <span
@@ -1328,7 +1374,7 @@ function Exam() {
                         <label
                           htmlFor="answer4"
                           onCopy={(e) =>
-                            textcopy(auth.user_id, auth.user_data.email)
+                            textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                           }
                         >
                           <span
@@ -1369,7 +1415,7 @@ function Exam() {
                       <span
                         style={{ marginLeft: "5px", color: "green" }}
                         onCopy={(e) =>
-                          textcopy(auth.user_id, auth.user_data.email)
+                          textcopy(auth.user_id, auth.user_data.email,auth.encrypt_user_id)
                         }
                       >
                         {parse(question.questionlist.explanation)}

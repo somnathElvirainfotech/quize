@@ -127,25 +127,21 @@ function Home() {
     form.append("chkHide", checkH);
     form.append("radMode", data.radMode);
     form.append("type", "filter");
+    form.append("token", "guest");
 
     var responce = await userService.FreeQuestion(form);
-
+    console.log(responce,"free question xxxxxxx")
     if (responce.data.error) {
       toast.error(responce.data.error);
     } else {
-      // console.log(responce.data, "jghjgjg");
-      // console.log(responce.data.question_ids, "jghjgjg");
+     
 
       let new_ans = await removeDuplicates(responce.data.ques.ans);
-
       responce.data.ques.ans = new_ans;
-
-
-
       dispatch(questionActions.questionReset());
-
       dispatch(questionActions.questionlist(responce.data.ques));
       dispatch(questionActions.questionid(responce.data.question_ids));
+      dispatch(questionActions.encrypted_questionid(responce.data.question_ids2));       
       dispatch(questionActions.totalQuestion(responce.data.question_count));
       dispatch(questionActions.subject_name(responce.data.subject_name));
       dispatch(questionActions.radMode(data.radMode));
@@ -244,7 +240,7 @@ function Home() {
       //   Navigate("/free-exam");
       // }
     } else {
-
+      //alert(auth.encrypt_user_id);
 
       const form = new FormData();
       form.append("lstSubject", data.lstSubject);
@@ -253,11 +249,11 @@ function Home() {
       form.append("chkHide", checkH);
       form.append("radMode", data.radMode);
       form.append("type", "filter");
-      form.append("userId", auth.user_id);
-
+      form.append("token", auth.encrypt_user_id);
+      //console.log(form.getAll,"sdgsdfgskdfh");
       var responce = await userService.Postquestion(form);
 
-      // console.log(responce.data);
+     // console.log(responce.data,"ggggggggg");
       if (responce.data.error) {
         toast.error(responce.data.error);
         setModalmsg("You do not have a valid plan to load");
@@ -274,6 +270,7 @@ function Home() {
         dispatch(questionActions.questionReset());
         dispatch(questionActions.questionlist(responce.data.ques));
         dispatch(questionActions.questionid(responce.data.question_ids));
+        dispatch(questionActions.encrypted_questionid(responce.data.question_ids2));                
         dispatch(questionActions.totalQuestion(responce.data.question_count));
         dispatch(questionActions.subject_name(responce.data.subject_name));
         dispatch(questionActions.radMode(data.radMode));
@@ -406,13 +403,24 @@ function Home() {
       form.append("radMode", data.radMode);
       form.append("type", "filter");
       form.append("userId", auth.user_id);
+      form.append("token", auth.encrypt_user_id);
 
+
+console.log(form,"sdgsdfgskdfh");
       var responce = await userService.Postquestion(form);
 
-      // console.log(responce.data);
+       console.log(responce.data);
       if (responce.data.error) {
         setModalmsg("You're NOT subscribed to select Module.");
         toast.error(responce.data.error);
+        if(!responce.data.status){
+         
+          if(responce.data.auth == 0){
+            dispatch(authActions.Logout());
+            Navigate('/');
+          }
+        }
+        
         handleShow();
       } else {
         // console.log(responce.data, "jghjgjg");
@@ -437,6 +445,7 @@ function Home() {
 
         dispatch(questionActions.questionlist(responce.data.ques));
         dispatch(questionActions.questionid(responce.data.question_ids));
+        dispatch(questionActions.encrypted_questionid(responce.data.question_ids2));
         dispatch(questionActions.totalQuestion(responce.data.question_count));
         dispatch(questionActions.subject_name(responce.data.subject_name));
         dispatch(questionActions.radMode(data.radMode));
@@ -469,6 +478,8 @@ function Home() {
       let datas = {
         mem_id: mem_id,
         engine_type: "filter",
+        token:auth.encrypt_user_id
+        
       };
       var response = await userService.getlist(datas);
       // console.log("faqdata ", response.data);
@@ -535,33 +546,32 @@ function Home() {
     reset();
   };
   var getnewdropdowndata = async () => {
+    if(auth.isAuthenticated){
+        var datas = {
+          userId: auth.user_id,
+          token: auth.encrypt_user_id,
 
-    let datas = {
-      userId: auth.user_id,
+        };
+      }else{
+        var datas = {
+          userId: 0,
+          token: "guest",
 
-    };
-    var response = await userService.get_new_dropdown_data(datas);
-    //  // console.log("free trial data ", response.data);
-
-
+        };
+      }
+    var response = await userService.get_new_dropdown_data(JSON.stringify(datas));
+    console.log("dropdown data......", response.data);
     if (response.data.error) {
       setDropdowndata([]);
     } else {
       var arr = [];
       var mobile_arr = [];
-      // console.log("new drop down data",response.data.dropdown_data);
-
-
+      
       var drp_data = response.data.dropdown_data;
       if (auth.isAuthenticated) {
         drp_data.unshift({ option_value: "[FAQ]", option: "Orientation" }, { option_value: "[BQ]", option: "Bookmarked" });
-      }
-      // }else{
-      //   drp_data.unshift({option_value:"[FAQ]",option:"Orientation"});
-      // }
+      }    
       setDropdowndata(drp_data);
-
-
     }
 
     reset();
@@ -569,6 +579,7 @@ function Home() {
   var getmobiledropdowndata = async () => {
     let datas = {
       userId: auth.user_id,
+      token: auth.encrypt_user_id
 
     };
     var response = await userService.getmobiledatalist(datas);
@@ -643,7 +654,7 @@ function Home() {
       setSelectedModule(e.target.value)
       let datas = {
         module_id: e.target.value,
-
+        token:auth.encrypt_user_id
       };
 
       var response = await userService.getchapterbymodule(datas);
@@ -1381,7 +1392,7 @@ function Home() {
             I DISAGREE
           </Button>
           <Button variant="primary" onClick={handleExam}>
-            I AGREEE
+            I AGREE
           </Button>
         </Modal.Footer>
       </Modal>

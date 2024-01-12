@@ -45,15 +45,23 @@ function Result() {
 
 
     if (q_id !== "") {
-      let datas = {
-        "next_qid": question.questionid[q_id]
-      }
+        if(auth.isAuthenticated){
+          var datas = {
+            "next_qid": question.questionid[q_id],
+            "token": auth.encrypt_user_id,
+            "next_qid2": question.encryptquestionid[q_id],
+          }
+        }else{
+          var datas = {
+            "next_qid": question.questionid[q_id],
+            "token": "guest",
+            "next_qid2": question.encryptquestionid[q_id],
+          }
+        }
 
 
 
       var response = await userService.Nextquestion(datas);
-
-
 
       if (response.data.error) {
 
